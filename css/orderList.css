@@ -1,0 +1,69 @@
+#mui-icon-left{
+	color:#292929;
+}
+.order-nav{
+	margin-bottom:10px;
+}
+.order-nav .order-text{
+	background: #ffffff;
+}
+.order-nav .order-text .item-box{
+	display: block;
+	padding:18px 0 16px 13px;
+}
+#item-icon img{
+	width:21px;
+	height:21px;
+}
+.order-nav .order-text .item-title{
+	font-size:17px;
+	color:#3b3b3b;
+	padding-left: 4px;
+}
+.order-nav .order-time{
+	padding:21px 0 15px 14px;
+	background: #f8f8f8;
+}
+.order-time .time span{
+	font-size:13px;
+	color:#333333;
+}
+.order-state{
+	height:58px;
+	background: #fff;
+}
+.order-state p{
+	display: inline-block;
+}
+.order-state .unexecuted{
+	font-size:14px;
+	color:#3883fd;
+	line-height: 58px;
+	padding-left:14px;
+}
+.order-state .unexecuted.executed{
+	color:#ff5454;
+}
+.order-state .cancel{
+	float: right;
+	margin:7px 14px 0 0;
+}
+.order-state .finished{
+	float: right;
+	font-size:14px;
+	color:#9b9b9b;
+	padding-right:14px;
+	line-height: 58px;
+}
+.order-state .cancel button{
+	border:none;
+	padding:10px 30px;
+	font-size:15px;
+	color:#333333;
+	border:1px solid #d2d2d2;
+	border-radius: 50px;
+}
+.order-state .cancel.unpay button{
+	color:#fff;
+	background: #3883fd;
+}

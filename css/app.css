@@ -1,0 +1,72 @@
+* {
+	margin:0;
+	padding:0;
+}
+img {
+	border:none;
+	vertical-align: middle;
+}
+ul,ol,li {
+	list-style: none;
+}
+.header-bar {
+	height: 44px;
+	background: #ffffff;
+}
+.nav-tab-bar {
+	height: 49px;
+	background: #fff;
+	box-shadow: initial;
+	-webkit-box-shadow: initial;
+	padding-top: 6px;
+}
+.nav-tab-bar:after {
+	content: '';
+	position: absolute;
+	left:0;
+	top:0;
+	right:0;
+	height:1px;
+	background:#ededed;
+}
+.nav-tab-bar .mui-tab-item {
+	width:33.3%;
+	height: 49px;
+}
+.nav-tab-bar a.mui-active {
+	color:#0a7bf9;
+}
+.nav-tab-bar span.mui-icon {
+	position: static;
+	top:0;
+	width:100%;
+	height: 26px;
+	line-height: initial;
+}
+.nav-tab-bar .mui-tab-item .mui-icon~.mui-tab-label {
+	line-height: initial;
+}
+.nav-tab-bar span.home {
+	background: url(../img/home2.png) no-repeat center;
+	background-size:contain;
+}
+.nav-tab-bar a.mui-active span.home {
+	background: url(../img/home1@2x.png) no-repeat center;
+	background-size:contain;
+}
+.nav-tab-bar  a span.Release {
+	background: url(../img/Release2.png) no-repeat center;
+	background-size:contain;
+}
+.nav-tab-bar  a.mui-active span.Release {
+	background: url(../img/Release1.png) no-repeat center;
+	background-size:contain;
+}
+.nav-tab-bar a span.my {
+	background: url(../img/my2.png) no-repeat center;
+	background-size:contain;
+}
+.nav-tab-bar a.mui-active span.my {
+	background: url(../img/my1.png) no-repeat center;
+	background-size:contain;
+}

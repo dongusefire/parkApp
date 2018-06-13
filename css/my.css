@@ -1,0 +1,89 @@
+.park-header{
+	margin-bottom:10px;
+}
+.mipark-top{
+	height:145px;
+	padding-top:51px;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+	background: url(../img/gwbj.png) no-repeat center #ffffff;
+    background-size:100% 100%;
+}
+.mipark-top .Headportrait{
+	width:71px;
+	height:71px;
+	border-radius: 100%;
+	margin-left:19px;
+	background: url(../img/Head-p.png) no-repeat center #fcfcfc;
+	background-size:contain;
+}
+.mipark-top .information{
+	margin:10px 0 0 8px;
+}
+.mipark-top .information span{
+	display: block;
+	font-size:14px;
+	color:#ffffff;
+	padding-bottom:12px;
+}
+.park-nav .item-box {
+	height:59px;
+	display: block;
+	line-height:59px;
+	position: relative;
+	padding-left:65px;
+	background: #fff;
+	color:#333333;
+	font-size: 13px;
+}
+.park-nav .item-box:after {
+	content: '';
+	position: absolute;
+	left:66px;
+	right:0;
+	bottom:0;
+	height:1px;
+	background: #f1f1f1;
+}
+.park-nav .item-box:last-child:after {
+	content: initial;
+}
+.park-nav .item-box .item-icon {
+	position: absolute;
+	left:23px;
+	top:19px;
+	height:21px;
+}
+#line-distance{
+	margin-bottom:10px;
+	
+}
+#line-distance:after{
+	content: '';
+	position: absolute;
+	left:57px;
+	right:0;
+	bottom:0;
+	height: 1px;
+	background: #fff;
+}
+#distance{
+	margin-bottom:5px;
+}
+#distance:after{
+	content: '';
+	position: absolute;
+	left:57px;
+	right:0;
+	bottom:0;
+	height: 1px;
+	background: #fff;
+}
+.park-nav .item-box .item-icon img{
+	height: 100%;
+	width: auto;
+	vertical-align: top;
+}

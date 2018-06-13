@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>我的订单</title>
+		<link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/orderList.css"/>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav header-bar">
+		    <a id="mui-icon-left"class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title title">我的订单</h1>
+		</header>
+		<div class="mui-content trans-box">
+			<div class="order-nav">
+				<div class="order-text">
+					<a href="#" class="item-box">
+						<span id="item-icon"><img src="../img/tcicon.png"></span>
+						<span class="item-title">万科停车场</span>
+				   </a>
+				</div>
+				<div class="order-time">
+					<p class="time place-time">
+						<span>下单时间:</span>
+						<span>2018.5.20</span>
+						<span>16:45</span>
+					</p>
+					<p class="time out-time">
+						<span>出入场时间:</span>
+						<span>2018.5.20</span>
+						<span>16:45-17:45</span>
+					</p>
+				</div>
+				<div class="order-state">
+					<p class="unexecuted">未执行</p>
+					<p class="unexecuted executed" style="display: none;">已执行</p>
+					<p class="finished" style="display: none;">已完成</p>
+					<p class="cancel"><button>取消订单</button></p>
+				    <p class="cancel unpay" style="display: none;"><button>待支付</button></p>
+				</div>
+			</div>
+		</div>
+	    <script src="../js/mui.min.js"></script>
+		<script src="../js/orderList.js"></script>
+	</body>
+</html>
