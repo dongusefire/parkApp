@@ -1,0 +1,83 @@
+#province-box .province-text {
+	font-size: 19px;
+	color: #292929;
+	letter-spacing: 0;
+}
+#province-box .arrow {
+	display: inline-block;
+	width:14px;
+	height: 14px;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	border: 2px solid transparent;
+	border-color: transparent transparent #292929 #292929;
+	vertical-align: 3px;
+	margin-left: 13px;
+}
+.header-bar {
+	height: 46px;
+	-webkit-box-shadow:initial;
+	box-shadow:initial;
+	background: #fff;
+}
+.header-bar .icon-menu {
+	width:26px;
+	height: 19px;
+	background: url(../img/cd.png) no-repeat;
+	background-size: contain;
+	margin-top: 13px;
+}
+#map {
+	position: absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index: 2;
+}
+#search-box {
+	position: absolute;
+	left:7%;
+	top:10px;
+	width:86%;
+	z-index: 3;
+	height: 40px;
+}
+#search-box .mui-icon-search::before{
+	content: initial;
+}
+#search-box .mui-search::before {
+	font-family: Muiicons;
+    font-size: 24px;
+    font-weight: 400;
+    position: absolute;
+    top: 50%;
+    right: auto;
+    left: 20px;
+    display: block;
+    margin-right: 0;
+    margin-top: -9px;
+    margin-right: 0;
+    content: '\e466';
+    color:#9497B3;
+}
+#search-box .mui-search input[type=search] {
+	padding: 0;
+	height: 40px;
+	border-radius: 40px;
+	background: rgba(255,255,255,0.90);
+	margin:0;
+	padding-left: 45px;
+}
+#parking-box {
+	position: absolute;
+	left:3%;
+	bottom:7px;
+	width:94%;
+	background: #FFFFFF;
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.02);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.02);
+	border-radius: 8px;
+	z-index: 3;
+}
