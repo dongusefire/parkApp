@@ -1,0 +1,11 @@
+{
+  "index.html": {
+    "resources": [
+      "template/home.html"
+    ],
+    "refer": [
+      "template/my.html",
+      "template/home.html"
+    ]
+  }
+}
