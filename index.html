@@ -11,7 +11,7 @@
 </head>
 <body>
 	<nav class="mui-bar mui-bar-tab nav-tab-bar">
-	    <a class="mui-tab-item mui-active" href="template/home.html'">
+	    <a class="mui-tab-item mui-active" href="template/home.html">
 	        <span class="mui-icon home"></span>
 	        <span class="mui-tab-label">首页</span>
 	    </a>
@@ -66,7 +66,6 @@
 			};
 			//判断是使用选项卡还是打开新的页面
 			if(this.dataset.type!='open'){
-				console.log('触发选项卡切换',aniShow[targetTab],JSON.stringify(aniShow))
 				//显示目标选项卡
 				//若为iOS平台或非首次显示，则直接显示
 				if(mui.os.ios||aniShow[targetTab]){
@@ -82,11 +81,22 @@
 				};
 				//隐藏当前;
 				plus.webview.hide(activeTab);
-				//更改当前活跃的选项卡
-				activeTab = targetTab;
 			}else{
-				
+				//打开窗口的相关参数
+				var options = {
+					styles:{
+						popGesture: "close",
+						statusbar:{
+							background:"#fff"
+						}
+					},
+					extras:{}
+				};
+				//打开新窗口
+				mui.openWindow(targetTab,targetTab,options);
 			};
+			//更改当前活跃的选项卡
+			activeTab = targetTab;
 		});
     </script>
 </body>
