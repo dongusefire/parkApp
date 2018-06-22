@@ -1,3 +1,14 @@
+.siteInfo {
+			position: relative;
+}
+.guide  {
+	position: absolute;
+	top:36px;
+	right:20px;
+}
+.guide img {
+	width: 40px;
+}
 body {
 	background-color:#F5F5F5; 
 }
@@ -110,47 +121,6 @@ img {
 	background-color: #3883FD;
 	border-radius: 0;
 	width: 35%;
-}
-.select-box {
-	margin:15px;
-}
-.select {
-	display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-	-webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-	padding:0 10px;
-	background-color: #fff;
-	height: 50px;
-	line-height: 50px;
-}
-.select-box .carNo{
-	background-color: #DDE3EB;
-}
-.select .label {
-	font-size: 14px;
-	color: #292929;
-	letter-spacing: 0;
-}
-.select  .details {
-	font-size: 16px;
-	color: #292929;
-	letter-spacing: 0;
-}
-.line {
-	background-color: #e8e8e8;
-	width: 96%;
-	margin-left: 2%;
-	height: 1px;
-}
-.select .time {
-	font-size: 13px;
-	color: #9B9B9B;
-	letter-spacing: 0;
 }
 .mui-icon {
 	font-size: 28px;
