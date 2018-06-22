@@ -1,0 +1,54 @@
+.search-box {
+	position: relative;
+	height:30px;
+	line-height: initial;
+	margin-top: 8px;
+}
+.search-box .mui-icon-search::before{
+	content: initial;
+}
+.search-box .mui-search::before {
+	font-family: Muiicons;
+    font-size: 24px;
+    font-weight: 400;
+    position: absolute;
+    top: 50%;
+    right: auto;
+    left: 10px;
+    display: block;
+    margin-right: 0;
+    margin-top: -13px;
+    margin-right: 0;
+    content: '\e466';
+    color:#9497B3;
+}
+.search-box .mui-search input[type=search] {
+	padding: 0;
+	height:30px;
+	border-radius:30px;
+	background: rgba(246,246,246,0.90);
+	margin:0;
+	padding-left: 45px;
+}
+.search-title {
+	height: 42px;
+	line-height: 42px;
+	color:#666;
+	font-size: 13px;
+	text-indent:17px;
+}
+.search-list {
+	background: #fff;
+	padding-left: 12px;
+}
+.search-list .parking {
+	padding-left: 0;
+	height:83px;
+	border-bottom: 1px #e7e7e7 solid;
+}
+.search-list .parking-r {
+	top:12px;
+}
+.search-list .parking:last-child {
+	border:none;
+}

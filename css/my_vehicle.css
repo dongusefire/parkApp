@@ -1,0 +1,75 @@
+.addvehicle {
+	height: 44px;
+	width:91%;
+	margin:0 auto;
+	margin-top: 32px;
+	margin-bottom: 24px;
+	background: #FFFFFF;
+	border: 1px dashed #DCDCDC;
+	border-radius: 4px;
+	line-height: 44px;
+	text-align: center;
+	font-size: 16px;
+	color: #333333;
+}
+.addvehicle i {
+	font-weight: 600;
+	font-size: 20px;
+	vertical-align: bottom;
+	margin-right: 6px;
+}
+.vehicle-title {
+	line-height: 42px;
+	font-size: 14px;
+	color: #9B9B9B;
+	padding-left: 6.3%;
+}
+.vehicle-list {
+	width:93%;
+	margin:0 auto;
+}
+.vehicle-box {
+	background: #FFFFFF;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+	border-radius: 8px;
+	padding:0 12px;
+	margin-bottom: 12px;
+}
+.vehicle-box .vehicle-tbar {
+	line-height: 43px;
+	height: 43px;
+	border-bottom: 1px dashed #E8E8E8;
+}
+.vehicle-box .vehicle-tbar .mui-checkbox label{
+	font-size: 14px;
+	color: #666666;
+	padding-left: 33px;
+	padding-right: 0;
+}
+.vehicle-box .vehicle-tbar .mui-checkbox input {
+	left:4px;
+	top:11px;
+	right:0;
+	width:20px;
+	height:20px;
+}
+.vehicle-box .vehicle-tbar .mui-checkbox input:before {
+	font-size: 20px;
+}
+.vehicle-box .vehicle-tbar .mui-checkbox input[type=checkbox]:checked:before {
+	color:#39A1FF;
+}
+.vehicle-box .vehicle-tbar .mui-icon-trash {
+	font-size: 18px;
+	margin-top: 12px;
+}
+.vehicle-box .vehicle-tbar .mui-icon-trash:before {
+	color:#231916;
+}
+.vehicle-box .vehicle-b {
+	height: 55px;
+	line-height: 55px;
+	font-size: 18px;
+	color: #333333;
+	padding-left: 4px;
+}

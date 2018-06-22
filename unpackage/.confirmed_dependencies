@@ -5,7 +5,8 @@
     ],
     "refer": [
       "template/my.html",
-      "template/home.html"
+      "template/home.html",
+      "template/carportShare.html"
     ]
   }
 }
