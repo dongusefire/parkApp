@@ -17,7 +17,7 @@
 		<div class="box">
 			<p>取消原因</p>
 			<div class="mui-clearfix">
-				<span>订错车场</span>
+				<span class="active">订错车场</span>
 				<span>订错时段</span>
 				<span>临时有事</span>
 				<span>其 它</span>
@@ -31,9 +31,13 @@
 			<p>退费规则：</p>
 			确定需要退费后，请您取消订单，订金会在一到三个工作日返还到您的账户中，欢迎下次使用！
 		</div>
-		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			$(function(){
+				$('.box span').click(function(){
+					$(this).addClass('active').siblings().removeClass('active');
+				})
+			})
 		</script>
 	</body>
 

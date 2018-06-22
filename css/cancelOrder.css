@@ -37,6 +37,10 @@ body {
 	font-size: 14px;
 	color: #333333;
 }
+.box span.active {
+	color: #087CFD;
+	border-color: #087cfd;
+}
 .box span:nth-child(3){
 	margin-right: 0;
 }
