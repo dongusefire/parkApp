@@ -52,9 +52,9 @@ input::-webkit-input-placeholder {
 	line-height: 20px;
 }
 .submit {
-	width: 90%;
+	width: 94%;
 	border:none;
-	margin-left: 5%;
+	margin-left: 3%;
 	margin-top: 27px;
 	background-image: linear-gradient(-180deg, #53B9FF 0%, #087CFD 85%);
 	border-radius: 8px;
