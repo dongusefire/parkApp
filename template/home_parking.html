@@ -5,28 +5,69 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>首页-搜索框</title>
+    <title>首页-停车场</title>
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
+    <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+	<style>
+		html,body{
+			background: initial;
+		}
+	</style>
 	<div id="parking-box">
 		<div class="parking">
 			<div class="parking-l">
 				<div class="top">
-					<span class="name">万科停车场</span>
-					<span class="price"><span>5元</span>/小时</span>
+					<span class="name">{{parkingName}}</span>
+					<span class="price"><span>{{minPrice==maxPrice? minPrice:minPrice+'~'+maxPrice}}</span>/小时</span>
 				</div>
-				<p class="address">广东省广州市黄埔区石化路255号</p>
-				<div class="num">车位:<span>200</span>/400</div>
+				<p class="address">{{address}}</p>
+				<div class="num">车位:<span>{{carPortSurplusCount}}</span>/{{carPortCount}}</div>
 			</div>
 			<div class="parking-r">
-				<div class="parking-img"></div>
+				<div class="parking-img"><span class="goRoute"></span></div>
 				<p>1.5km</p>
 			</div>
 		</div>
 	</div>
+	
     <script src="../js/mui.min.js"></script>
+    <script type="text/javascript">
+    	var vm = new Vue({
+    		el:'#parking-box',
+    		data:{
+    			address:'',
+    			longitude:'',
+    			latitude:'',
+    			parkingName:'',
+    			maxPrice:'',
+    			minPrice:'',
+    			carPortCount:0,
+				carPortSurplusCount:0
+    		},
+    		methods:{
+    			readData:function(data){
+    				this.address = data.address;
+	    			this.longitude = data.longitude;
+	    			this.latitude = data.latitude;
+	    			this.parkingName = data.parkingName;
+	    			this.maxPrice = data.maxPrice;
+	    			this.minPrice = data.minPrice;
+	    			this.carPortCount = data.carPortCount;
+	    			this.carPortSurplusCount = data.carPortSurplusCount;
+    			}
+    		}
+    	})
+    	mui.plusReady(function(){
+    		var w = plus.webview.currentWebview();
+    		vm.readData(w);
+    	});
+    	mui('#parking-box').on('tap','.goRoute',function(){
+    		plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.longitude+','+vm.latitude+')');
+    	});
+    </script>
 </body>
 </html>
