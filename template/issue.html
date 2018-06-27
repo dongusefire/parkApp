@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/issue.css" />
+		<link rel="stylesheet" href="../css/plug/ion.rangeSlider.css" />
+		<link rel="stylesheet" href="../css/plug/ion.rangeSlider.skinHTML5.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">发布</h1>
+			<a href="" class="mui-pull-right tolist"><span>放租列表</span></a>
+		</header>
+		<div class="paaddSpace">
+			<div class="addSpace"><img src="../img/add_ld.png" alt="" />添加发布车位</div>
+		</div>
+		<div class="index" style="padding:0 15px;">
+			<input id="range_44" /> 
+			<div class="demo-big__extra">
+				<pre id="result_44"></pre>
+			</div>
+        </div>
+        <div>
+        	<div id="test">
+        		
+        	</div>
+        </div>
+		
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
+		<script src="../js/plug/ion.rangeSlider.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				var $range = $("#range_44"),
+					$result = $("#result_44");
+				var track = function (data) {
+					delete data.input;
+					delete data.slider;
+					if (JSON) {
+						var xx = JSON.stringify(data, null, 2);
+						var xxx = JSON.parse(xx);
+						console.log(xxx.to - xxx.from);
+					} else {
+						console.log(data);
+					}
+				};
+				$range.ionRangeSlider({
+					type: "double",
+					min: 0,
+					max: 24,
+					from: 8,
+					to: 16,
+					step: 1,
+					onStart: track,
+					onChange: track,
+					onFinish: track,
+					onUpdate: track,
+					grid: false,
+					min_interval: 4,
+				});
+			});
+		</script>
+	</body>
+
+</html>
