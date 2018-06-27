@@ -59,11 +59,11 @@
 .vehicle-box .vehicle-tbar .mui-checkbox input[type=checkbox]:checked:before {
 	color:#39A1FF;
 }
-.vehicle-box .vehicle-tbar .mui-icon-trash {
+.vehicle-box .vehicle-tbar .mui-icon-trash,.vehicle-box .vehicle-tbar .handle {
 	font-size: 18px;
 	margin-top: 12px;
 }
-.vehicle-box .vehicle-tbar .mui-icon-trash:before {
+.vehicle-box .vehicle-tbar .mui-icon-trash:before,.vehicle-box .vehicle-tbar .handle:before {
 	color:#231916;
 }
 .vehicle-box .vehicle-b {
@@ -72,4 +72,37 @@
 	font-size: 18px;
 	color: #333333;
 	padding-left: 4px;
+}
+.vehicle-status {
+	font-size: 14px;
+}
+.vehicle-status.status1{
+	color: #087CFD;
+}
+.vehicle-status.status2{
+	color: #F2AC00;
+}
+.vehicle-status.status3{
+	color: #FF5454;
+}
+.parkingArea {
+	margin-top: 20px;
+}
+.parkingArea .vehicle-b {
+	height: auto;
+	min-height: 50px;
+	padding:0 1%;
+}
+.parkingArea .vehicle-b span {
+  width: 30%;
+  margin-right: 3.33%;
+  text-align:center;
+  margin-top:20px;
+  height:30px;
+  line-height:30px;
+  border:1px solid #dcdcdc;
+  border-radius:30px;
+  font-size:14px;
+  color: #333333;
+  display: inline-block;
 }
