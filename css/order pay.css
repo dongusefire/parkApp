@@ -53,53 +53,6 @@
 	font-size:10px;
 	color:#666666;
 }
-.pay-style{
-	width:93%;
-	margin:10px auto;
-	background-color:#fff;
-}
-.pay-style .item-box{
-	height: 53px;
-    display: block;
-    line-height: 53px;
-    position: relative;
-    padding-left:40px;
-    color: #323232;
-    font-size: 13px;
-}
-.pay-style .item-box .item-icon{
-	position: absolute;
-    left: 13px;
-    top: 15px;
-    height: 20px;
-}
-.pay-style .item-box .item-icon img{
-	height: 100%;
-    width: auto;
-    vertical-align: top;
-}
-.pay-style .item-box:after{
-	content: '';
-    position: absolute;
-    left:12px;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background: #e8e8e8;
-}
-.pay-style .item-box:last-child:after {
-	content: initial;
-}
-.pay-style .item-box input[type=radio]{
-	position: absolute;
-    top: 12px;
-    right: 20px;
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    border: 0;
-    background-color:#fff;
-}
 .q-pay{
 	width:93%;
 	height:54px;
@@ -118,4 +71,58 @@
 }
 .q-pay p span{
 	font-size:16px;
+}
+.mui-input-row {
+	width:93%;
+	margin:10px auto;
+	background-color:#fff;
+}
+.mui-input-row .radio_inline{
+	height: 53px;
+    display: block;
+    line-height: 53px;
+    position: relative;
+  padding-left:30px;
+    color: #323232;
+    font-size: 13px;
+}
+.mui-input-row .radio_inline .item-icon{
+	position: absolute;
+    left: 13px;
+    top: 15px;
+    height: 20px;
+}
+.mui-input-row .radio_inline .item-icon img{
+	height: 100%;
+    width: auto;
+    vertical-align: top;
+}
+.mui-input-row .radio_inline label{
+	line-height:29px;
+}
+.mui-input-row .radio_inline:after{
+	content: '';
+    position: absolute;
+    left:12px;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #e8e8e8;
+}
+.mui-input-row .radio_inline:last-child:after {
+	content: initial;
+}
+.change .radio_inline {
+	display: flex;
+}
+.change .radio_inline input[type=radio]{
+	position: absolute;
+	top:12px;
+	right:18px;
+    width:25px;             
+    height:25px;
+}
+.change .mui-radio input[type='radio']:checked:before{
+	content:'\e442';
+	color:#309dfe;
 }
