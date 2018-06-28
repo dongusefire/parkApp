@@ -30,5 +30,20 @@
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/my_vehicle.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+    	var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMTY5MTIwLCJleHAiOjE1MzAyMDUxMjAsIm5iZiI6MTUzMDE2OTEyMCwianRpIjoicklmUEJkVDcxb1FUamw0cSJ9.yneZ_f35PdMRxZP9XnquBRHXofNDRzetjh2zovMVLDc';
+		var Park_lot_num = '11010200001';
+    	mui.init();
+    	mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
+    		data:{
+    			"park_lot_num":park_lot_num
+    		},
+    		type:'get',
+    		dataTypeL:'json',
+    		success:function(res){
+    			console.log(res);
+    		}
+    	})
+    </script>
 </body>
 </html>
