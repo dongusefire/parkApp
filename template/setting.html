@@ -8,6 +8,11 @@
     <title>设置</title>
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+    <style>
+    	.logout {
+    		margin:20px 5%;
+    	}
+    </style>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
@@ -18,14 +23,42 @@
 		<ul class="mui-table-view">
 		    <li class="mui-table-view-cell" id="clear">清除storage</li>
 		</ul>
+		<div class="logout">
+			<button type="button" class="mui-btn mui-btn-danger mui-btn-block">退出登录</button>
+		</div>
 	</div>
     <script src="../js/mui.min.js"></script>
+    <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+    	var login_off = false//token=plus.storage.setItem('token');
+    	var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMTY5ODExLCJleHAiOjE1MzAyMDU4MTEsIm5iZiI6MTUzMDE2OTgxMSwianRpIjoiWE0zTmZ0VkFwZzlzeDF1aSJ9.WQI0v08cY3RV22a1C8O0A57_-pDJNNT9PXRa5CpvfDA";
     	mui('.g-content').on('tap','#clear',function(){
 			plus.storage.clear();
+			//获取我的页面的窗口对象
+			var list = plus.webview.currentWebview().opener();
+			//触发我的页面（readData）,从而进行数据刷新
+			mui.fire(list,'readData');
 			mui.toast("已清除");
-    	})
+    	});
+    	mui('.g-content').on('tap','.logout',function(){
+    		if(!login_off){
+    			mui.ajax(AJAX_PATH+'/auth/logout?token='+token,{
+					dataType:'json',
+					type:'get',
+					success:function(res,textStatus,xhr){
+						console.log(res);
+						if(res.code==200){
+							mui.toast(res.msg);
+						}else{
+							mui.alert(res.msg,'系统提示','确定',null);
+						};
+					},
+					complete:function(xhr, status){
+						login_off = false;
+					}
+				});
+    		};
+    	});
     </script>
-    <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

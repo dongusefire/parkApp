@@ -9,8 +9,6 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/parking.css"/>
-    <link href="../css/mui.picker.css" rel="stylesheet" />
-	<link href="../css/mui.poppicker.css" rel="stylesheet" />
 	<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
@@ -26,11 +24,29 @@
 				</div>
 			</div>
 			<div class="filter">
-				<span class="active">智能排序<i></i></span>
+				<span @click="sortToggle">{{sort}}<i></i></span>
 				<span>停车时长<i></i></span>
 			</div>
 		</div>
-		<div id="parking-list">
+		<div id="tab-box" :class="isSort? 'show-box':''">
+			<div class="tab-sort-group" :class="isSort? 'show':''">
+				<div class="sort1">
+					<ul class="mui-table-view mui-table-view-radio" id="sort">
+						<li class="mui-table-view-cell mui-selected" data-sort="distance">
+							<a class="mui-navigate-right">距离优先</a>
+						</li>
+						<li class="mui-table-view-cell" data-sort="price">
+							<a class="mui-navigate-right">价格最低</a>
+						</li>
+						<li class="mui-table-view-cell" data-sort="number">
+							<a class="mui-navigate-right">车位数量优先</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="parking-list" v-show="items.length!=0">
+			<div class="parkingList-mask" :style="isSort? 'display:block':'display:none'"></div>
 			<div class="parking" :id="index" v-for="(item,index) in items">
 				<div class="parking-l">
 					<div class="top">
@@ -47,56 +63,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		var vm = new Vue({
-			el:'#parking-list',
-			data:{
-				items:[],
-				page:1,
-				maxPage:1,
-				point:{}
-			},
-			methods:{
-				readData:function(res,point){ //初始化第一次的数据
-					var list = res.data.list;
-					for(var i=0;i<list.lenth;i++){
-						list[i].distance = (list[i].distance/1000).toFixed(3)
-					};
-					this.items = list;
-					this.point = point;
-				},
-				getParking:function(point,sort){
-					var _this= this;
-					mui.ajax(AJAX_PATH+'/parkinglot/search',{
-						data:{
-							"longitude":point.longitude,
-							"latitude":point.latitude,
-							"sort":sort  //distance-距离，price-价格，number-车位数量
-						},
-						dataType:'json',
-						type:'POST',
-						success:function(res,textStatus,xhr){
-							if(res.code==200){
-								_this.list = res.data.list;
-								_this.createParking();
-								//触发列表页面的数据更新
-								mui.fire(detailPage,'newsId',{
-								    id:id
-								});
-							}else{
-								mui.alert(res.msg,'系统提示','确定',null);
-							};
-						}
-					});
-				}
-			}
-		});
-		window.addEventListener('readData',function(event){
-		  vm.readData(event.detail.data);
-		});
-	</script>
     <script src="../js/mui.min.js"></script>
-    <script src="../js/update.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/parking.js" type="text/javascript" charset="utf-8"></script>
 </body>

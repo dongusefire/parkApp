@@ -97,10 +97,9 @@
 								plus.storage.setItem('phone_number',phone_number);
 								plus.storage.setItem('token',res.data);
 								mui.toast('登陆成功');
-								//获得列表界面的webview
+								//获取我的页面的窗口对象
 								var list = plus.webview.currentWebview().opener();
-								//触发列表界面的自定义事件（readData）,从而进行数据刷新
-								mui.fire(list,'readData');
+								//触发我的页面（readData）,从而进行数据刷新
 								mui.later(function(){
 									mui.back();
 								},'1500');
