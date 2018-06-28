@@ -5,10 +5,11 @@
 		<title>登录</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" href="../css/login.css" />
 	</head>
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav header-bar">
 			<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
 			<h1 class="mui-title">登录</h1>
 		</header>
@@ -30,6 +31,7 @@
 		<script src="../js/mui.min.js"></script>
     	<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script>
+			mui.init();
 			function sendCode(){
 				if(countdown == 0){
 					seconds.style.display = 'none';
@@ -94,6 +96,14 @@
 							if(res.code==200){
 								plus.storage.setItem('phone_number',phone_number);
 								plus.storage.setItem('token',res.data);
+								mui.toast('登陆成功');
+								//获得列表界面的webview
+								var list = plus.webview.currentWebview().opener();
+								//触发列表界面的自定义事件（readData）,从而进行数据刷新
+								mui.fire(list,'readData');
+								mui.later(function(){
+									mui.back();
+								},'1500');
 							}else{
 								mui.alert(res.msg,'系统提示','确定',null);
 							};

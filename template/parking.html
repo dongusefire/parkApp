@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>车位列表</title>
+    <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/parking.css"/>
+    <link href="../css/mui.picker.css" rel="stylesheet" />
+	<link href="../css/mui.poppicker.css" rel="stylesheet" />
+	<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav header-bar">
+		<a class="mui-pull-left" id="hideView"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 3px;color:#292929;"></span></a>
+	    <h1 class="mui-title">车位列表</h1>
+	</header>
+	<div class="mui-content g-content">
+		<div id="topbar">
+			<div id="search-box">
+				<div class="mui-input-row mui-search mui-active">
+				    <input type="search" class="mui-input-clear" placeholder="">
+				</div>
+			</div>
+			<div class="filter">
+				<span class="active">智能排序<i></i></span>
+				<span>停车时长<i></i></span>
+			</div>
+		</div>
+		<div id="parking-list">
+			<div class="parking" :id="index" v-for="(item,index) in items">
+				<div class="parking-l">
+					<div class="top">
+						<span class="name">{{item.parking_lot_name}}</span>
+						<span class="price"><span>{{item.price}}</span>/小时</span>
+					</div>
+					<p class="address">{{item.parking_lot_address}}</p>
+					<div class="num">车位:<span>{{item.free_number}}</span>/{{item.number}}</div>
+				</div>
+				<div class="parking-r">
+					<div class="parking-img"><span class="goRoute"></span></div>
+					<p>{{item.distance}}km</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'#parking-list',
+			data:{
+				items:[],
+				page:1,
+				maxPage:1,
+				point:{}
+			},
+			methods:{
+				readData:function(res,point){ //初始化第一次的数据
+					var list = res.data.list;
+					for(var i=0;i<list.lenth;i++){
+						list[i].distance = (list[i].distance/1000).toFixed(3)
+					};
+					this.items = list;
+					this.point = point;
+				},
+				getParking:function(point,sort){
+					var _this= this;
+					mui.ajax(AJAX_PATH+'/parkinglot/search',{
+						data:{
+							"longitude":point.longitude,
+							"latitude":point.latitude,
+							"sort":sort  //distance-距离，price-价格，number-车位数量
+						},
+						dataType:'json',
+						type:'POST',
+						success:function(res,textStatus,xhr){
+							if(res.code==200){
+								_this.list = res.data.list;
+								_this.createParking();
+								//触发列表页面的数据更新
+								mui.fire(detailPage,'newsId',{
+								    id:id
+								});
+							}else{
+								mui.alert(res.msg,'系统提示','确定',null);
+							};
+						}
+					});
+				}
+			}
+		});
+		window.addEventListener('readData',function(event){
+		  vm.readData(event.detail.data);
+		});
+	</script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/update.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/parking.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

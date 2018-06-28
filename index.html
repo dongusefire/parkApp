@@ -28,18 +28,27 @@
     <script src="js/update.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-    	mui.init();
+    	
     	var subpages = ['template/home.html', 'template/my.html'];
     	var subpage_style = {
 			top: '0',
-			bottom: '51px'
+			bottom: '51px',
+			statusbar:{
+				background:"#fff" 
+			}
 		};
 		var aniShow = {};
+		var self = null;
 		//webview对象首次被创建
 		mui.plusReady(function() {
 			//仅支持竖屏显示
 			plus.screen.lockOrientation("portrait-primary");
-			var self = plus.webview.currentWebview(); //通过plus.webview可获取应用界面管理对象。 currentWebview方法获取当前窗口的WebviewObject对象
+			self = plus.webview.currentWebview(); //通过plus.webview可获取应用界面管理对象。 currentWebview方法获取当前窗口的WebviewObject对象
+			self.setStyle({
+				statusbar:{
+					background:'#fff'
+				}
+			});
 			for(var i = 0; i < subpages.length; i++) {
 				var temp = {};
 				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
@@ -76,6 +85,21 @@
 					temp[targetTab] = "true";
 					mui.extend(aniShow,temp);
 					plus.webview.show(targetTab,"fade-in",300);
+					
+				};
+				//根据将要切换的页面来设置不同的状态栏样式
+				if(targetTab=='template/my.html'){
+					self.setStyle({
+						statusbar:{
+							background:'#3883fd'
+						}
+					});
+				}else{
+					self.setStyle({
+						statusbar:{
+							background:'#fff'
+						}
+					});
 				};
 				//隐藏当前;
 				plus.webview.hide(activeTab);
