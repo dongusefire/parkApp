@@ -178,7 +178,19 @@
 	background-image: -moz-linear-gradient(-180deg, #53B9FF 0%, #53B9FF 85%);
 	background-image: -webkit-linear-gradient(-180deg, #53B9FF 0%, #53B9FF 85%);
 }
-
+.btn-box{
+	width:92%;
+	margin:48px auto;
+	background: linear-gradient(#9ed2fa,#7fb9f9);
+	text-align: center;
+	border-radius: 5px;
+}
+.btn-box .mui-button{
+	height:54px;
+	line-height:45px;
+	border:none;
+	background:none;
+}
 @media screen and (max-width:360px){
 	.license-plate .num {
 		width:32px;

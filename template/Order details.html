@@ -9,6 +9,9 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/Order details.css"/>
+    <style>
+    	 -webkit-tap-highlight-color:transparent;
+    </style>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar" style="border-bottom:2px solid #f5f5f5">
@@ -56,9 +59,13 @@
 		<p class="mark-o">备注：</p>
 		<p>这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容</p>
 	</div>
-		<script src="../js/mui.min.js"></script>
+	  <script src="../js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			$(function(){
+				$('.state-btn p').click(function(){
+					$(this).addClass('active').siblings().removeClass('active');
+				})
+			})
 		</script>
 	</body>
 

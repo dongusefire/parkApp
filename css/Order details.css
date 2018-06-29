@@ -77,6 +77,10 @@
 	display: flex;
 	justify-content: flex-end;
 }
+.state-btn p.active{
+	color:#087cfd;
+	border-color:#087cfd;
+}
 .state-btn .cancel{
 	display:inline-block;
 	padding:11px 22px;

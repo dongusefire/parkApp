@@ -82,7 +82,7 @@
     display: block;
     line-height: 53px;
     position: relative;
-  padding-left:30px;
+    padding-left:30px;
     color: #323232;
     font-size: 13px;
 }
@@ -98,7 +98,7 @@
     vertical-align: top;
 }
 .mui-input-row .radio_inline label{
-	line-height:29px;
+	line-height:30px;
 }
 .mui-input-row .radio_inline:after{
 	content: '';
@@ -118,7 +118,7 @@
 .change .radio_inline input[type=radio]{
 	position: absolute;
 	top:12px;
-	right:18px;
+	right:13px;
     width:25px;             
     height:25px;
 }
