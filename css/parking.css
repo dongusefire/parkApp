@@ -10,6 +10,7 @@
 	right:0;
 	top:0;
 	z-index: 3;
+	height: 102px;
 }
 #topbar #search-box {
 	width: 86%;
@@ -81,4 +82,50 @@
   border-top: 7.5px solid #666;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
+}
+#tab-box {
+	position: absolute;
+	left: 0;
+    right: 0;
+    top: 102px;
+    z-index: 3;
+    height:0;
+    width:100%;
+    overflow: hidden;
+}
+#tab-box.show-box {
+	height: auto;
+}
+#tab-box .sort1 ul:after,#tab-selectList .sort1 ul:before {
+	content: initial;
+}
+#tab-box .tab-sort-group {
+	opacity:0;
+	background:#fff;
+	position:relative;
+	transform:translateY(-50%);
+	-webkit-transform:translateY(-50%);
+	-moz-transform:translateY(-50%);
+	-ms-transform:translateY(-50%);
+	transition:.3s all;
+	-webkit-transition:.3s all;
+	-moz-transition:.3s all;
+	-ms-transition:.3s all;
+}
+#tab-box .tab-sort-group.show {
+	opacity:1;
+	transform:translateY(0);
+	webkit-transform:translateY(0);
+	-moz-transform:translateY(0);
+	-ms-transform:translateY(0);
+}
+.parkingList-mask {
+	position: absolute;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	z-index: 2;
+	background:rgba(0,0,0,0.3);
+	display: none;
 }

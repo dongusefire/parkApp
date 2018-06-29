@@ -9,6 +9,7 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/search.css"/>
+    <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
@@ -23,7 +24,7 @@
 	</header>
 	<div class="mui-content g-content">
 		<div class="search-title">历史搜索</div>
-		<div class="search-list">
+		<div class="search-list" v-show="isRecord">
 			<div class="parking">
 				<div class="parking-l">
 					<div class="top">
@@ -32,35 +33,12 @@
 					<p class="address">广东省广州市黄埔区石化路255号</p>
 				</div>
 				<div class="parking-r">
-					<div class="parking-img"></div>
-					<p>1.5km</p>
-				</div>
-			</div>
-			<div class="parking">
-				<div class="parking-l">
-					<div class="top">
-						<span class="name">万科停车场</span>
-					</div>
-					<p class="address">广东省广州市黄埔区石化路255号</p>
-				</div>
-				<div class="parking-r">
-					<div class="parking-img"></div>
-					<p>1.5km</p>
-				</div>
-			</div>
-			<div class="parking">
-				<div class="parking-l">
-					<div class="top">
-						<span class="name">万科停车场</span>
-					</div>
-					<p class="address">广东省广州市黄埔区石化路255号</p>
-				</div>
-				<div class="parking-r">
-					<div class="parking-img"></div>
+					<div class="parking-img"><span class="goRoute"></span></div>
 					<p>1.5km</p>
 				</div>
 			</div>
 		</div>
+		<div class="search-null" v-show="!isRecord">暂无记录</div>
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>

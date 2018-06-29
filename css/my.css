@@ -87,3 +87,12 @@
 	width: auto;
 	vertical-align: top;
 }
+.no-login {
+	padding-left: 10px;
+	height: 70px;
+	line-height: 70px;
+}
+.no-login a{
+	color:#fff;
+	font-size: 18px;
+}

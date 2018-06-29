@@ -3,54 +3,13 @@ var home = {
 	ws:null,
 	map:null,
 	wo:null,
+	page:1,
+	maxPage:1,
 	point:{
 		lng:'',
 		lat:''
 	},
-	list:[
-		{
-			address:"测试1",
-			carPortCount:2000,
-			carPortSurplusCount:1989,
-			distance:"1887997",
-			ltdCode:"2000001",
-			maxPrice:0.33,
-			minPrice:0.33,
-			parkCode:"20000010002",
-			parkingName:"安居宝园区停车场",
-			longitude:116.396367,
-			latitude:40.089076,
-			status:0,
-		},
-		{
-			address:"测试2",
-			carPortCount:2000,
-			carPortSurplusCount:1989,
-			distance:"1887997",
-			ltdCode:"2000001",
-			maxPrice:0.17,
-			minPrice:0.17,
-			parkCode:"20000010002",
-			parkingName:"安居宝园区停车场2",
-			longitude:116.22945,
-			latitude:40.076029,
-			status:1,
-		},
-		{
-			address:"测试3",
-			carPortCount:2000,
-			carPortSurplusCount:1989,
-			distance:"1887997",
-			ltdCode:"2000001",
-			maxPrice:0.22,
-			minPrice:0.1,
-			parkCode:"20000010002",
-			parkingName:"安居宝园区停车场3",
-			longitude:116.239992,
-			latitude:40.015259,
-			status:2
-		}
-	],
+	list:[],
 	activeParking:'', //当前显示的Parking
 	getUserLocation:function(){ 
 		var _this=this;
@@ -61,6 +20,7 @@ var home = {
 					lat:point.latitude
 				};
 				_this.setCenter(point);
+				_this.getParking(point,'');
 			}else{
 				alert( "Failed!" );//用户拒绝授权
 			};
@@ -82,7 +42,7 @@ var home = {
 		var _url = 'home_parking.html';
 		var list = this.list;
 		for(var i=0;i<list.length;i++){
-			var sub = plus.webview.create(_url,list[i].parkingName,{
+			var sub = plus.webview.create(_url,list[i].parking_lot_number,{
 				bottom:'7px',
 				left:'3%',
 				height:'96px',
@@ -92,36 +52,77 @@ var home = {
 				background:'transparent'
 			},list[i]);
 			sub.hide();
-			this.createMarker(list[i].longitude,list[i].latitude,list[i].status,i);
+			this.createMarker(list[i].longitude,list[i].latitude,list[i].free_number,i);
 			this.ws.append(sub);
 		};
 	},
 	createMarker:function(lng,lat,status,k){//创建地图标点Marker对象
-		var Icon = '/img/jh.png';
-		var _this = this;
-		var marker=new plus.maps.Marker(new plus.maps.Point(lng,lat));
-		if(status==1){
-			Icon = '/img/ls.png';
-		}else if(status==2){
+		var Icon = '/img/ls.png';
+		if(status<=5){
+			Icon = '/img/jh.png';
+		}else if(status==0){
 			Icon = '/img/sh.png';
 		};
+		var _this = this;
+		var marker=new plus.maps.Marker(new plus.maps.Point(lng,lat));
 		marker.setIcon(Icon);
 		marker.uuid = k; //给当前的Marker对象自定义一个属性
 		marker.onclick = function(marker){
-			if(_this.activeParking==_this.list[marker.uuid].parkingName){
+			if(_this.activeParking==_this.list[marker.uuid].parking_lot_number){
 				return false;
 			};
 			if(mui.os.ios){
-				plus.webview.show(_this.list[marker.uuid].parkingName);
+				plus.webview.show(_this.list[marker.uuid].parking_lot_number);
 			}else{
-				plus.webview.show(_this.list[marker.uuid].parkingName,"fade-in",300);
+				plus.webview.show(_this.list[marker.uuid].parking_lot_number,"fade-in",300);
 			};
 			if(_this.activeParking!=''){
 				plus.webview.hide(_this.activeParking);
 			};
-			_this.activeParking = _this.list[marker.uuid].parkingName;
+			_this.activeParking = _this.list[marker.uuid].parking_lot_number;
 		};
 		this.map.addOverlay(marker);
+	},
+	createParkingView:function(){ //创建列表页窗口
+		var sub = plus.webview.create('parking.html','parking.html',{
+			statusbar:{
+				background:"#fff" 
+			},
+			top:0,
+			left:0,
+			width:'100%',
+			height:'100%',
+			position:"absolute",
+			zindex:9
+		});
+		sub.hide();
+		this.ws.append(sub);
+	},
+	openSearch:function(){
+		var options = {
+			styles:{
+				popGesture: "close", //popGesture窗口的侧滑返回功能。可取值"none"：无侧滑返回功能；"close"：侧滑返回关闭Webview窗口；"hide"：侧滑返回隐藏webview窗口
+				statusbar:{  //statusbar窗口状态栏样式。仅在应用设置为沉浸式状态栏样式下有效，设置此属性后将自动保留系统状态栏区域不被Webview窗口占用。http://www.dcloud.io/docs/api/zh_cn/webview.html#plus.webview.WebviewStatusbarStyles
+					background:"#fff" 
+				}
+			},
+			extras:{}
+		};
+		mui.openWindow('search.html','search.html',options);
+	},
+	bespeak:function(num){  //打开预定页面
+		var options = {
+			styles:{
+				popGesture: "close", //popGesture窗口的侧滑返回功能。可取值"none"：无侧滑返回功能；"close"：侧滑返回关闭Webview窗口；"hide"：侧滑返回隐藏webview窗口
+				statusbar:{  //statusbar窗口状态栏样式。仅在应用设置为沉浸式状态栏样式下有效，设置此属性后将自动保留系统状态栏区域不被Webview窗口占用。http://www.dcloud.io/docs/api/zh_cn/webview.html#plus.webview.WebviewStatusbarStyles
+					background:"#fff" 
+				}
+			},
+			extras:{
+				parking_lot_num:num
+			}
+		};
+		mui.openWindow('order.html','order.html',options);
 	},
 	createRoute:function(lng,lat){ //创建地图中的路线对象
 //		var routeObj = new plus.maps.Route(new plus.maps.Point(this.point.lng,this.point.lat),new plus.maps.Point(lng,lat));
@@ -151,8 +152,41 @@ var home = {
 	bindEvent:function(){
 		this.map.onclick = function(point){  //获取当前用户点击的地里位置
 			console.log(JSON.stringify(point),'点击地图')
-		}
-	}, 
+		};
+		mui('.header-bar').on('tap','#openMenu',function(){
+			if(mui.os.ios){
+				plus.webview.show("parking.html");
+			}else{
+				plus.webview.show("parking.html","fade-in",300);
+			};
+		});
+	},
+	getParking:function(point,sort){
+		var _this= this;
+		mui.ajax(AJAX_PATH+'/parkinglot/search',{
+			data:{
+				"longitude":point.longitude,
+				"latitude":point.latitude,
+				"sort":sort  //distance-距离，price-价格，number-车位数量
+			},
+			dataType:'json',
+			type:'POST',
+			success:function(res,textStatus,xhr){
+				if(res.code==200){
+					_this.list = res.data.list;
+					_this.createParking();
+					
+					//触发列表页面的数据更新
+					mui.fire(plus.webview.getWebviewById('parking.html'),'readData',{
+					    data:res,
+					    point:point
+					});
+				}else{
+					mui.alert(res.msg,'系统提示','确定',null);
+				};
+			}
+		});
+	},
 	init:function(){
 		// 获取窗口对象
 		this.ws=plus.webview.currentWebview();
@@ -161,7 +195,7 @@ var home = {
 		this.map = new plus.maps.Map('map');
 		this.getUserLocation();
 		this.createSearchView();
-		this.createParking();
+		this.createParkingView();
 		this.bindEvent();
 	}
 }

@@ -10,26 +10,26 @@
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
     <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-</head>
-<body>
-	<style>
+    <style>
 		html,body{
 			background: initial;
 		}
 	</style>
+</head>
+<body id="body">
 	<div id="parking-box">
 		<div class="parking">
 			<div class="parking-l">
 				<div class="top">
-					<span class="name">{{parkingName}}</span>
-					<span class="price"><span>{{minPrice==maxPrice? minPrice:minPrice+'~'+maxPrice}}</span>/小时</span>
+					<span class="name">{{parking_lot_name}}</span>
+					<span class="price"><span>{{price}}</span>/小时</span>
 				</div>
-				<p class="address">{{address}}</p>
-				<div class="num">车位:<span>{{carPortSurplusCount}}</span>/{{carPortCount}}</div>
+				<p class="address">{{parking_lot_address}}</p>
+				<div class="num">车位:<span>{{free_number}}</span>/{{number}}</div>
 			</div>
 			<div class="parking-r">
 				<div class="parking-img"><span class="goRoute"></span></div>
-				<p>1.5km</p>
+				<p>{{distance}}km</p>
 			</div>
 		</div>
 	</div>
@@ -39,25 +39,27 @@
     	var vm = new Vue({
     		el:'#parking-box',
     		data:{
-    			address:'',
+    			parking_lot_address:'',
     			longitude:'',
     			latitude:'',
-    			parkingName:'',
-    			maxPrice:'',
-    			minPrice:'',
-    			carPortCount:0,
-				carPortSurplusCount:0
+    			parking_lot_name:'',
+    			price:'',
+    			number:0,
+				free_number:0,
+				distance:'',
+				parking_lot_number:''
     		},
     		methods:{
     			readData:function(data){
-    				this.address = data.address;
+    				this.parking_lot_address = data.parking_lot_address;
 	    			this.longitude = data.longitude;
 	    			this.latitude = data.latitude;
-	    			this.parkingName = data.parkingName;
-	    			this.maxPrice = data.maxPrice;
-	    			this.minPrice = data.minPrice;
-	    			this.carPortCount = data.carPortCount;
-	    			this.carPortSurplusCount = data.carPortSurplusCount;
+	    			this.parking_lot_name = data.parking_lot_name;
+	    			this.price = data.price;
+	    			this.number = data.number;
+	    			this.free_number = data.free_number;
+	    			this.distance = (data.distance/1000).toFixed(3);
+	    			this.parking_lot_number = data.parking_lot_number;
     			}
     		}
     	})
@@ -65,8 +67,12 @@
     		var w = plus.webview.currentWebview();
     		vm.readData(w);
     	});
-    	mui('#parking-box').on('tap','.goRoute',function(){
+    	mui('#body').on('tap','.goRoute',function(e){
     		plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.longitude+','+vm.latitude+')');
+    		e.stopPropagation();
+    	});
+    	mui('#body').on('tap','#parking-box',function(){
+    		plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.parking_lot_number+')');
     	});
     </script>
 </body>

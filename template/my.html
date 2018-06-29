@@ -10,32 +10,36 @@
     <link href="../css/icons-extra.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/my.css"/>
+    <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<div class="mui-content">
 		<div class="park-header">
 		    <div class="mipark-top">
 		      	   <div class="Headportrait"></div>
-		      	   <div class="information">
-		      	   	 <span class="person_W">138****2489</span>
-		      	     <span class="ewallet">信用值:340</span>
+		      	   <div class="information" v-show="islogin">
+		      	   	 <span class="person_W">{{userName}}</span>
+		      	     <span class="ewallet">信用值:{{num}}</span>
+		      	   </div>
+		      	   <div class="no-login" v-show="!islogin">
+		      	   	 <a id="openLogin">未登录</a>
 		      	   </div>
 		    </div>
 		</div>
 		<div class="park-nav">
-			<a href="#" class="item-box">
+			<a href="wallet.html" class="item-box">
 				<span class="item-icon"><img src="../img/wdqb.png"></span>
 				<span class="item-title">我的钱包</span>
 			</a>
-			<a href="#" class="item-box">
+			<a href="orderList.html" class="item-box">
 				<span class="item-icon"><img src="../img/dd.png"></span>
 				<span class="item-title">我的订单</span>
 			</a>
-			<a href="#" class="item-box">
+			<a href="my_parking.html" class="item-box">
 				<span class="item-icon"><img src="../img/cw.png"></span>
 				<span class="item-title">我的车位</span>
 			</a>
-			<a id="line-distance" href="#" class="item-box">
+			<a id="line-distance" href="my_vehicle.html" class="item-box">
 				<span class="item-icon"><img src="../img/cl.png"></span>
 				<span class="item-title">车辆管理</span>
 			</a>
@@ -47,12 +51,38 @@
 				<span class="item-icon"><img src="../img/zn.png"></span>
 				<span class="item-title">用户指南</span>
 			</a>
-			<a id="distance" href="#" class="item-box">
+			<a id="distance" href="setting.html" class="item-box">
 				<span class="item-icon"><img src="../img/xz.png"></span>
 				<span class="item-title">设置</span>
 			</a>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var vm = new Vue({
+			el:'.mui-content',
+			data:{
+				islogin:false,
+				userName:'',
+				num:0
+			},
+			methods:{
+				readData:function(){
+					var userName = plus.storage.getItem('phone_number');
+					if(userName && userName!=""){
+						userName.replace(userName.substring(3, 8),'*****');
+						this.userName = userName;
+						this.islogin = true;
+					};
+				}
+			}
+		});
+		document.addEventListener('plusready',function(){
+			vm.readData();
+		},false);
+		window.addEventListener('readData',function(){
+			vm.readData();
+		},false);
+	</script>
     <script src="../js/mui.min.js"></script>
     <script src="../js/my.js"></script>
 </body>

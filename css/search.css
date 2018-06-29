@@ -52,3 +52,9 @@
 .search-list .parking:last-child {
 	border:none;
 }
+.search-null {
+	color:#9B9B9B;
+	height: 80px;
+	line-height: 80px;
+	text-align: center;
+}

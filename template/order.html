@@ -21,22 +21,15 @@
 		<div class="mui-content">
 			<div class="picture"></div>
 		    <!--<img src="../img/yuantiao.jpg" alt="" />-->
-		    <div class="siteInfo">
-		    	<div class="name">
-		    		<span class='big'>万科停车场</span> <span class="price">5元</span>/小时
-		    	</div>
-		    	<p class="address"><img src="../img/Page1.png"/> 广东省广州市黄埔区石化路225号</p>
-		    	<p class="num">
-		    		车位： <span class='occupied'>200</span>/400
-		    	</p>
-		    </div>
+		    <!--车场详情-->
+		    <div class="siteInfo"></div>
 		    <!--选择器-->
 		    <div class="select-box">
 		    	<!--车牌号选择器-->
 		    	<div class="select carNo">
 		    		<span class="label">车牌号:</span>
 		    		<div>
-		    			<span class="details" id="showCarno">粤G88888</span>
+		    			<span class="details" id="showCarno"></span>
 		    			<span class="mui-icon mui-icon-arrowright"></span>
 		    		</div>
 		    	</div>
@@ -72,22 +65,65 @@
 		<script src="../js/mui.picker.js"></script>
 		<script src="../js/mui.poppicker.js"></script>
 		<script src="../js/mui.picker.min.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
+		<script src="../js/app.js"></script>
 		<script type="text/javascript">
-			(function($,doc){
+			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMTY5MTIwLCJleHAiOjE1MzAyMDUxMjAsIm5iZiI6MTUzMDE2OTEyMCwianRpIjoicklmUEJkVDcxb1FUamw0cSJ9.yneZ_f35PdMRxZP9XnquBRHXofNDRzetjh2zovMVLDc';
+			var Park_lot_num = '11010200001';
+			(function($,doc,$$){
 				$.init();
 				$.ready(function(){
+					//车位信息获取
+					mui.ajax(AJAX_PATH+'/parking/list?token='+token,{
+						data:{
+							"park_lot_num":Park_lot_num
+						},
+						dataType:'json',
+						type:'get',
+						success:function(res,status,xhr){
+							if( res.code== '200'){
+								if(res.data == ''){
+									mui.alert('请添加车辆','系统提示','确定',function(){
+										mui.openWindow({
+											id:'add_vehicle',
+											url:'add_vehicle.html'
+										})
+									})
+								}else{
+									//设置车场信息
+									var _data = res.data.parking_info[0];
+									var _html ='<div class="name">'+
+										    		'<span class="big">'+_data.parking_lot_name+'</span>'+
+										    		'<span class="price">'+_data.price+'元</span>/小时</div>'+
+										    	'<p class="address"><img src="../img/Page1.png"/>'+_data.parking_lot_address+'</p>'+
+										    	'<p class="num">车位： <span class="occupied">'+_data.free_number +'</span>/'+_data.number+'</p>';
+									$$('.siteInfo').append(_html);
+									//这里设置默认车牌号
+									var data = res.data.userCar_info;
+									$$.each(data,function(name,value){
+										console.log(value);
+										if(value.default == 1){
+											//设置默认车辆
+											$$('.details').html(this.car_number);
+										}else{
+											$$('.details').html(data[0].car_number);
+										}
+									})
+									//这里填充picker的数据
+									console.log(data);
+									var picker_data = [];
+									for(let i=0;i<data.length;i++){
+										picker_data.push({value:data[i].car_id,text:data[i].car_number});
+									}
+									carnoPicker.setData(picker_data);
+								}
+							}else{
+								mui.alert('res.msg','系统提示','确定',null);
+							}
+						}
+					})
 					//选择车牌号
 					var carnoPicker = new $.PopPicker();
-					carnoPicker.setData([{
-						value: '粤G88888',
-						text: '粤G88888'
-					}, {
-						value: '京G88888',
-						text: '京G88888'
-					}, {
-						value: '沪G88888',
-						text: '沪G88888'
-					}])
 					var showCarno = doc.getElementById('showCarno');
 					showCarno.addEventListener('tap',function(event){
 						carnoPicker.show(function(items){
@@ -125,7 +161,7 @@
 						},false);
 					})
 				});
-			})(mui,document);
+			})(mui,document,jQuery);
 			
 		</script>
 	</body>
