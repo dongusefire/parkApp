@@ -60,6 +60,7 @@
 		    	<span class="tcf">停车费:</span><span class="num">12</span>
 		    	<button class='reserve' id='reserve'>立即预定</button>
 		    </div>
+		    
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/mui.picker.js"></script>
@@ -68,7 +69,7 @@
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
-			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMjYzOTM3LCJleHAiOjE1MzAyOTk5MzcsIm5iZiI6MTUzMDI2MzkzNywianRpIjoiaVVyZnBtVWNoS2ttNkpnaCJ9.qLtGB1tddBdM2xoNVnBJNTxZ-uhqXt9Xdn5PYfyVkVo';
+			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMzI0ODE0LCJleHAiOjE1MzAzNjA4MTQsIm5iZiI6MTUzMDMyNDgxNCwianRpIjoicmREZm9QSGE4elBNQ0w1ayJ9.kUYHgXygsSeUbAyfeKiBZJPoVcLMECezdwRkWxp0rzI';
 			var Park_lot_num = '11010200003';
 			var that = this;
 			(function($,doc,$$){
@@ -245,16 +246,25 @@
 							type:'post',
 							dataType:'json',
 							data:jsonData,
+							beforeSend:function(){
+								var mask = mui.createMask();//callback为用户点击蒙版时自动执行的回调；
+								mask.show();//显示遮罩
+								//发送等待过程中加过渡动画
+								$$("body").append('<div id="pload" style="text-align:center;line-height:140px;color:#9b9b9b; position:fixed;top:40%;z-index:1200;background:url(../img/icon_loading.png) top center no-repeat;width:100%;height:140px;margin:auto auto;">请稍候...</div>');
+							},
 							success:function(res){
-								console.log(res);
 								if(res.code == 200){
 									//成功之后做的处理
-									
+									mui.openWindow({
+										url:'successfulBooking.html',
+										id:'suc_book',
+									})
 								}else{
 									mui.alert(res.msg,'系统提示','确定',null);
 								}
 							},complete:function(xhr, status){
 								ajaxSubmit_off = false;
+								$$("#pload").remove();
 							}
 						})
 					}

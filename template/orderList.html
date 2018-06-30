@@ -43,8 +43,85 @@
 				    <p class="cancel unpay" style="display: none;"><button>待支付</button></p>
 				</div>
 			</div>
+			
+			
 		</div>
 	    <script src="../js/mui.min.js"></script>
-		<script src="../js/orderList.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
+		<script>
+			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMzI0ODE0LCJleHAiOjE1MzAzNjA4MTQsIm5iZiI6MTUzMDMyNDgxNCwianRpIjoicmREZm9QSGE4elBNQ0w1ayJ9.kUYHgXygsSeUbAyfeKiBZJPoVcLMECezdwRkWxp0rzI';
+			(function($){
+				mui.init();
+				function timestampToTime(timestamp,type) {
+			        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			        Y = date.getFullYear() + '-';
+			        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+			        D = date.getDate() + ' ';
+			        h = date.getHours() + ':';
+			        m = date.getMinutes() < 10 ? '0'+ date.getMinutes() : date.getMinutes();
+			        s = date.getSeconds();
+			        if(type == 'toDay'){
+			        	return Y+M+D;
+			        }else if(type == 'toMinute' ){
+			        	return h+m;
+			        }else if(type == ''){
+			        	return Y+M+D+h+m;
+			        }
+			    }
+			   
+				
+				mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
+					dataType:'json',
+					type:'get',
+					success:function(res){
+//						console.log(res.data);
+//						console.log(res.data.success);
+//						console.log(res.data.runing);
+						if(res.code == 200){
+							var success = res.data.success;
+							var runing = res.data.runing;
+							var html_ = '';
+							//循环数组,判断不同条件下的显示情况，自定义属性在各个项目上，需要把一些参数传到下一个页面
+							$.each(runing,function(key,value){
+								console.log(value);
+								var startTime = timestampToTime(value.start_time,''),startTime_mini = timestampToTime(value.start_time,'toMinute');
+								var endTime = timestampToTime(value.end_time,'toMinute'), Period = timestampToTime(value.start_time,'toDay');
+								var xx = timestampToTime(value.start_time,'toMinute')
+								console.log(xx);
+								html_+='<div class="order-nav">'+
+											'<div class="order-text">'+
+												'<a href="#" class="item-box">'+
+													'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
+													'<span class="item-title">'+value.park_name+'</span>'+
+											   '</a>'+
+											'</div>'+
+											'<div class="order-time">'+
+												'<p class="time place-time">'+
+													'<span>下单时间:</span>'+
+													'<span>'+startTime+'</span>'+
+												'</p>'+
+												'<p class="time out-time">'+
+													'<span>预约时段:</span>'+
+													'<span>2018.5.20</span>'+
+													'<span>16:45-17:45</span>'+
+												'</p>'+
+											'</div>'+
+											'<div class="order-state">'+
+												'<p class="unexecuted">未执行</p>'+
+												'<p class="unexecuted executed" style="display: none;">已执行</p>'+
+												'<p class="finished" style="display: none;">已完成</p>'+
+												'<p class="cancel"><button>取消订单</button></p>'+
+											    '<p class="cancel unpay" style="display: none;"><button>待支付</button></p>'+
+											'</div>'+
+										'</div>';
+							})
+						}else{
+							mui.alert(res.msg,'系统提示','确定',null);
+						}
+					}
+				})
+			})(jQuery)
+		</script>
 	</body>
 </html>
