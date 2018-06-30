@@ -17,7 +17,7 @@
 		<div class="park-header">
 		    <div class="mipark-top">
 		      	   <div class="Headportrait"></div>
-		      	   <div class="information" v-show="islogin">
+		      	   <div class="information" v-show="islogin" :data-id="id">
 		      	   	 <span class="person_W">{{userName}}</span>
 		      	     <span class="ewallet">信用值:{{num}}</span>
 		      	   </div>
@@ -27,7 +27,7 @@
 		    </div>
 		</div>
 		<div class="park-nav">
-			<a href="wallet.html" class="item-box">
+			<a href="wallet.html" class="item-box" :data-wallet="wallet">
 				<span class="item-icon"><img src="../img/wdqb.png"></span>
 				<span class="item-title">我的钱包</span>
 			</a>
@@ -57,13 +57,33 @@
 			</a>
 		</div>
 	</div>
+	<script src="../js/mui.min.js"></script>
+    <script src="../js/my.js"></script>
+	<script src="../js/app.js"></script>
+	<script src="../js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript">
 		var vm = new Vue({
 			el:'.mui-content',
 			data:{
 				islogin:false,
 				userName:'',
-				num:0
+				num:0,
+				id:'',
+				wallet:'',
+				token : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMjM3MTY3LCJleHAiOjE1MzAyNzMxNjcsIm5iZiI6MTUzMDIzNzE2NywianRpIjoiMjhYMG14QlMxT2QzNzdicCJ9.7ARyP8v9vXeE5WEH9sw9aqvRwQPhe4psrsbHxiPGnh8'
+			},
+			created:function(){
+				mui.init();
+				var _this = this;
+				mui.ajax(AJAX_PATH+'/user/info?token='+this.token,{
+					type:'get',
+					dataType:'json',
+					success:function(res){
+						_this.num = res.data.dcc_score;
+						_this.id = res.data.id;
+						_this.wallet = res.data.wallet;
+					}
+				})
 			},
 			methods:{
 				readData:function(){
@@ -83,7 +103,6 @@
 			vm.readData();
 		},false);
 	</script>
-    <script src="../js/mui.min.js"></script>
-    <script src="../js/my.js"></script>
+    
 </body>
 </html>

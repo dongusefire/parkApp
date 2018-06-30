@@ -16,34 +16,82 @@
 	    <h1 class="mui-title">万科停车场</h1>
 	</header>
 	<div class="mui-content g-content">
-		<div class="vehicle-list parkingArea">
-			<div class="vehicle-box">
-				<div class="vehicle-tbar">
-					<span class="mui-left parking-name">A栋2层</span>
-				</div>
-				<div class="vehicle-b">
-					<span>负二层</span><span>负二层</span><span>负二层</span>
-				</div>
-			</div>
-		</div>
+		<div class="vehicle-list parkingArea"></div>
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/my_vehicle.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-1.11.2.min.js"></script>
     <script>
-    	var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMTY5MTIwLCJleHAiOjE1MzAyMDUxMjAsIm5iZiI6MTUzMDE2OTEyMCwianRpIjoicklmUEJkVDcxb1FUamw0cSJ9.yneZ_f35PdMRxZP9XnquBRHXofNDRzetjh2zovMVLDc';
-		var Park_lot_num = '11010200001';
+    	var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMzI0ODE0LCJleHAiOjE1MzAzNjA4MTQsIm5iZiI6MTUzMDMyNDgxNCwianRpIjoicmREZm9QSGE4elBNQ0w1ayJ9.kUYHgXygsSeUbAyfeKiBZJPoVcLMECezdwRkWxp0rzI';
+		var park_lot_num = '11010200001';
     	mui.init();
     	mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
     		data:{
     			"park_lot_num":park_lot_num
     		},
     		type:'get',
-    		dataTypeL:'json',
+    		dataType:'json',
     		success:function(res){
-    			console.log(res);
+    			if(res.code==200){
+    				var data = res.data.park_bf_info;
+	    			for(var i in data){
+	    				var list_ ='';
+	    				$.each(data[i],function(key,value){
+	    					var text = '地上';
+	    					var text2 = '';
+	    					if(value[0]!='0'){
+	    						text = '地下';
+	    					};
+	    					if(value[2]==1){
+	    						text2 = '夹层' 
+	    					};
+	    					list_ += '<span data-floor="'+value+'" class="floor">'+text+value[1]+'层'+text2+'</span>';
+	    					
+	    				});
+	    				var _html = '<div class="vehicle-box">'+
+	    							'<div class="vehicle-tbar">'+
+										'<span class="mui-left parking-name">'+i+'栋</span>'+
+									'</div>'+
+									'<div class="vehicle-b" data-build="'+i+'">'+list_+
+									'</div>'+
+									'</div>';
+						$('.parkingArea').append(_html);
+						//设置数据
+						
+	    			}
+    			}else{
+    				mui.alert(res.msg,'系统提示','确定',null);
+    			}
     		}
     	})
+ 		
+    	$('.parkingArea').on('click','.floor',function(){
+    		//获取楼层信息
+    		var floor = this.getAttribute('data-floor');
+    		var vehicle_b = this.parentNode;
+    		//获取楼栋信息
+    		var build = vehicle_b.getAttribute('data-build');
+    		console.log(build);
+			//数据请求
+			mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
+	    		data:{
+	    			"park_lot_num":park_lot_num,
+	    			"p_b_num":build,
+	    			"p_b_floor":floor
+	    		},
+	    		type:'get',
+	    		dataTypeL:'json',
+	    		success:function(res){
+	    			//设置信息，带到下一个页面的信息有停车场编号，p_b_num,p_b_floor,p_b_area,
+	    			var p_b_area = res.data.park_aSn_info;
+	    			mui.openWindow({
+	    				
+	    			})
+	    		}
+	    	})
+
+		})
     </script>
 </body>
 </html>

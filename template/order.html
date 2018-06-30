@@ -15,7 +15,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
-			<a href="carportShare.html" class="mui-pull-right optional">自选车位</a>
+			<a class="mui-pull-right optional">自选车位</a>
 			<h1 class="mui-title">预定车位</h1>
 		</header>
 		<div class="mui-content">
@@ -29,7 +29,7 @@
 		    	<div class="select carNo">
 		    		<span class="label">车牌号:</span>
 		    		<div>
-		    			<span class="details" id="showCarno"></span>
+		    			<span class="details" id="showCarno" data-id=""></span>
 		    			<span class="mui-icon mui-icon-arrowright"></span>
 		    		</div>
 		    	</div>
@@ -37,7 +37,7 @@
 		    	<div class="select">
 		    		<span class="label">入场时间:</span>
 		    		<div>
-		    			<span class="time" id="showStartime" data-options='{"value":"2018-10-10 10:10","beginYear":2010,"endYear":2020}'>2018-06-13 10:10</span>
+		    			<span class="time" id="showStartime">请选择开始时间</span>
 		    			<span class="mui-icon mui-icon-arrowright"></span>
 		    		</div>
 		    	</div>
@@ -46,7 +46,7 @@
 		    	<div class="select">
 		    		<span class="label">出场时间:</span>
 		    		<div>
-		    			<span class="time" id="showEndtime" data-options='{"value":"2018-06-12 10:10","beginYear":2017,"endYear":2020}'>2018-06-13 10:10</span>
+		    			<span class="time" id="showEndtime">请选择结束时间</span>
 		    			<span class="mui-icon mui-icon-arrowright"></span>
 		    		</div>
 		    	</div>
@@ -58,7 +58,7 @@
 		    </div>
 		    <div class="fee">
 		    	<span class="tcf">停车费:</span><span class="num">12</span>
-		    	<button class='reserve'>立即预定</button>
+		    	<button class='reserve' id='reserve'>立即预定</button>
 		    </div>
 		</div>
 		<script src="../js/mui.min.js"></script>
@@ -68,19 +68,66 @@
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
-			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMTY5MTIwLCJleHAiOjE1MzAyMDUxMjAsIm5iZiI6MTUzMDE2OTEyMCwianRpIjoicklmUEJkVDcxb1FUamw0cSJ9.yneZ_f35PdMRxZP9XnquBRHXofNDRzetjh2zovMVLDc';
-			var Park_lot_num = '11010200001';
+			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMjYzOTM3LCJleHAiOjE1MzAyOTk5MzcsIm5iZiI6MTUzMDI2MzkzNywianRpIjoiaVVyZnBtVWNoS2ttNkpnaCJ9.qLtGB1tddBdM2xoNVnBJNTxZ-uhqXt9Xdn5PYfyVkVo';
+			var Park_lot_num = '11010200003';
+			var that = this;
 			(function($,doc,$$){
 				$.init();
+				//获取当前时间
+				function p(s) {
+				    return s < 10 ? '0' + s: s;
+				}
+				var myDate = new Date();
+				//获取当前年
+				var year=myDate.getFullYear();
+				//获取当前月
+				var month=myDate.getMonth()+1;
+				//获取当前日
+				var date=myDate.getDate(); 
+				var h=myDate.getHours();       //获取当前小时数(0-23)
+				var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+				var m2=myDate.getMinutes()+15; 
+				var s=myDate.getSeconds();  
+				var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
+				//获取时间差
+				function GetDateDiff(startTime, endTime, diffType) {
+					  startTime = startTime.replace(/\-/g, "/");
+					  endTime = endTime.replace(/\-/g, "/");
+					  //将计算间隔类型字符串转换为小写
+					  diffType = diffType.toLowerCase();
+					  var sTime = new Date(startTime); //开始时间
+					  var eTime = new Date(endTime); //结束时间
+					  //作为除数的数字
+					  var divNum = 1;
+					  switch (diffType) {
+					    case "second":
+					      divNum = 1000;
+					      break;
+					    case "minute":
+					      divNum = 1000 * 60;
+					      break;
+					    case "hour":
+					      divNum = 1000 * 3600;
+					    case "day":
+					      divNum = 1000 * 3600 * 24;
+					      break;
+					    default:
+					      break;
+					  }
+					  return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+					}
+				
+				
 				$.ready(function(){
 					//车位信息获取
-					mui.ajax(AJAX_PATH+'/parking/list?token='+token,{
+					mui.ajax(AJAX_PATH+'/parking/time_list/c?token='+token,{
 						data:{
 							"park_lot_num":Park_lot_num
 						},
 						dataType:'json',
 						type:'get',
 						success:function(res,status,xhr){
+							console.log(res);
 							if( res.code== '200'){
 								if(res.data == ''){
 									mui.alert('请添加车辆','系统提示','确定',function(){
@@ -101,16 +148,16 @@
 									//这里设置默认车牌号
 									var data = res.data.userCar_info;
 									$$.each(data,function(name,value){
-										console.log(value);
 										if(value.default == 1){
 											//设置默认车辆
 											$$('.details').html(this.car_number);
+											$$('.details').attr('data-id',this.car_id);
 										}else{
 											$$('.details').html(data[0].car_number);
+											$$('.details').attr('data-id',data[0].car_id);
 										}
 									})
 									//这里填充picker的数据
-									console.log(data);
 									var picker_data = [];
 									for(let i=0;i<data.length;i++){
 										picker_data.push({value:data[i].car_id,text:data[i].car_number});
@@ -128,6 +175,7 @@
 					showCarno.addEventListener('tap',function(event){
 						carnoPicker.show(function(items){
 							showCarno.innerHTML = items[0].text;
+							showCarno.setAttribute('data-id',items[0].value);
 						})
 					},false);
 					
@@ -138,13 +186,16 @@
 							var _self = this;
 							if(_self.picker){
 								_self.picker.show(function(rs){
-									_self.innerHTML=res.text;
+									_self.innerHTML=rs.text;
 									_self.picker.dispose();
 									_self.picker = null;
 								});
 							}else{
-								var optionsJson = this.getAttribute('data-options')||'{}';
-								var options = JSON.parse(optionsJson);
+								var options = {
+									"value":"",
+									"beginYear":year,
+									"endYear":year
+								}
 								var id = this.getAttribute('id');
 								/*
 								 *首次显示实例化组件
@@ -160,6 +211,54 @@
 							}
 						},false);
 					})
+				});
+				
+				//预定部分
+				var ajaxSubmit_off = false;
+				mui('.mui-content').on('tap','.reserve',function(){
+					//计算时间差，并验证
+					var time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html(),time3 = now;
+					var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
+					if(TimeDifference < 15){
+						mui.alert('结束时间必须大于起始时间15分钟以上','系统提示','确定',null);
+						return false;
+					}
+					if(diff2 <= 0){
+						mui.alert('起始时间必须大于当前时间1分钟以上','系统提示','确定',null);
+						return false;
+					}
+					//2.组织数据
+					var carId = $$('.details').attr('data-id');
+					var jsonData = {
+							"type":"0",
+							"start":time1, //开始时间
+							"end":time2, //结束时间
+							"parking_lot_num":Park_lot_num,
+							"car_id":carId, //上个接口获取到的car_id
+							"park_space_id":""
+					};
+					jsonData = JSON.stringify(jsonData);
+					//3.发送预定请求
+					if(!ajaxSubmit_off){
+						ajaxSubmit_off = true;
+						mui.ajax(AJAX_PATH+'/user/reserve?token='+token,{
+							type:'post',
+							dataType:'json',
+							data:jsonData,
+							success:function(res){
+								console.log(res);
+								if(res.code == 200){
+									//成功之后做的处理
+									
+								}else{
+									mui.alert(res.msg,'系统提示','确定',null);
+								}
+							},complete:function(xhr, status){
+								ajaxSubmit_off = false;
+							}
+						})
+					}
+					
 				});
 			})(mui,document,jQuery);
 			
