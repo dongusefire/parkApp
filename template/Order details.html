@@ -20,7 +20,7 @@
 	</header>
 	<div class="mui-content">
 		<div class="mui-main">
-			<div class="mui-details">
+			<!--<div class="mui-details">
 				<div class="name">
 		    		<span class='big'>万科停车场</span><a href="" class="price">详情&nbsp;>
 		    	</div>
@@ -45,45 +45,96 @@
 					<span class="state-time">离场时间:</span>
 					<span class="date-time">2018.5.20&nbsp;16:45</span>
 				</p>
-			</div>
+			</div>-->
 	    </div>
 	    <div class="Parking-Rate">
-				<p class="park-rate">停车费:<span>12</span></p>
+				<!--<p class="park-rate">停车费:<span>12</span></p>-->
 	    </div>
 	    <div class="state-btn">
-	    	<p class="cancel">取消订单</p>
-	    	<p class="Nav">导航</p>
+	    	<!--<p class="cancel">取消订单</p>
+	    	<p class="Nav">导航</p>-->
 	    </div>
 	</div>
 	<div class="Remarks">
-		<p class="mark-o">备注：</p>
-		<p>这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容</p>
+		<!--<p class="mark-o">备注：</p>
+		<p>这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容</p>-->
 	</div>
 	  <script src="../js/jquery-1.11.2.min.js"></script>
 	  <script src="../js/mui.min.js"></script>
 	  <script src="../js/app.js"></script>
 		<script type="text/javascript">
 			var park_id = 22;
-//			order_num = 2018062715054084;
+			order_num = "20180619082642737";
 			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI0LCJpc3MiOiJodHRwOi8vdC5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE1MzAzNDIxMjEsImV4cCI6MTUzMDM3ODEyMSwibmJmIjoxNTMwMzQyMTIxLCJqdGkiOiJBQ0RmTVdxdzAzRVRKTWp3In0.IeukiXeOT6FO3AmrYGVlAlxlgf9omxSisyBmUI96qW4';
 			(function($){
-				console.log(2311)
 				$('.state-btn p').click(function(){
 					$(this).addClass('active').siblings().removeClass('active');
 				});
-				
+				var html_ = '';
+				var fixed = '';
+				var fee = '';
+				var manage = '';
 				mui.ajax(AJAX_PATH+'/user/order/detail?token='+token,{
 					type:'get',
 					dataType:'json',
 					data:{
 						"park_id":park_id,
-						"order_num":'20180619082642737'
+						"order_num":order_num
 					},
 					success:function(res){
 						console.log(res);
 						if(res.code == 200){
 							//逻辑操作
-							
+							var park_info = res.data.park_info[0];
+							var order_info = res.data.order_info[0];
+							if(order_info.flag == 'D'){
+								fixed = '固定'
+							}else if(order_info.flag == 'C'){
+								fixed = '不固定'
+							}
+							html_+= '<div class="mui-details">'+
+										'<div class="name">'+
+								    		'<span class="big">'+park_info.parking_lot_name+'</span>'+
+								    		'<a data-id="'+park_info.id+'" class="price">详情&nbsp;></a>'+
+								    	'</div>'+
+								    	'<p class="address"><img src="../img/Page1.png"/>'+park_info.parking_lot_address+'</p>'+
+								    	'<p class="num">车位： <span class="occupied">'+fixed+'</span>'+
+								    	'</p>'+
+									'</div>'+
+									'<div class="car-num">'+
+										'<p class="plate-num">车牌号：<span style="color:#666666">'+order_info.car_num+'</span></p>'+
+									'</div>'+
+									'<div class="park-time">'+
+										'<p class="time lower-time">'+
+											'<span class="state-time">下单时间:</span>'+
+											'<span class="date-time">'+order_info.submit_time+'</span>'+
+										'</p>'+
+										'<p class="time in-time">'+
+											'<span class="state-time">入场时间:</span>'+
+											'<span class="date-time"s>2018.5.20&nbsp;16:45</span>'+
+										'</p>'+
+										'<p class="time out-time">'+
+											'<span class="state-time">离场时间:</span>'+
+											'<span class="date-time">2018.5.20&nbsp;16:45</span>'+
+										'</p>'+
+									'</div>';
+								fee+= '<p class="park-rate">停车费:<span>'+order_info.pay_amount+'</span></p>';
+								//订单状态判断
+								if(order_info.order_status==5||order_info.order_status==6||order_info.order_status==7){
+									manage+='<p class="cancel">删除订单</p>';
+								}else if(order_info.order_status==1){
+									manage+='<p class="cancel">取消订单</p>'+
+											'<p class="Nav">支付</p>';
+								}else if(order_info.order_status==2){
+									manage+='<p class="cancel">取消订单</p>'+
+	    									'<p class="Nav">导航</p>';
+								}else if(order_info.order_status==3){
+									manage+='';
+								}
+								//添加dom
+								$('.mui-main').append(html_);
+								$('.Parking-Rate').append(fee);
+								$('.state-btn').append(manage);
 						}else{
 							mui.alert(res.msg,'系统提示','确定',null);
 						};
