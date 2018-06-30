@@ -13,6 +13,7 @@ document.getElementById('openLogin').addEventListener('tap',function(){
 },false);
 mui('.park-nav').on('tap','a',function(){
 	var href = this.getAttribute('href');
+	var token = plus.storage.getItem('token');
 	//非plus环境，直接走href跳转
 	if(!mui.os.plus) {
 		location.href = href;
@@ -21,8 +22,18 @@ mui('.park-nav').on('tap','a',function(){
 	if(href=='#'){
 		return false;
 	};
+	//判断要跳转的页面是否需要登录才能跳转
+//	if(href.indexOf('setting')!=-1){
+//		if(token || token==''){
+//			login();
+//			return false;
+//		};
+//	};
 	var options = {
 		styles:{
+			bottom:0,
+			top:0,
+			width:'100%',
 			popGesture: "close",
 			statusbar:{
 				background:"#fff" 

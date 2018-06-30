@@ -49,7 +49,8 @@ mui.ajaxSettings.beforeSend = function(xhr, setting) {
 mui.ajaxSettings.complete = function(xhr, status) {
 	console.log('complete:' + status,xhr);
 	if(xhr.response&&xhr.response!=''){
-		var res = JSON.parse(xhr.response);
+		console.log(xhr.response)
+		var res = mui.parseJSON(xhr.response);
 		if(res.code==502 || res.code==503){
 			login('登录已过期')
 		};

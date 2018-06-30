@@ -15,6 +15,7 @@ var home = {
 		var _this=this;
 		this.map.getUserLocation(function(state, point){ //获取用户的当前位置信息
 			if( 0 == state ){
+				console.log(JSON.stringify(point))
 				_this.point={
 					lng:point.longitude,
 					lat:point.latitude
@@ -175,8 +176,7 @@ var home = {
 				if(res.code==200){
 					_this.list = res.data.list;
 					_this.createParking();
-					
-					//触发列表页面的数据更新
+					//初始化列表页的数据
 					mui.fire(plus.webview.getWebviewById('parking.html'),'readData',{
 					    data:res,
 					    point:point

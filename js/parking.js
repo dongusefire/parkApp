@@ -23,6 +23,7 @@ var vm = new Vue({
 		},
 		getParking:function(sort){
 			var _this= this;
+			console.log(this.point)
 			mui.ajax(AJAX_PATH+'/parkinglot/search',{
 				data:{
 					"longitude":this.point.longitude,
@@ -46,7 +47,7 @@ var vm = new Vue({
 	}
 });
 window.addEventListener('readData',function(event){
-  vm.readData(event.detail.data);
+  vm.readData(event.detail.data,event.detail.point);
 });
 //点击返回按钮，隐藏当前webview
 document.getElementById('hideView').addEventListener('tap',function(){

@@ -57,7 +57,7 @@
 		    	<p>欢迎使用，请您在选择车位时确认好选择时间，车牌号等信息，以确保预定信息准确提交<p>
 		    </div>
 		    <div class="fee">
-		    	<span class="tcf">停车费:</span><span class="num">12</span>
+		    	<span class="tcf">停车费:</span><span class="num" id="num"></span>
 		    	<button class='reserve' id='reserve'>立即预定</button>
 		    </div>
 		    
@@ -69,9 +69,13 @@
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
-			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMzI0ODE0LCJleHAiOjE1MzAzNjA4MTQsIm5iZiI6MTUzMDMyNDgxNCwianRpIjoicmREZm9QSGE4elBNQ0w1ayJ9.kUYHgXygsSeUbAyfeKiBZJPoVcLMECezdwRkWxp0rzI';
-			var Park_lot_num = '20050090005';
+			//获取创建当前窗口的webview对象
+			var ws = plus.webview.currentWebview();
+			var token = plus.storage.getItem('token');
+			ws.parking_lot_num = 11010200003;
+			var Park_lot_num = ws.parking_lot_num
 			var that = this;
+			
 			(function($,doc,$$){
 				$.init();
 				//获取当前时间
@@ -90,6 +94,7 @@
 				var m2=myDate.getMinutes()+15; 
 				var s=myDate.getSeconds();  
 				var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
+				var parkPrice = 0;
 				//获取时间差
 				function GetDateDiff(startTime, endTime, diffType) {
 					  startTime = startTime.replace(/\-/g, "/");
@@ -146,6 +151,7 @@
 										    	'<p class="address"><img src="../img/Page1.png"/>'+_data.parking_lot_address+'</p>'+
 										    	'<p class="num">车位： <span class="occupied">'+_data.free_number +'</span>/'+_data.number+'</p>';
 									$$('.siteInfo').append(_html);
+									parkPrice = _data.price;
 									//这里设置默认车牌号
 									var data = res.data.userCar_info;
 									$$.each(data,function(name,value){
@@ -208,12 +214,35 @@
 									_self.innerHTML=rs.text;
 									_self.picker.dispose();
 									_self.picker = null;
+									
+									//计算停车时长
+									var time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
+									if(time1!='' && time2!=''){
+										var timeDifference = GetDateDiff(time1, time2, "minute");
+										var bookPrice = parkPrice;
+									    var Difference = Math.ceil(timeDifference / 60);
+									    var bookFee = bookPrice * Difference;
+									    $$('#num').html((bookFee / 100).toFixed(2))
+									};
 								})
 							}
 						},false);
 					})
 				});
-				
+				$$('.optional').click(function(){
+					var options = {
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							parking_lot_num:Park_lot_num
+						}
+					};
+					mui.openWindow("parkingArea.html","parkingArea.html",options);
+				});
 				//预定部分
 				var ajaxSubmit_off = false;
 				mui('.mui-content').on('tap','.reserve',function(){

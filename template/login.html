@@ -25,7 +25,7 @@
 				<label for="">验证码</label>
 				<input type="number" id="code" placeholder="请输入验证码"/>
 			</div>
-			<p class="explain">手机号登录时代表您已同意<span>《用户协议》</span></p>
+			<p class="explain">手机号登录时代表您已同意<span id="openPro">《用户协议》</span></p>
 			<button type="button" class="submit">登 录</button>
 		</div>
 		<script src="../js/mui.min.js"></script>
@@ -72,6 +72,16 @@
 					});
 				};
 			});
+			mui('#login-box').on('tap','#openPro',function(){
+				mui.openWindow("protocol.html","protocol.html",{
+					styles:{
+						popGesture: "close",
+						statusbar:{
+							background:"#fff" 
+						}
+					}
+				});
+			});
 			mui('#login-box').on('tap','.submit',function(){
 				var code = mui('#code')[0].value;
 				var phone_number = mui('#phone_number')[0].value;
@@ -110,7 +120,7 @@
 						}
 					});
 				};
-				});
+			});
 		</script>
 	</body>
 

@@ -20,11 +20,12 @@
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
-    <script src="../js/my_vehicle.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/jquery-1.11.2.min.js"></script>
     <script>
-    	var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMzI0ODE0LCJleHAiOjE1MzAzNjA4MTQsIm5iZiI6MTUzMDMyNDgxNCwianRpIjoicmREZm9QSGE4elBNQ0w1ayJ9.kUYHgXygsSeUbAyfeKiBZJPoVcLMECezdwRkWxp0rzI';
-		var park_lot_num = '11010200001';
+    	//获取创建当前窗口的webview对象
+		var ws = plus.webview.currentWebview();
+    	var token = plus.storage.getItem('token');
+		var park_lot_num = ws.parking_lot_num;
     	mui.init();
     	mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
     		data:{
@@ -72,7 +73,6 @@
     		var vehicle_b = this.parentNode;
     		//获取楼栋信息
     		var build = vehicle_b.getAttribute('data-build');
-    		console.log(build);
 			//数据请求
 			mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
 	    		data:{
@@ -84,9 +84,25 @@
 	    		dataTypeL:'json',
 	    		success:function(res){
 	    			//设置信息，带到下一个页面的信息有停车场编号，p_b_num,p_b_floor,p_b_area,
-	    			var p_b_area = res.data.park_aSn_info;
+	    			var p_b_area = [];
+	    			for(var item in res.data.park_aSn_info){
+	    				p_b_area.push(item);
+	    			};
 	    			mui.openWindow({
-	    				
+	    				url:"parking-spaces.html",
+	    				id:"parking-spaces.html",
+	    				styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+	    				extras:{
+	    					p_b_num:build,
+	    					p_b_floor:floor,
+	    					park_lot_num:park_lot_num,
+	    					p_b_area:p_b_area
+	    				}
 	    			})
 	    		}
 	    	})
