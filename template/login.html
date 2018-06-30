@@ -92,6 +92,7 @@
 						dataType:'json',
 						type:'POST',
 						success:function(res,textStatus,xhr){
+							ajaxSubmit_off = false;
 							console.log(res);
 							if(res.code==200){
 								plus.storage.setItem('phone_number',phone_number);
@@ -106,9 +107,6 @@
 							}else{
 								mui.alert(res.msg,'系统提示','确定',null);
 							};
-						},
-						complete:function(xhr, status){
-							ajaxSubmit_off = false;
 						}
 					});
 				};

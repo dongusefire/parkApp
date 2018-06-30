@@ -21,6 +21,22 @@ function smsSend(phone,type,resCallback,completeCallback){
 		}
 	});
 };
+function login(str){
+	if(str || str==''){
+		str='尚未登录或登录已过期';
+	};
+	mui.alert(str,'系统提示','去登录',function(){
+		mui.openWindow('login.html','login.html',{
+			styles:{
+				popGesture: "close", //popGesture窗口的侧滑返回功能。可取值"none"：无侧滑返回功能；"close"：侧滑返回关闭Webview窗口；"hide"：侧滑返回隐藏webview窗口
+				statusbar:{  //statusbar窗口状态栏样式。仅在应用设置为沉浸式状态栏样式下有效，设置此属性后将自动保留系统状态栏区域不被Webview窗口占用。http://www.dcloud.io/docs/api/zh_cn/webview.html#plus.webview.WebviewStatusbarStyles
+					background:"#fff" 
+				}
+			},
+			extras:{}
+		});
+	});
+};
 //设置ajax全局的beforeSend
 mui.ajaxSettings.beforeSend = function(xhr, setting) {
 	if(!isNetwork){
@@ -31,5 +47,11 @@ mui.ajaxSettings.beforeSend = function(xhr, setting) {
 };
 //设置ajax全局的complete
 mui.ajaxSettings.complete = function(xhr, status) {
-	console.log('complete:' + status);
+	console.log('complete:' + status,xhr);
+	if(xhr.response&&xhr.response!=''){
+		var res = JSON.parse(xhr.response);
+		if(res.code==502 || res.code==503){
+			login('登录已过期')
+		};
+	};
 };
