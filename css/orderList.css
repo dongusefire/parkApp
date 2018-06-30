@@ -3,6 +3,8 @@
 }
 .order-nav{
 	margin:5px 10px;
+	border-radius: 8px;
+	overflow: hidden;
 }
 .order-nav .order-text{
 	background: #ffffff;
@@ -20,14 +22,22 @@
 	color:#3b3b3b;
 	padding-left: 4px;
 }
+.order-nav .order-text .pay {
+	margin-right: 10px;
+}
 .order-nav .order-time{
-	padding:21px 0 15px 14px;
+	padding:10px 0 0 14px;
 	background: #f8f8f8;
 }
 .order-time .time span{
 	font-size:13px;
 	color:#333333;
 }
+.order-time .amount {
+	font-size: 14px;
+	color: #292929;
+	letter-spacing: 0;
+} 
 .order-state{
 	height:58px;
 	background: #fff;
@@ -64,6 +74,35 @@
 	border-radius: 50px;
 }
 .order-state .cancel.unpay button{
-	color:#fff;
-	background: #3883fd;
+	/*color:#fff;
+	background: #3883fd;*/
+	background-color: #fff;
+	color: #087CFD;
+	border-color: #087CFD;
+}
+.trans-box {
+	margin-top: 50px;
+}
+.choose {
+	position: fixed;
+	top:50px;
+	width: 100%;
+	height: 44px;
+	background-color: #fff;
+}
+.choose li {
+	width: 33.3%;
+	float: left;
+	text-align: center;
+	line-height: 40px;
+	font-size: 14px;
+	color: #333333;
+	letter-spacing: 0;
+}
+.choose li span {
+	display: inline-block;
+	line-height: 41px;
+}
+.choose li span.active {
+	border-bottom: 3px solid #087CFD;
 }

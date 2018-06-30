@@ -60,12 +60,36 @@
 		<p>这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容这里是温备注内容</p>
 	</div>
 	  <script src="../js/jquery-1.11.2.min.js"></script>
+	  <script src="../js/mui.min.js"></script>
+	  <script src="../js/app.js"></script>
 		<script type="text/javascript">
-			$(function(){
+			var park_id = 22;
+//			order_num = 2018062715054084;
+			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI0LCJpc3MiOiJodHRwOi8vdC5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE1MzAzNDIxMjEsImV4cCI6MTUzMDM3ODEyMSwibmJmIjoxNTMwMzQyMTIxLCJqdGkiOiJBQ0RmTVdxdzAzRVRKTWp3In0.IeukiXeOT6FO3AmrYGVlAlxlgf9omxSisyBmUI96qW4';
+			(function($){
+				console.log(2311)
 				$('.state-btn p').click(function(){
 					$(this).addClass('active').siblings().removeClass('active');
+				});
+				
+				mui.ajax(AJAX_PATH+'/user/order/detail?token='+token,{
+					type:'get',
+					dataType:'json',
+					data:{
+						"park_id":park_id,
+						"order_num":'20180619082642737'
+					},
+					success:function(res){
+						console.log(res);
+						if(res.code == 200){
+							//逻辑操作
+							
+						}else{
+							mui.alert(res.msg,'系统提示','确定',null);
+						};
+					}
 				})
-			})
+			})(jQuery)
 		</script>
 	</body>
 
