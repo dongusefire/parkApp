@@ -44,7 +44,6 @@
 				
 			},
 			created:function(){
-				
 				this.getData(1);
 			},
 			methods:{
@@ -52,18 +51,17 @@
 					var jsonData = JSON.stringify({
 							"park_lot_num":ws.park_lot_num,
 							"p_b_num":ws.p_b_num,
-							"p_b_ﬂoor":ws.p_b_floor,
+							"p_b_f":ws.p_b_floor,
 							"p_b_area":ws.p_b_area[0],
 							"page":num,
 							"size":20
 					});
-					console.log(jsonData)
 					mui.ajax(AJAX_PATH+'/parking/self/list?token='+token,{
 						data:jsonData,
 						dataType:'json',
 						type:'get',
 						success:function(res,textStatus,xhr){
-							alert(23232)
+							alert(111)
 							if(res.code==200){
 								console.log(res,232323);
 							}else if(res.code!=502 && res.code!=503){

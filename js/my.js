@@ -23,12 +23,12 @@ mui('.park-nav').on('tap','a',function(){
 		return false;
 	};
 	//判断要跳转的页面是否需要登录才能跳转
-//	if(href.indexOf('setting')!=-1){
-//		if(token || token==''){
-//			login();
-//			return false;
-//		};
-//	};
+	if(href.indexOf('setting')!=-1){
+		if(token || token==''){
+			login();
+			return false;
+		};
+	};
 	var options = {
 		styles:{
 			bottom:0,

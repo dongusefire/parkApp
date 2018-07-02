@@ -15,7 +15,17 @@ var vm = new Vue({
 	},
 	methods:{
 		openView:function(){
-			mui.openWindow('add_vehicle.html','add_vehicle.html')
+			mui.openWindow('add_vehicle.html','add_vehicle.html',{
+				styles:{
+					bottom:0,
+					top:0,
+					width:'100%',
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				}
+			})
 		},
 		readData:function(){
 			var _this = this;
