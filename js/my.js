@@ -20,15 +20,16 @@ mui('.park-nav').on('tap','a',function(){
 		return;
 	}
 	if(href=='#'){
+		mui.alert('敬请期待','系统提示','确定',null)
 		return false;
 	};
 	//判断要跳转的页面是否需要登录才能跳转
-	if(href.indexOf('setting')!=-1){
-		if(token || token==''){
-			login();
-			return false;
-		};
-	};
+//	if(href.indexOf('setting')!=-1){
+//		if(token || token==''){
+//			login();
+//			return false;
+//		};
+//	};
 	var options = {
 		styles:{
 			bottom:0,
