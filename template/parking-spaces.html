@@ -32,12 +32,14 @@
 		</div>
 	</div>
     <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-1.11.2.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		mui.init();
+		var html_ = '';
 		var ws = plus.webview.currentWebview();
     	var token = plus.storage.getItem('token');
-    	alert(token)
+		var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI0LCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwNDk2ODE5LCJleHAiOjE1MzA1MzI4MTksIm5iZiI6MTUzMDQ5NjgxOSwianRpIjoid2dWNFhjQzNQaEFGTmxiRyJ9.vnX-7X5FbxDn5oFNCDr7Xdk3FhXDpxE-3gCjjwfEgwA';
 		var vm = new Vue({
 			el:'.mui-content',
 			data:{
@@ -56,14 +58,34 @@
 							"page":num,
 							"size":20
 					});
+					var data = {
+						//固定数据 
+							"park_lot_num":11010200003,
+							"p_b_num":01,
+							"p_b_f":010,
+							"p_b_area":01,
+							"page":num,
+							"size":20
+					}
 					mui.ajax(AJAX_PATH+'/parking/self/list?token='+token,{
-						data:jsonData,
+						data:data,
 						dataType:'json',
 						type:'get',
 						success:function(res,textStatus,xhr){
-							alert(111)
 							if(res.code==200){
-								console.log(res,232323);
+								var park_info = res.data.park_info[0];
+								var list_data = res.data;
+								console.log(park_info);
+								console.log(list_data);
+								$.each(list_data,function(key,value){
+									html_+= '<div class="bor_b">'+
+												'<div class="list-fire">'+
+													'<p class="par">'+park_info.parking_lot_name+'<span>去预定&nbsp;></span></p>'+
+													'<p class="tim">共享时段：<span>2018.06.15 &nbsp;&nbsp;09:00-24:00</span></p>'+
+													'<p class="price">'+park_info.price+'<span>/小时</span></p>'+
+												'</div>'+
+											'</div>';
+								})
 							}else if(res.code!=502 && res.code!=503){
 								mui.alert(res.msg,'系统提示','确定',null);
 							};
