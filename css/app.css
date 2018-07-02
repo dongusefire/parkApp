@@ -24,6 +24,9 @@ img {
 iframe {
 	border:none;
 }
+[v-cloak] {
+	display: none;
+}
 .hidden {
 	display: none;
 }

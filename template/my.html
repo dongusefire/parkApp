@@ -58,9 +58,7 @@
 		</div>
 	</div>
 	<script src="../js/mui.min.js"></script>
-    <script src="../js/my.js"></script>
 	<script src="../js/app.js"></script>
-	<script src="../js/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript">
 		var vm = new Vue({
 			el:'.mui-content',
@@ -70,7 +68,7 @@
 				num:0,
 				id:'',
 				wallet:'',
-				token : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjMwLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMjM3MTY3LCJleHAiOjE1MzAyNzMxNjcsIm5iZiI6MTUzMDIzNzE2NywianRpIjoiMjhYMG14QlMxT2QzNzdicCJ9.7ARyP8v9vXeE5WEH9sw9aqvRwQPhe4psrsbHxiPGnh8'
+				token:plus.storage.getItem('token') 
 			},
 			created:function(){
 				mui.init();
@@ -103,6 +101,6 @@
 			vm.readData();
 		},false);
 	</script>
-    
+    <script src="../js/my.js"></script>    
 </body>
 </html>

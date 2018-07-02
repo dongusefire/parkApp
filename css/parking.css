@@ -51,6 +51,7 @@
 	bottom:0;
 	width:100%;
 	background: #FFFFFF;
+	overflow: auto;
 }
 #parking-list .parking {
 	padding-left: 0;

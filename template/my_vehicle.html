@@ -9,6 +9,7 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/my_vehicle.css"/>
+    <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
@@ -16,38 +17,18 @@
 	    <h1 class="mui-title">我的车辆</h1>
 	</header>
 	<div class="mui-content g-content">
-		<div class="addvehicle"><i>+</i>添加车辆</div>
+		<div class="addvehicle" @click="openView"><i>+</i>添加车辆</div>
 		<div class="vehicle-title">最多可添加5个车牌</div>
 		<div class="vehicle-list">
-			<div class="vehicle-box">
+			<div class="vehicle-box" v-for="(item,index) in items">
 				<div class="vehicle-tbar">
-					<span class="mui-icon mui-icon-trash mui-pull-right"></span>
+					<span class="mui-icon mui-icon-trash mui-pull-right" @click="removeVehicle(index)"></span>
 					<div class="mui-input-row mui-checkbox mui-left">
-					  <label>默认车位</label>
-					  <input name="checkbox1" value="" type="checkbox">
+					  <label>默认车牌</label>
+					  <input name="default" :checked="item.default==1" @change="changeDefault(index)" :value="item.car_id" type="checkbox">
 					</div>
 				</div>
-				<div class="vehicle-b">京 A10086</div>
-			</div>
-			<div class="vehicle-box">
-				<div class="vehicle-tbar">
-					<span class="mui-icon mui-icon-trash mui-pull-right"></span>
-					<div class="mui-input-row mui-checkbox mui-left">
-					  <label>默认车位</label>
-					  <input name="checkbox1" value="" type="checkbox">
-					</div>
-				</div>
-				<div class="vehicle-b">京 A10086</div>
-			</div>
-			<div class="vehicle-box">
-				<div class="vehicle-tbar">
-					<span class="mui-icon mui-icon-trash mui-pull-right"></span>
-					<div class="mui-input-row mui-checkbox mui-left">
-					  <label>默认车位</label>
-					  <input name="checkbox1" value="" type="checkbox">
-					</div>
-				</div>
-				<div class="vehicle-b">京 A10086</div>
+				<div class="vehicle-b">{{item.car_number}}</div>
 			</div>
 		</div>
 	</div>
