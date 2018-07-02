@@ -64,24 +64,14 @@
 			el:'.mui-content',
 			data:{
 				islogin:false,
-				userName:'',
-				num:0,
+				userName:'用户名',
+				num:'0',
 				id:'',
 				wallet:'',
-				token:plus.storage.getItem('token') 
+				token:'' 
 			},
 			created:function(){
 				mui.init();
-				var _this = this;
-				mui.ajax(AJAX_PATH+'/user/info?token='+this.token,{
-					type:'get',
-					dataType:'json',
-					success:function(res){
-						_this.num = res.data.dcc_score;
-						_this.id = res.data.id;
-						_this.wallet = res.data.wallet;
-					}
-				})
 			},
 			methods:{
 				readData:function(){
@@ -91,15 +81,30 @@
 						this.userName = userName;
 						this.islogin = true;
 					};
+					var _this = this;
+					this.token = plus.storage.getItem('token');
+					mui.ajax(AJAX_PATH+'/user/info?token='+this.token,{
+						type:'get',
+						dataType:'json',
+						success:function(res){
+							console.log(25555555);
+							if(res.code == 200){
+								_this.num = res.data.dcc_score;
+								_this.id = res.data.id;
+								_this.wallet = res.data.wallet;
+							}
+						}
+					})
 				}
 			}
 		});
-		document.addEventListener('plusready',function(){
-			vm.readData();
-		},false);
 		window.addEventListener('readData',function(){
 			vm.readData();
 		},false);
+		document.addEventListener('plusready',function(){
+			vm.readData();
+		},false);
+		
 	</script>
     <script src="../js/my.js"></script>    
 </body>

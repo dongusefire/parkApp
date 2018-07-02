@@ -54,10 +54,10 @@
 	font-size:17px;
 	color:#3b3b3b;
 }
-.space-list .list-fire .par span{
+.space-list .list-fire  .toOrder{
 	float: right;
 	font-size:13px;
-	 color:#087cfd;
+	color:#087cfd !important;
 }
 .space-list .list-fire .tim{
 	font-size:13px;
