@@ -33,8 +33,10 @@
 			            <div class="num" :class="[plateIndex==2? 'active':'']">{{carArr[2]}}</div>
 			            <div class="num" :class="[plateIndex==3? 'active':'']">{{carArr[3]}}</div>
 			            <div class="num" :class="[plateIndex==4? 'active':'']">{{carArr[4]}}</div>
+			            <div class="plateInput-box">
+				          	<input type="text" readonlyunselectable="on" @focus="focusInput($event)" pattern="[A-Z0-9a-z]" @blur="blurInput($event)" @input="setInput(event)" :maxlength="maxlen" class="plateInput"/>
+				        </div>
 			            <div class="num" :class="[maxlen==5? 'hide':'',plateIndex==5? 'active':'']">{{carArr[5]}}</div>
-			            <div class="plateInput-box"><input type="text" readonlyunselectable="on" @focus="focusInput(event)" pattern="[A-Z0-9a-z]" @blur="blurInput" @input="setInput(event)" :maxlength="maxlen" class="plateInput"/></div>
 			          </div>
 			          <div class="plate-order" style="margin-left: 0;">
 			          	<div class="num addNum" @click="addNum" :class="[maxlen==6? 'hide':'']"></div>

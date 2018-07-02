@@ -81,12 +81,14 @@
 	right:6px;
 	top:0;
 	bottom:0;
+	z-index: 2;
+	overflow: hidden;
 	opacity: 0;
 }
 .vehicle-box .plate-order .plateInput-box input {
+	background: blue;
 	color:transparent;
 	text-indent: -999em; /*文本向左缩进*/
-  	margin-left: -100%;
   	opacity: 0;
 }
 .vehicle-box .plate-order .num.addNum {

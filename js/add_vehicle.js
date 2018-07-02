@@ -26,13 +26,16 @@ var vm = new Vue({
 		setInput:function(e){
 			this.carArr = e.target.value.toUpperCase().split('');
 			this.plateInput = e.target.value;
-			this.plateIndex = e.target.value==''? null:e.target.value.length;
+			console.log(e.target.value)
+			this.plateIndex = e.target.value==''? 0:e.target.value.length-1;
 		},
-		focusInput:function(e){
-			this.plateIndex = e.target.value==''? 0:e.target.value.length;
+		focusInput:function(event){
+			this.plateIndex = event.target.value==''? 0:event.target.value.length-1;
+			event.currentTarget.style.marginLeft = '-100%';
 		},
-		blurInput:function(){
+		blurInput:function(event){
 			this.plateIndex = null;
+			event.currentTarget.style.marginLeft = '0';
 		},
 		selectProvince:function(str){
 			this.province = str;
