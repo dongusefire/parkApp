@@ -15,7 +15,7 @@
 	        <span class="mui-icon home"></span>
 	        <span class="mui-tab-label">首页</span>
 	    </a>
-	    <a class="mui-tab-item" href="template/carportShare.html" data-type="open">
+	    <a class="mui-tab-item"  href="template/carportShare.html" data-type="open">
 	        <span class="mui-icon push"></span>
 	        <span class="mui-tab-label">发布</span>
 	    </a>
@@ -37,6 +37,7 @@
 			}
 		};
 		console.log('首页')
+		
 		var aniShow = {};
 		var self = null;
 		//webview对象首次被创建
@@ -114,8 +115,9 @@
 					},
 					extras:{}
 				};
+				mui.alert('敬请期待个人分享','系统提示','确定');
 				//打开新窗口
-				mui.openWindow(targetTab,targetTab,options);
+//				mui.openWindow(targetTab,targetTab,options);
 			};
 			//更改当前活跃的选项卡
 			activeTab = targetTab;

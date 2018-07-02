@@ -1,12 +1,91 @@
 {
-  "index.html": {
-    "resources": [
-      "template/home.html"
-    ],
-    "refer": [
-      "template/my.html",
-      "template/home.html",
-      "template/carportShare.html"
-    ]
-  }
+	"index.html": {
+		"resources": [
+			"template/home.html",
+			"img/my.png",
+			"js/app.js",
+			"img/push.png",
+			"js/mui.min.js",
+			"css/app.css",
+			"css/mui.min.css",
+			"js/update.js",
+			"img/home1@2x-active.png",
+			"img/my-active.png",
+			"img/home1@2x.png",
+			"img/push-active.png"
+		],
+		"refer": [
+			"template/my.html",
+			"template/home.html",
+			"template/carportShare.html"
+		]
+	},
+	"template/home_search.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"template/home_parking.html": {
+		"resources": [
+			"css/index.css",
+			"css/mui.min.css"
+		]
+	},
+	"template/parking.html": {
+		"resources": [
+			"img/dwt.png",
+			"css/parking.css",
+			"img/dhicon.png",
+			"js/parking.js",
+			"css/mui.min.css"
+		]
+	},
+	"template/my.html": {
+		"resources": [
+			"img/cw.png",
+			"js/jquery-1.11.2.min.js",
+			"img/gwbj.png",
+			"img/Head-p.png",
+			"js/vue.min.js",
+			"css/icons-extra.css",
+			"img/xx.png",
+			"css/my.css",
+			"img/zn.png",
+			"js/my.js",
+			"img/xz.png",
+			"img/dd.png",
+			"img/wdqb.png",
+			"img/cl.png",
+			"template/setting.html"
+		],
+		"refer": [
+			"template/setting.html"
+		]
+	},
+	"template/home.html": {
+		"resources": [
+			"css/index.css",
+			"template/home_search.html",
+			"img/cd.png",
+			"js/index.js"
+		],
+		"refer": [
+			"template/home_search.html",
+			"template/home_parking.html",
+			"template/parking.html"
+		]
+	},
+	"template/setting.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
+	},
+	"template/my_parking.html": {
+		"resources": [
+			"css/my_vehicle.css",
+			"js/my_parking.js",
+			"css/mui.min.css"
+		]
+	}
 }
