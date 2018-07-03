@@ -13,7 +13,7 @@
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
 		<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 3px;color:#292929;"></span></a>
-	    <h1 class="mui-title">万科停车场</h1>
+	    <h1 class="mui-title">停车场</h1>
 	</header>
 	<div class="mui-content g-content">
 		<div class="vehicle-list parkingArea"></div>
@@ -35,6 +35,7 @@
     		dataType:'json',
     		success:function(res){
     			if(res.code==200){
+    				console.log(res);
     				var data = res.data.park_bf_info;
 	    			for(var i in data){
 	    				var list_ ='';

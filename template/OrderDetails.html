@@ -8,7 +8,7 @@
     <title>订单详情</title>
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/Order details.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/OrderDetails.css"/>
     <style>
     	 -webkit-tap-highlight-color:transparent;
     </style>
@@ -63,9 +63,12 @@
 	  <script src="../js/mui.min.js"></script>
 	  <script src="../js/app.js"></script>
 		<script type="text/javascript">
-			var park_id = 22;
-			order_num = "20180619082642737";
-			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjI0LCJpc3MiOiJodHRwOi8vdC5jb20vYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE1MzAzNDIxMjEsImV4cCI6MTUzMDM3ODEyMSwibmJmIjoxNTMwMzQyMTIxLCJqdGkiOiJBQ0RmTVdxdzAzRVRKTWp3In0.IeukiXeOT6FO3AmrYGVlAlxlgf9omxSisyBmUI96qW4';
+//			var park_id = 22;
+//			order_num = "20180630102005330";
+			var token = plus.storage.getItem('token');
+			var ws = plus.webview.currentWebview();
+			var park_id = ws.park_id;
+			var order_num = ws.order_num;
 			(function($){
 				$('.state-btn p').click(function(){
 					$(this).addClass('active').siblings().removeClass('active');

@@ -31,8 +31,9 @@
 	<script type="text/javascript">
 		mui.init();
 		var html_ = '',floor_ = '',text1 = '', text2 = '';
-		var ws = plus.webview.currentWebview();
-    	var token = plus.storage.getItem('token');
+//		var ws = plus.webview.currentWebview();
+//  	var token = plus.storage.getItem('token');
+		var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwNTkwMjgyLCJleHAiOjE1MzA2MjYyODIsIm5iZiI6MTUzMDU5MDI4MiwianRpIjoiOHdram5Cd2JaSU5KaEdWZyJ9.oEsq7uit6S6MjzaRlmxAiIAx447t0gGDqcEoUlD9DB0';
 		var vm = new Vue({
 			el:'.mui-content',
 			data:{
@@ -42,24 +43,26 @@
 				this.getData(1);
 			},
 			methods:{
+
 				getData:function(num){
-					var jsonData = JSON.stringify({
-							"park_lot_num":ws.park_lot_num,
-							"p_b_num":ws.p_b_num,
-							"p_b_f":ws.p_b_floor,
-							"p_b_area":ws.p_b_area[0],
-							"page":num,
-							"size":20
-					});
-//					var jsonData = {
-//						//固定数据 
-//							"park_lot_num":'11010200003',
-//							"p_b_num":'01',
-//							"p_b_f":'010',
-//							"p_b_area":'01',
-//							"page":'num',
-//							"size":'20'
-//					}
+
+//					var jsonData = JSON.stringify({
+//							"park_lot_num":ws.park_lot_num,
+//							"p_b_num":ws.p_b_num,
+//							"p_b_f":ws.p_b_floor,
+//							"p_b_area":ws.p_b_area[0],
+//							"page":num,
+//							"size":20
+//					});
+					var jsonData = {
+						//固定数据 
+							"park_lot_num":'11010200003',
+							"p_b_num":'01',
+							"p_b_f":'010',
+							"p_b_area":'01',
+							"page":'num',
+							"size":'20'
+					}
 					mui.ajax(AJAX_PATH+'/parking/self/list?token='+token,{
 						data:jsonData,
 						dataType:'json',
@@ -91,18 +94,55 @@
 												'<div class="list-fire">'+
 													'<p class="par">'+park_info.parking_lot_name+'&nbsp;&nbsp;'+floor_+'</p>'+
 													'<p class="tim">共享时段：<span>'+value.p_s_share_start_time+'-'+endtime+'</span></p>'+
-													'<p class="price">'+park_info.price+'<span>/小时</span><span class="toOrder">去预定&nbsp;></span></p>'+
+													'<p class="price">'+park_info.price+
+													'<span>/小时</span>'+
+													'<span class="toOrder" data-num="'+park_info.parking_lot_number+'"  data-id="'+value.id+'">去预定&nbsp;></span></p>'+
 												'</div>'+
 											'</div>';
 								});
 								$('.space-list').append(html_);
+								
 							}else if(res.code!=502 && res.code!=503){
 								mui.alert(res.msg,'系统提示','确定',null);
 							};
 						}
 					});
-				}
+					
+				},
+				
 			}
+			
+		})
+		//点击去预定
+		$('.space-list').on('click','.toOrder',function(){
+			var p_l_num = this.getAttribute('data-num'),space_id = this.getAttribute('data-id');
+			var jsonData = {
+					//固定数据 
+						"park_lot_num":'11010200003',
+						"p_b_num":'01', //栋
+						"p_b_f":'010', //层
+						"p_b_area":'01',//区
+						"page":'num',
+						"size":'20'
+				}
+			console.log(jsonData.p_b_num);
+			mui.openWindow({
+				url:'order.html',
+				id:'order',
+				styles:{
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				},
+				extras:{
+					parking_lot_num:p_l_num,//停车场编号
+					park_space_id:space_id,//车位id
+					p_b_num:jsonData.p_b_num,
+					p_b_f:jsonData.p_b_f,
+					p_b_area:jsonData.p_b_area
+				}
+			})
 		})
 	</script>
 </body>

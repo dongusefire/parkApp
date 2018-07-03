@@ -23,44 +23,13 @@
 			</ul>
 		</div>
 		<div class="mui-content trans-box" id="trans-box">
-			<!--<div class="order-nav">
-				<div class="order-text">
-					<a href="#" class="item-box">
-						<span id="item-icon"><img src="../img/tcicon.png"></span>
-						<span class="item-title">万科停车场</span>
-						<span class="mui-pull-right pay">待支付</span>
-				   </a>
-				</div>
-				<div class="order-time">
-					<p class="time place-time">
-						<span>下单时间:</span>
-						<span>2018.5.20</span>
-						<span>16:45</span>
-					</p>
-					<p class="amount">
-						￥12
-					</p>
-					<p class="time out-time">
-						<span>出入场时间:</span>
-						<span>2018.5.20</span>
-						<span>16:45-17:45</span>
-					</p>
-				</div>
-				<div class="order-state">
-					<p class="finished" style="display: none;">已完成</p>
-				    <p class="cancel unpay" style=""><button>去支付</button></p>
-				    <p class="cancel unpay" id="navigate" style="display: none;"><button>导航</button></p>
-				    <p class="cancel"><button>取消订单</button></p>
-				</div>
-			</div>-->
-
+			
 		</div>
 	    <script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script>
-//			var token = plus.storage.getItem('token');
-			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwNTg0MjA2LCJleHAiOjE1MzA2MjAyMDYsIm5iZiI6MTUzMDU4NDIwNiwianRpIjoiUG05eU1QQk5ES0doT0YyNCJ9.67qcswX2Q5Um4ZrhAr-yVPIGjdztRIyyHhy7I-1PCNE';
+			var token = plus.storage.getItem('token');
 			(function($){
 				mui.init();
 				auto_ajax();
@@ -96,7 +65,6 @@
 									var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
 									if(startTime.substr(0,10) == endTime.substr(0,10)){
 										end = endTime.substr(11,8)
-										console.log(end);
 									}else if(startTime.substr(0,10) != endTime.substr(0,10)){
 										end = endTime;
 									}
@@ -131,7 +99,7 @@
 										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 									}
 									//拼接dom
-									html_+='<div class="order-nav">'+
+									html_+='<div class="order-nav" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'">'+
 												'<div class="order-text">'+
 													'<a href="#" class="item-box">'+
 														'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
@@ -144,7 +112,7 @@
 														'<span>车位:</span>'+
 														'<span>'+type+'</span>'+
 													'</p>'+
-													'<p class="amount">￥12</p>'+
+													'<p class="amount">￥'+value.order_amount+'</p>'+
 													'<p class="time out-time">'+
 														'<span>预约时间段:</span>'+
 														'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
@@ -223,7 +191,7 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											//拼接dom
-											r_html+='<div class="order-nav">'+
+											r_html+='<div class="order-nav" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'">'+
 														'<div class="order-text">'+
 															'<a href="#" class="item-box">'+
 																'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
@@ -236,7 +204,7 @@
 																'<span>车位:</span>'+
 																'<span>'+type+'</span>'+
 															'</p>'+
-															'<p class="amount">￥12</p>'+
+															'<p class="amount">￥'+value.order_amount+'</p>'+
 															'<p class="time out-time">'+
 																'<span>预约时间段:</span>'+
 																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
@@ -269,8 +237,7 @@
 											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
 											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
 											if(startTime.substr(0,10) == endTime.substr(0,10)){
-												end = endTime.substr(11,8)
-												console.log(end);
+												end = endTime.substr(11,8);
 											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
 												end = endTime;
 											}
@@ -305,7 +272,7 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											//拼接dom
-											s_html+='<div class="order-nav">'+
+											s_html+='<div class="order-nav" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'">'+
 														'<div class="order-text">'+
 															'<a href="#" class="item-box">'+
 																'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
@@ -318,7 +285,7 @@
 																'<span>车位:</span>'+
 																'<span>'+type+'</span>'+
 															'</p>'+
-															'<p class="amount">￥12</p>'+
+															'<p class="amount">￥'+value.order_amount+'</p>'+
 															'<p class="time out-time">'+
 																'<span>预约时间段:</span>'+
 																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
@@ -339,7 +306,28 @@
 						auto_ajax();
 					}
 					
-				})
+				});
+				
+				//点击进入订单详情
+				$("#trans-box").on('click','.order-nav .order-text,.order-time',function(){
+					//获取订单编号和停车场编号
+					var order_num = this.getAttribute('data-onum'),park_id = this.getAttribute('data-pid');
+					mui.openWindow({
+						url:'OrderDetails.html',
+						id:'orderDetails',
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							order_num:order_num,
+							park_id:park_id
+						}
+					})
+				});
+				
 			})(jQuery)
 		</script>
 	</body>
