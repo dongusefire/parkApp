@@ -57,10 +57,15 @@
 			"img/dd.png",
 			"img/wdqb.png",
 			"img/cl.png",
-			"template/setting.html"
+			"template/setting.html",
+			"css/mui.min.css"
 		],
 		"refer": [
-			"template/setting.html"
+			"template/setting.html",
+			"template/login.html",
+			"template/wallet.html",
+			"template/orderList.html",
+			"template/my_vehicle.html"
 		]
 	},
 	"template/home.html": {
@@ -73,7 +78,8 @@
 		"refer": [
 			"template/home_search.html",
 			"template/home_parking.html",
-			"template/parking.html"
+			"template/parking.html",
+			"template/search.html"
 		]
 	},
 	"template/setting.html": {
@@ -86,6 +92,44 @@
 			"css/my_vehicle.css",
 			"js/my_parking.js",
 			"css/mui.min.css"
+		]
+	},
+	"template/login.html": {
+		"resources": [
+			"css/login.css",
+			"css/mui.min.css"
+		]
+	},
+	"template/wallet.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/wallet.css",
+			"img/withdrawl.png"
+		]
+	},
+	"template/orderList.html": {
+		"resources": [
+			"js/jquery-1.11.2.min.js",
+			"css/orderList.css",
+			"img/tcicon.png",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"template/login.html"
+		]
+	},
+	"template/my_vehicle.html": {
+		"resources": [
+			"css/my_vehicle.css",
+			"css/mui.min.css",
+			"js/my_vehicle.js"
+		]
+	},
+	"template/search.html": {
+		"resources": [
+			"css/search.css",
+			"css/mui.min.css",
+			"js/search.js"
 		]
 	}
 }

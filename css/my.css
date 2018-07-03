@@ -32,6 +32,9 @@
 .mipark-top .information .person_W {
 	font-size: 15px;
 }
+.mipark-top .information .ewallet {
+	padding-left:4px;
+}
 .park-nav .item-box {
 	height:59px;
 	display: block;
@@ -62,7 +65,6 @@
 }
 #line-distance{
 	margin-bottom:10px;
-	
 }
 #line-distance:after{
 	content: '';

@@ -41,7 +41,7 @@
 		},
 		"Speech": {
 			"description": "管理语音识别插件"
-		}
+		},"Zip":{},"Push":{},"File":{},"Audio":{},"Share":{},"OAuth":{},"Camera":{},"Device":{},"Runtime":{},"Payment":{},"Gallery":{},"Storage":{},"Webview":{},"Barcode":{},"Uploader":{},"NativeUI":{},"Proximity":{},"Navigator":{},"Statistic":{},"NativeObj":{},"Downloader":{},"Invocation":{},"Orientation":{},"Geolocation":{},"Accelerometer":{},"XMLHttpRequest":{}
 	},
 	"plus": {
 		"statusbar": {
@@ -89,34 +89,7 @@
 				"schemes":[
 					"parking"
 				],  //Android平台通过UrlSchemes与第三方应用相互调用
-				"permissions": [
-					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
-					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
-					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
-					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
-					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
-					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
-					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
-					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
-					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
-					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
-					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
-					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
-				]
+				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -192,72 +165,170 @@
 		"pages": {
 			"index.html": {
 				"resources": [
-					"template/home.html"
+					"template/home.html",
+					"img/my.png",
+					"js/app.js",
+					"img/push.png",
+					"js/mui.min.js",
+					"css/app.css",
+					"css/mui.min.css",
+					"js/update.js",
+					"img/home1@2x-active.png",
+					"img/my-active.png",
+					"img/home1@2x.png",
+					"img/push-active.png"
 				],
 				"refer": [
 					"template/my.html",
 					"template/carportShare.html"
 				],
 				"priority": 0
+			},
+			"template/home_search.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/home_parking.html": {
+				"resources": [
+					"css/index.css",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/parking.html": {
+				"resources": [
+					"img/dwt.png",
+					"css/parking.css",
+					"img/dhicon.png",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/my.html": {
+				"resources": [
+					"img/cw.png",
+					"img/gwbj.png",
+					"img/Head-p.png",
+					"js/vue.min.js",
+					"css/icons-extra.css",
+					"img/xx.png",
+					"css/my.css",
+					"img/zn.png",
+					"js/my.js",
+					"img/xz.png",
+					"img/dd.png",
+					"img/wdqb.png",
+					"img/cl.png",
+					"css/mui.min.css",
+					"template/setting.html"
+				],
+				"refer": [
+					"template/login.html",
+					"template/wallet.html",
+					"template/orderList.html",
+					"template/my_vehicle.html"
+				],
+				"priority": 0
+			},
+			"template/home.html": {
+				"resources": [
+					"css/index.css",
+					"template/home_search.html",
+					"img/cd.png",
+					"js/index.js"
+				],
+				"refer": [
+					"template/home_parking.html",
+					"template/parking.html",
+					"template/search.html"
+				],
+				"priority": 0
+			},
+			"template/setting.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/login.html": {
+				"resources": [
+					"css/login.css",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/wallet.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/wallet.css",
+					"img/withdrawl.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/orderList.html": {
+				"resources": [
+					"js/jquery-1.11.2.min.js",
+					"css/orderList.css",
+					"img/tcicon.png",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"template/login.html"
+				],
+				"priority": 0
+			},
+			"template/my_vehicle.html": {
+				"resources": [
+					"css/my_vehicle.css",
+					"css/mui.min.css",
+					"js/my_vehicle.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/search.html": {
+				"resources": [
+					"css/search.css",
+					"css/mui.min.css",
+					"js/search.js"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
 			"resources": [
-				"img/my.png",
 				"img/ss.png",
 				"js/mui.picker.min.js",
-				"img/Head-p.png",
-				"img/tcicon.png",
-				"js/my.js",
 				"js/mui.poppicker.js",
-				"img/dwt.png",
 				"css/mui.picker.min.css",
 				"js/mui.js",
-				"template/orderList.html",
 				"img/Page 1 Copy 2.png",
 				"js/orderList.js",
 				"README.md",
-				"img/cw.png",
 				"js/mui.picker.js",
-				"js/app.js",
-				"img/push.png",
-				"img/gwbj.png",
 				"css/carportShare.css",
-				"fonts/mui.ttf",
 				"img/Page1.png",
 				"template/order.html",
 				"css/mui.css",
-				"img/dhicon.png",
-				"css/my.css",
 				"css/order.css",
-				"js/update.js",
-				"img/wdqb.png",
 				"img/Page 1 Copy.png",
-				"img/push-active.png",
-				"img/cd.png",
-				"js/index.js",
 				"js/parking.js",
-				"img/home1@2x-active.png",
-				"css/icons-extra.css",
-				"css/index.css",
-				"js/mui.min.js",
-				"img/xz.png",
-				"img/my-active.png",
-				"img/cl.png",
 				"css/mui.poppicker.css",
-				"img/home1@2x.png",
-				"css/orderList.css",
 				"img/jh.png",
 				"css/mui.picker.css",
-				"img/xx.png",
-				"img/zn.png",
-				"css/app.css",
 				"img/ls.png",
-				"img/dd.png",
-				"css/mui.min.css",
 				"img/sh.png",
 				"img/yuantiao.jpg",
-				"css/parking.css",
 				"img/Page 1.png"
 			]
 		}
