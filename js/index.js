@@ -10,6 +10,7 @@ var home = {
 		lat:''
 	},
 	list:[],
+	ParkingView:null,
 	activeParking:'', //当前显示的Parking
 	getUserLocation:function(){ 
 		var _this=this;
@@ -85,7 +86,7 @@ var home = {
 		this.map.addOverlay(marker);
 	},
 	createParkingView:function(){ //创建列表页窗口
-		var sub = plus.webview.create('parking.html','parking.html',{
+		this.ParkingView = plus.webview.create('parking.html','parking.html',{
 			statusbar:{
 				background:"#fff" 
 			},
@@ -96,8 +97,6 @@ var home = {
 			position:"absolute",
 			zindex:9
 		});
-		sub.hide();
-		this.ws.append(sub);
 	},
 	openSearch:function(){
 		var options = {
@@ -125,11 +124,17 @@ var home = {
 		};
 		mui.openWindow('order.html','order.html',options);
 	},
-	createRoute:function(lng,lat){ //创建地图中的路线对象
-//		var routeObj = new plus.maps.Route(new plus.maps.Point(this.point.lng,this.point.lat),new plus.maps.Point(lng,lat));
-//		routeObj.routeTip='导航';
-//		console.log(lng,lat,'route',JSON.stringify(routeObj))
-//		this.map.addOverlay(routeObj);
+	createRoute:function(lng,lat){ //调用地图导航
+		var address = localStorage.getItem('parking_lot_address');
+		var point = this.point;
+		if(point.lng!='' &&point.lng!=null){
+			// 设置目标位置坐标点和其实位置坐标点
+			var dst = new plus.maps.Point(lng,lat); // 终点坐标
+			var src = new plus.maps.Point(point.lng,point.lat); // 起点坐标
+			plus.maps.openSysMap(dst,address,src);
+		}else{
+			mui.alert('未获取到您的位置，无法进行导航');
+		}
 	},
 	showUserLocation:function(){ //打开用户位置
 		this.map.showUserLocation( true );
@@ -151,15 +156,17 @@ var home = {
 		this.showUserLocation();
 	},
 	bindEvent:function(){
+		var _this = this;
 		this.map.onclick = function(point){  //获取当前用户点击的地里位置
 			console.log(JSON.stringify(point),'点击地图')
 		};
 		mui('.header-bar').on('tap','#openMenu',function(){
-			if(mui.os.ios){
-				plus.webview.show("parking.html");
-			}else{
-				plus.webview.show("parking.html","fade-in",300);
-			};
+			_this.ParkingView.show('pop-in');
+//			if(mui.os.ios){
+//				plus.webview.show("parking.html");
+//			}else{
+//				plus.webview.show("parking.html","fade-in",300);
+//			};
 		});
 	},
 	getParking:function(point,sort){

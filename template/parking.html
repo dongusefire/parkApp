@@ -20,12 +20,12 @@
 		<div id="topbar">
 			<div id="search-box">
 				<div class="mui-input-row mui-search mui-active">
-				    <input type="search" class="mui-input-clear" placeholder="">
+				    <input type="search" class="mui-input-clear" v-model="keywords" @change="getParking()" placeholder="">
 				</div>
 			</div>
 			<div class="filter">
 				<span @click="sortToggle">{{sort}}<i></i></span>
-				<span>停车时长<i></i></span>
+				<!--<span>停车时长<i></i></span>-->
 			</div>
 		</div>
 		<div id="tab-box" :class="isSort? 'show-box':''">
@@ -57,7 +57,7 @@
 					<div class="num">车位:<span>{{item.free_number}}</span>/{{item.number}}</div>
 				</div>
 				<div class="parking-r">
-					<div class="parking-img"><span class="goRoute"></span></div>
+					<div class="parking-img"><span class="goRoute" :id="index"></span></div>
 					<p>{{item.distance}}km</p>
 				</div>
 			</div>
@@ -76,32 +76,53 @@
 					longitude:'',
 					latitude:''
 				},
+				keywords:'',
 				isSort:false,
-				sort:'智能排序'
+				sort:'智能排序',
+				sortValue:'distance',
 			},
 			methods:{
 				readData:function(res,point){ //初始化第一次的数据
 					var list = res.data.list;
-					for(var i=0;i<list.lenth;i++){
+					for(var i=0;i<list.length;i++){
 						list[i].distance = (list[i].distance/1000).toFixed(3)
 					};
 					this.items = list;
 					this.point = point;
 				},
-				getParking:function(sort){
+				getParking:function(){
 					var _this= this;
-					console.log(this.point)
-					mui.ajax(AJAX_PATH+'/parkinglot/search',{
-						data:{
+					var jsonData = JSON.stringify({
 							"longitude":this.point.longitude,
 							"latitude":this.point.latitude,
-							"sort":sort  //distance-距离，price-价格，number-车位数量
-						},
+							"sort":this.sortValue,
+							"keywords":this.keywords
+					});
+					mui.ajax(AJAX_PATH+'/parkinglot/search',{
+						data:jsonData,
 						dataType:'json',
 						type:'POST',
 						success:function(res,textStatus,xhr){
 							if(res.code==200){
-								_this.items = res.data.list;
+								var _list = res.data.list;
+								for(var i=0;i<_list.length;i++){
+									_list[i].distance = (_list[i].distance/1000).toFixed(3)
+								};
+								_this.items = _list;
+								if(_this.keywords!=''){
+									var list  = plus.storage.getItem('search');
+									if(!list){ //如果是第一次获取的数据，那么就创建search的storage
+										plus.storage.setItem('search',JSON.stringify(_list));
+									}else{
+										if(_list&&_list.length!=0){
+											var old = JSON.parse(list);
+											for(var i=0;i<_list.length;i++){
+												old.push(_list[i])
+											};
+											plus.storage.setItem('search',JSON.stringify(old));
+										};
+									};
+								};
 							}else{
 								mui.alert(res.msg,'系统提示','确定',null);
 							};
@@ -118,7 +139,7 @@
 		});
 		//点击返回按钮，隐藏当前webview
 		document.getElementById('hideView').addEventListener('tap',function(){
-			plus.webview.hide("parking.html");
+			plus.webview.hide("parking.html","auto");
 		});
 		mui('#parking-list').on('tap','.parking',function(){
 			var id = this.getAttribute('id');
@@ -126,11 +147,13 @@
 		});
 		mui('#parking-list').on('tap','.goRoute',function(e){
 			var id = this.getAttribute('id');
+			localStorage.setItem('parking_lot_address',vm.items[id].parking_lot_address);
 			plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.items[id].longitude+','+vm.items[id].latitude+')');
 		    e.stopPropagation();
 		});
 		document.querySelector('#sort.mui-table-view-radio').addEventListener('selected',function(e){
-			vm.getParking(e.detail.el.dataset.sort);
+			vm.sortValue =e.detail.el.dataset.sort; 
+			vm.getParking();
 			vm.isSort = false;
 		});
     </script>

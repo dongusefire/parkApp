@@ -40,6 +40,11 @@
 .search-list {
 	background: #fff;
 	padding-left: 12px;
+	position: absolute;
+	top:42px;
+	left:0;
+	right:0;
+	bottom:0;
 }
 .search-list .parking {
 	padding-left: 0;

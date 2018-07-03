@@ -101,3 +101,7 @@ var vm = new Vue({
 		}
 	}
 })
+//设置更新事件
+window.addEventListener('updata',function(){
+	vm.readData();
+});

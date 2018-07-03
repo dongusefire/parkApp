@@ -28,6 +28,7 @@
     <script src="js/update.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+    	mui.init();
     	var subpages = ['template/home.html', 'template/my.html'];
     	var subpage_style = {
 			top: '0',
@@ -40,9 +41,10 @@
 		var self = null;
 		//webview对象首次被创建
 		mui.plusReady(function() {
+			self = plus.webview.currentWebview(); //通过plus.webview可获取应用界面管理对象。 currentWebview方法获取当前窗口的WebviewObject对象
+			var showGuide = plus.storage.getItem("lauchFlag");
 			//仅支持竖屏显示
 			plus.screen.lockOrientation("portrait-primary");
-			self = plus.webview.currentWebview(); //通过plus.webview可获取应用界面管理对象。 currentWebview方法获取当前窗口的WebviewObject对象
 			self.setStyle({
 				statusbar:{
 					background:'#fff'
@@ -59,10 +61,27 @@
 				}
 				self.append(sub);
 			};
-			//关闭splash页面；
-			plus.navigator.closeSplashscreen();
-			//setFullscreen方法设置应用是否全屏显示;true表示全屏模式显示，false表示非全屏模式显示，默认为非全屏模式显示
-			plus.navigator.setFullscreen(false);
+			if(showGuide){
+				//关闭splash页面；
+				plus.navigator.closeSplashscreen();
+				//setFullscreen方法设置应用是否全屏显示;true表示全屏模式显示，false表示非全屏模式显示，默认为非全屏模式显示
+				plus.navigator.setFullscreen(false);
+			}else{
+				//显示启动导航
+				mui.openWindow({
+					id: 'guide',
+					url: 'template/guide.html',
+					styles: {
+						popGesture: "none"
+					},
+					show: {
+						aniShow: 'none'
+					},
+					waiting: {
+						autoShow: false
+					}
+				});
+			};
 		});
 		//当前激活选项
 		var activeTab = subpages[0];

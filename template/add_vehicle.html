@@ -34,7 +34,7 @@
 			            <div class="num" :class="[plateIndex==3? 'active':'']">{{carArr[3]}}</div>
 			            <div class="num" :class="[plateIndex==4? 'active':'']">{{carArr[4]}}</div>
 			            <div class="plateInput-box">
-				          	<input type="text" readonlyunselectable="on" @focus="focusInput($event)" pattern="[A-Z0-9a-z]" @blur="blurInput($event)" @input="setInput(event)" :maxlength="maxlen" class="plateInput"/>
+				          	<input type="text" style="ime-mode:disabled" readonlyunselectable="on" @focus="focusInput($event)" pattern="[A-Z0-9a-z]" @blur="blurInput($event)" ref="plateInput" @input="setInput(event)" :maxlength="maxlen" class="plateInput"/>
 				        </div>
 			            <div class="num" :class="[maxlen==5? 'hide':'',plateIndex==5? 'active':'']">{{carArr[5]}}</div>
 			          </div>
@@ -52,8 +52,8 @@
 			</div>-->
 		</div>
 		<div class="inline-input">
-			<label>用户名</label>
-		    <input type="text" class="mui-input-clear" v-model="phone_number" placeholder="请输入用户名">
+			<label>手机号</label>
+		    <input type="text" class="mui-input-clear" v-model="phone_number" placeholder="请输入手机号">
 		    <span v-show="!isSend" @click="send">获取验证码</span>
 		    <span class="seconds" v-show="isSend">重新获取<span class="num">{{num}}</span>s</span>
 		</div>

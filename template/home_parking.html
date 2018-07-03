@@ -68,6 +68,7 @@
     		vm.readData(w);
     	});
     	mui('#body').on('tap','.goRoute',function(e){
+    		localStorage.setItem('parking_lot_address',vm.parking_lot_address)
     		plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.longitude+','+vm.latitude+')');
     		e.stopPropagation();
     	});

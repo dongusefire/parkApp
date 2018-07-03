@@ -20,13 +20,14 @@ var vm = new Vue({
 		isDefault:true,
 		isSend:false,
 		num:60,
-		token:plus.storage.getItem('token')
+		token:''
 	},
 	methods:{
 		setInput:function(e){
+//			this.$refs['plateInput'].value = e.target.value.replace(/\s+/g,"");
 			this.carArr = e.target.value.toUpperCase().split('');
-			this.plateInput = e.target.value;
 			console.log(e.target.value)
+			this.plateInput = e.target.value;
 			this.plateIndex = e.target.value==''? 0:e.target.value.length-1;
 		},
 		focusInput:function(event){
@@ -117,6 +118,7 @@ var vm = new Vue({
 				return false;
 			};
 			this.car_number = _this.province+_this.city+_this.plateInput;
+			this.token = plus.storage.getItem('token');
 			var jsonData = JSON.stringify({
 				phone_number:this.phone_number,code:this.code,car_number:this.car_number
 			});
@@ -126,7 +128,14 @@ var vm = new Vue({
 				type:'post',
 				success:function(res,textStatus,xhr){
 					if(res.code==200){
-						mui.toast('添加成功')
+						mui.toast('添加成功');
+						//获取我的页面的窗口对象
+			    		var wo = plus.webview.currentWebview().opener();
+						//触发我的页面（readData）,从而进行数据刷新
+						mui.fire(wo,'updata');
+						setTimeout(function(){
+							mui.back();
+						},1000);
 					}else{
 						mui.alert(res.msg,'系统提示','确定',null);
 					};
