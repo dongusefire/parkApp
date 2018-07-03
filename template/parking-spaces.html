@@ -69,7 +69,6 @@
 								var park_info = res.data.park_info[0];
 								var list_data = res.data.park_space_list;
 								console.log(list_data);
-								//待会改成线上数据parkList改为List_data;  !!!!!!!!!!!
 								$.each(list_data ,function(key,value){
 									//开始结束时间的判断 
 									if(this.p_s_share_start_time.substr(0,10) == this.p_s_share_end_time.substr(0,10)){

@@ -22,7 +22,7 @@
 				<li><span data-done="success">已完成</span></li>
 			</ul>
 		</div>
-		<div class="mui-content trans-box">
+		<div class="mui-content trans-box" id="trans-box">
 			<!--<div class="order-nav">
 				<div class="order-text">
 					<a href="#" class="item-box">
@@ -59,7 +59,8 @@
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script>
-			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwMzI0ODE0LCJleHAiOjE1MzAzNjA4MTQsIm5iZiI6MTUzMDMyNDgxNCwianRpIjoicmREZm9QSGE4elBNQ0w1ayJ9.kUYHgXygsSeUbAyfeKiBZJPoVcLMECezdwRkWxp0rzI';
+//			var token = plus.storage.getItem('token');
+			var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwNTg0MjA2LCJleHAiOjE1MzA2MjAyMDYsIm5iZiI6MTUzMDU4NDIwNiwianRpIjoiUG05eU1QQk5ES0doT0YyNCJ9.67qcswX2Q5Um4ZrhAr-yVPIGjdztRIyyHhy7I-1PCNE';
 			(function($){
 				mui.init();
 				auto_ajax();
@@ -80,13 +81,10 @@
 			        }
 			    }
 			   
-				var html_ = '';
-				var r_html = '';
-				var s_html = '';
-				var manage = '';
-				var status = '';
-				var type = '';
+				var html_ = '', r_html = '', s_html = '', manage = '',status = '',type = '',end = '';
 				function auto_ajax(){
+					$('#trans-box').html('');
+					html_ = '';
 					mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
 						dataType:'json',
 						type:'get',
@@ -94,9 +92,14 @@
 							if(res.code == 200){
 								var all = res.data.All_order_data;
 								$.each(all,function(key,value){
-									//时间戳处理
-									var startTime = timestampToTime(value.start_time,''),startTime_mini = timestampToTime(value.start_time,'toMinute');
-									var endTime = timestampToTime(value.end_time,'toMinute'), Period = timestampToTime(value.start_time,'toDay');
+									//时间戳处理：把时间戳转换为时间格式，然后再进行比对
+									var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
+									if(startTime.substr(0,10) == endTime.substr(0,10)){
+										end = endTime.substr(11,8)
+										console.log(end);
+									}else if(startTime.substr(0,10) != endTime.substr(0,10)){
+										end = endTime;
+									}
 									//状态判断
 									if(value.order_status==3||value.order_status==2){
 										status = '进行中';
@@ -144,8 +147,7 @@
 													'<p class="amount">￥12</p>'+
 													'<p class="time out-time">'+
 														'<span>预约时间段:</span>'+
-														'<span>'+Period+'</span>'+
-														'<span>'+startTime_mini+'-'+endTime+'</span>'+
+														'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 													'</p>'+
 												'</div>'+
 												'<div class="order-state">'+manage+
@@ -165,11 +167,12 @@
 				//未完成
 				$('.choose li').click(function(){
 					var status = $(this).children().attr('data-done');
-					$('.trans-box').html('');
 					console.log(status);
+					$('#trans-box').html('');
 					$(this).children('span').addClass('active');
 					$(this).siblings().children('span').removeClass('active');
 					if(status=='running'){
+							r_html = '';
 							mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
 								data:{
 									"order_type":'running'
@@ -181,9 +184,14 @@
 										var _data = res.data.running;
 										console.log(_data);
 										$.each(_data,function(key,value){
-												//时间戳处理
-											var startTime = timestampToTime(value.start_time,''),startTime_mini = timestampToTime(value.start_time,'toMinute');
-											var endTime = timestampToTime(value.end_time,'toMinute'), Period = timestampToTime(value.start_time,'toDay');
+											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
+											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
+											if(startTime.substr(0,10) == endTime.substr(0,10)){
+												end = endTime.substr(11,8)
+												console.log(end);
+											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
+												end = endTime;
+											}
 											//状态判断
 											if(value.order_status==3||value.order_status==2){
 												status = '进行中';
@@ -231,21 +239,22 @@
 															'<p class="amount">￥12</p>'+
 															'<p class="time out-time">'+
 																'<span>预约时间段:</span>'+
-																'<span>'+Period+'</span>'+
-																'<span>'+startTime_mini+'-'+endTime+'</span>'+
+																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 															'</p>'+
 														'</div>'+
 														'<div class="order-state">'+manage+
 														'</div>'+
 													'</div>';
-										})
-										$('.trans-box').html(r_html);
+										});
+										$('#trans-box').empty();
+										$('#trans-box').html(r_html);
 									}else{
 										mui.alert(res.msg,'系统提示','确定',null);
 									}
 								}
 						})
 					}else if(status=='success'){
+						s_html = '';
 						mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
 								data:{
 									"order_type":'success'
@@ -257,9 +266,14 @@
 										var _data = res.data.success;
 										console.log(_data);
 										$.each(_data,function(key,value){
-												//时间戳处理
-											var startTime = timestampToTime(value.start_time,''),startTime_mini = timestampToTime(value.start_time,'toMinute');
-											var endTime = timestampToTime(value.end_time,'toMinute'), Period = timestampToTime(value.start_time,'toDay');
+											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
+											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
+											if(startTime.substr(0,10) == endTime.substr(0,10)){
+												end = endTime.substr(11,8)
+												console.log(end);
+											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
+												end = endTime;
+											}
 											//状态判断
 											if(value.order_status==3||value.order_status==2){
 												status = '进行中';
@@ -307,15 +321,15 @@
 															'<p class="amount">￥12</p>'+
 															'<p class="time out-time">'+
 																'<span>预约时间段:</span>'+
-																'<span>'+Period+'</span>'+
-																'<span>'+startTime_mini+'-'+endTime+'</span>'+
+																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 															'</p>'+
 														'</div>'+
 														'<div class="order-state">'+manage+
 														'</div>'+
 													'</div>';
-										})
-										$('.trans-box').html(s_html);
+										});
+										$('#trans-box').empty();
+										$('#trans-box').html(s_html);
 									}else{
 										mui.alert(res.msg,'系统提示','确定',null);
 									}
