@@ -82,7 +82,7 @@
 			<ul class="mui-table-view clear">
 		       <li class="mui-table-view-cell" id="clear">清除缓存</li>
 		   </ul>
-			<div class="logout " >
+			<div class="logout" style="display:none;">
 				<button type="button" class="mui-btn mui-btn-danger mui-btn-block">退出登录</button>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
     	};
     	var login_off = false,token = null;
     	mui.plusReady(function(){
-    		token=plus.storage.setItem('token');
+    		token=plus.storage.getItem('token');
     		if(token){
     			mui('.logout')[0].style.display = 'block';
     		};
