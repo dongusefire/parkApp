@@ -106,7 +106,9 @@ var home = {
 					background:"#fff" 
 				}
 			},
-			extras:{}
+			extras:{
+				point:this.point
+			}
 		};
 		mui.openWindow('search.html','search.html',options);
 	},

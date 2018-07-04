@@ -9,9 +9,62 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <style>
-    	.logout {
-    		margin:20px 5%;
+    	.edi .ver{
+    		text-align: center;
     	}
+    	.edi p{
+    		font-size:14px;
+    		color:#333;
+    	}
+    	.edi .photo{
+    		 width: 100px;
+		     height: 100px;
+		     display: table-cell;
+		    }
+    	.edi .photo img{
+    		width: 100px;
+		    height: 100px;
+    		margin: 0 auto;
+    		position: absolute;  
+    		top:0;
+    		left:0;
+    		bottom:0;
+    		right:0;
+    	}
+    	.edi .introduce{
+    		width:87%;
+    		margin:0 auto;
+    	}
+    	.servation{
+    		position:relative;
+    		top:150px;
+    		left: 0;
+    	}
+    	.servation .clear{
+    		background: none;
+    		text-align: center;
+    		width:92%;
+    		height:46px;
+    		margin:0 auto;
+    		background: #fff;
+    	}
+    	.servation .clear:before{
+    		content: initial;
+    	}
+    	.servation .clear:after{
+    		content: initial;
+    	}
+    	.servation .logout{
+    		width:92%;
+    		height:46px;
+    		margin:0 auto;
+    		margin-top:10px;
+    	}
+    	.servation .logout button{
+    		line-height:15px;
+    		text-align: center;    		
+    	}
+    	
     </style>
 </head>
 <body>
@@ -20,12 +73,20 @@
 	    <h1 class="mui-title">设置</h1>
 	</header>
 	<div class="mui-content g-content">
-		<ul class="mui-table-view">
-		    <li class="mui-table-view-cell" id="clear">清除storage</li>
-		</ul>
-		<div class="logout" style="display: none;">
-			<button type="button" class="mui-btn mui-btn-danger mui-btn-block">退出登录</button>
+		<div class="edi">
+			<p class="photo"><img src="../img/edi.png"></p>
+			<p class="ver">Version 1.0</p>
+			<p class="introduce">易惠停是一款应用区块链技术打造的停车服务APP。为用户提供公开可信的预约服务，用户也可将自己的闲置车位共享，获取收益，参与缓解停车难问题。</p>
 		</div>
+		<div class="servation">
+			<ul class="mui-table-view clear">
+		       <li class="mui-table-view-cell" id="clear">清除缓存</li>
+		   </ul>
+			<div class="logout " >
+				<button type="button" class="mui-btn mui-btn-danger mui-btn-block">退出登录</button>
+			</div>
+		</div>
+		
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>

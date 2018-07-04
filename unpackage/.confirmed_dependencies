@@ -17,19 +17,23 @@
 		"refer": [
 			"template/my.html",
 			"template/home.html",
-			"template/carportShare.html"
+			"template/carportShare.html",
+			"template/guide.html"
 		]
 	},
 	"template/home_search.html": {
 		"resources": [
 			"fonts/mui.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/mui.min.js"
 		]
 	},
 	"template/home_parking.html": {
 		"resources": [
 			"css/index.css",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"js/vue.min.js"
 		]
 	},
 	"template/parking.html": {
@@ -38,7 +42,10 @@
 			"css/parking.css",
 			"img/dhicon.png",
 			"js/parking.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/app.js",
+			"js/vue.min.js",
+			"fonts/mui.ttf"
 		]
 	},
 	"template/my.html": {
@@ -73,7 +80,8 @@
 			"css/index.css",
 			"template/home_search.html",
 			"img/cd.png",
-			"js/index.js"
+			"js/index.js",
+			"css/mui.min.css"
 		],
 		"refer": [
 			"template/home_search.html",
@@ -84,7 +92,10 @@
 	},
 	"template/setting.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/app.js",
+			"js/mui.min.js",
+			"img/edi.png"
 		]
 	},
 	"template/my_parking.html": {
@@ -97,7 +108,9 @@
 	"template/login.html": {
 		"resources": [
 			"css/login.css",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/app.js",
+			"js/mui.min.js"
 		]
 	},
 	"template/wallet.html": {
@@ -129,7 +142,18 @@
 		"resources": [
 			"css/search.css",
 			"css/mui.min.css",
-			"js/search.js"
+			"js/search.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"js/vue.min.js",
+			"js/jquery-1.11.2.min.js"
+		]
+	},
+	"template/guide.html": {
+		"resources": [
+			"img/guide-slide2.jpg",
+			"img/guide-slide1.jpg",
+			"img/guide-slide3.jpg"
 		]
 	}
 }
