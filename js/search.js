@@ -52,7 +52,7 @@ var vm = new Vue({
 							_list[i].distance = (_list[i].distance/1000).toFixed(3)
 						};
 						_this.items = _list;
-					}else{
+					}else if(res.code!=502 && res.code!=503){
 						mui.alert(res.msg,'系统提示','确定',null);
 					};
 				}
