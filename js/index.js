@@ -126,14 +126,94 @@ var home = {
 		};
 		mui.openWindow('order.html','order.html',options);
 	},
+	openMapNav:function(opt){
+		var point = this.point;
+		var _url = '';
+		var mapName = opt.name;
+		var appName = 'park';
+		var osName = plus.os.name;
+		var _id = '';
+		if(opt.name=='高德地图'){
+			if(osName=='Android'){
+				//配置参考：https://lbs.amap.com/api/amap-mobile/guide/android/navigation
+				_id = "com.autonavi.minimap";
+				_url = "androidamap://navi?sourceApplication="+appName+"&poiname="+opt.poiname+"&lat="+point.lat+"&lon="+point.lng+"&dev=1&style=2";
+			}else{
+				//配置参考：https://lbs.amap.com/api/amap-mobile/guide/ios/navi
+				_id = "itunes.apple.com/cn/app/gao-tu-zhuan-ye-dao-hang-ban/id461703208?mt=8";
+				_url = "iosamap://navi?sourceApplication="+appName+"&poiname="+opt.poiname+"&lat="+point.lat+"&lon="+point.lng+"&dev=1&style=2";
+			};
+			plus.runtime.openURL( _url, function(e) {
+				plus.nativeUI.confirm( "检查到您未安装\"高德地图\"，是否到商城搜索下载？", function(status){
+					if ( status.index == 0 ) {
+						opt.err(osName,_id);
+					}
+				});
+			},_id);
+		}else{
+			if(osName=='Android'){
+				//配置参考：http://lbsyun.baidu.com/index.php?title=uri/api/android
+				_id = "com.baidu.BaiduMap";
+				_url = "baidumap://map/navi?location="+point.lat+","+point.lng+"&coord_type=wgs84&src="+appName;
+			}else{
+				//配置参考：http://lbsyun.baidu.com/index.php?title=uri/api/ios
+				_id = "itunes.apple.com/cn/app/bai-du-de-tu-yu-yin-dao-hang/id452186370?mt=8";
+				_url = "baidumap://map/navi?location="+point.lat+","+point.lng+"&coord_type=wgs84&type=type";
+			};
+			plus.runtime.openURL(_url, function(e) {
+				plus.nativeUI.confirm( "检查到您未安装\"百度地图\"，是否到商城搜索下载？", function(status){
+					if ( status.index == 0 ) {
+						if(osName=='Android'){
+							plus.runtime.openURL( "market://details?id="+_id);
+						}else{
+							plus.runtime.openURL( "itms-apps://"+_id);
+						};
+					}
+				});
+			});
+		};
+	},
 	createRoute:function(lng,lat){ //调用地图导航
 		var address = localStorage.getItem('parking_lot_address');
 		var point = this.point;
+		var _this = this;
 		if(point.lng!='' &&point.lng!=null){
 			// 设置目标位置坐标点和其实位置坐标点
-			var dst = new plus.maps.Point(lng,lat); // 终点坐标
-			var src = new plus.maps.Point(point.lng,point.lat); // 起点坐标
-			plus.maps.openSysMap(dst,address,src);
+			plus.nativeUI.actionSheet( {
+				title:"选择要使用的第三方导航",
+				cancel:"取消",
+				buttons:[{'title':'高德地图'},{'title':'百度地图'}]
+			}, function(e){
+				var index = e.index;
+				switch (index){
+					case 0:
+						console.log("选择要使用的第三方导航:取消");
+						break;
+					case 1:
+						console.log("选择要使用的第三方导航:高德地图");
+						_this.openMapNav({
+							name:'高德地图',
+							poiname:address,
+							err:function(name,id){
+								if(name=='Android'){
+									plus.runtime.openURL( "market://details?id="+id);
+								}else{
+									plus.runtime.openURL( "itms-apps://"+id);
+								};
+							}
+						});
+						break;
+					case 2:
+						console.log("选择要使用的第三方导航:百度地图");
+						_this.openMapNav({
+							name:'百度地图'
+						});
+						break;
+				}
+			});
+//			var dst = new plus.maps.Point(lng,lat); // 终点坐标
+//			var src = new plus.maps.Point(point.lng,point.lat); // 起点坐标
+//			plus.maps.openSysMap(dst,address,src);
 		}else{
 			mui.alert('未获取到您的位置，无法进行导航');
 		}

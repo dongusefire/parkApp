@@ -22,7 +22,7 @@ function smsSend(phone,type,resCallback,completeCallback){
 	});
 };
 function login(str){
-	if(str || str==''){
+	if(!str || str==''){
 		str='尚未登录或登录已过期';
 	};
 	mui.alert(str,'系统提示','去登录',function(){

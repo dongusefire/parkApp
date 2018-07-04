@@ -24,11 +24,13 @@ var vm = new Vue({
 	},
 	methods:{
 		setInput:function(e){
-//			this.$refs['plateInput'].value = e.target.value.replace(/\s+/g,"");
-			this.carArr = e.target.value.toUpperCase().split('');
-			console.log(e.target.value)
-			this.plateInput = e.target.value;
-			this.plateIndex = e.target.value==''? 0:e.target.value.length-1;
+			var val = e.target.value.replace(/[\W]/g,'');
+			if(val.length>this.maxlen){
+				val = val.substring(0,this.maxlen);
+			};
+			this.carArr = val.toUpperCase().split('');
+			this.plateInput = val;
+			this.plateIndex = val==''? 0:val.length-1;
 		},
 		focusInput:function(event){
 			this.plateIndex = event.target.value==''? 0:event.target.value.length-1;
@@ -36,6 +38,7 @@ var vm = new Vue({
 		},
 		blurInput:function(event){
 			this.plateIndex = null;
+			event.currentTarget.value = this.plateInput;
 			event.currentTarget.style.marginLeft = '0';
 		},
 		selectProvince:function(str){
