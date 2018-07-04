@@ -31,9 +31,8 @@
 	<script type="text/javascript">
 		mui.init();
 		var html_ = '',floor_ = '',text1 = '', text2 = '';
-//		var ws = plus.webview.currentWebview();
-//  	var token = plus.storage.getItem('token');
-		var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjgzLCJpc3MiOiJodHRwOi8vYmouZWNvc3lzbmV0LmNvbTo3MDk4L2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNTMwNTkwMjgyLCJleHAiOjE1MzA2MjYyODIsIm5iZiI6MTUzMDU5MDI4MiwianRpIjoiOHdram5Cd2JaSU5KaEdWZyJ9.oEsq7uit6S6MjzaRlmxAiIAx447t0gGDqcEoUlD9DB0';
+		var ws = plus.webview.currentWebview();
+    	var token = plus.storage.getItem('token');
 		var vm = new Vue({
 			el:'.mui-content',
 			data:{
@@ -46,55 +45,45 @@
 
 				getData:function(num){
 
-//					var jsonData = JSON.stringify({
-//							"park_lot_num":ws.park_lot_num,
-//							"p_b_num":ws.p_b_num,
-//							"p_b_f":ws.p_b_floor,
-//							"p_b_area":ws.p_b_area[0],
-//							"page":num,
-//							"size":20
-//					});
 					var jsonData = {
-						//固定数据 
-							"park_lot_num":'11010200003',
-							"p_b_num":'01',
-							"p_b_f":'010',
-							"p_b_area":'01',
-							"page":'num',
-							"size":'20'
-					}
+							"park_lot_num":ws.park_lot_num,
+							"p_b_num":ws.p_b_num,
+							"p_b_f":ws.p_b_floor,
+							"p_b_area":ws.p_b_area[0],
+							"page":num,
+							"size":20
+					};
+
 					mui.ajax(AJAX_PATH+'/parking/self/list?token='+token,{
 						data:jsonData,
 						dataType:'json',
 						type:'get',
 						success:function(res,textStatus,xhr){
 							if(res.code==200){
-								var park_info = res.data.park_info[0];
-								var list_data = res.data.park_space_list;
-								console.log(list_data);
+								var park_info = res.data.parkInfo;
+								var list_data = res.data.parkSpaceList;
 								$.each(list_data ,function(key,value){
 									//开始结束时间的判断 
-									if(this.p_s_share_start_time.substr(0,10) == this.p_s_share_end_time.substr(0,10)){
-										endtime = this.p_s_share_end_time.substr(11,8);
+									if(this.startTime.substr(0,10) == this.endTime.substr(0,10)){
+										endtime = this.endTime.substr(11,8);
 									}else{
-										endtime = this.p_s_share_end_time;
+										endtime = this.endTime;
 									}
-									console.log(endtime);
 									//停车场楼层的判断(待会改成线上数据)data 改为 jsonData    !!!!!!!!!
 									console.log(jsonData);
-									var floor = jsonData.p_b_f;
+									var floor = value.p_s_floor;
 									if(floor[0] != '0'){
 										text1 = '地下';
 									}
 									if(floor[2] == '1'){
 										text2 = '夹层' ;
 									}
-									floor_ = '<span>'+jsonData.p_b_num+'栋'+text1+floor[1]+'层'+text2+jsonData.p_b_area+'区'+value.id+'号车位'+'</span>';
+									floor_ = '<span>'+value.p_s_num+'栋'+text1+floor[1]+'层'+text2+value.p_s_area+'区'+value.p_s_sn+'号车位'+'</span>';
 									html_+= '<div class="bor_b">'+
 												'<div class="list-fire">'+
 													'<p class="par">'+park_info.parking_lot_name+'&nbsp;&nbsp;'+floor_+'</p>'+
-													'<p class="tim">共享时段：<span>'+value.p_s_share_start_time+'-'+endtime+'</span></p>'+
-													'<p class="price">'+park_info.price+
+													'<p class="tim">共享时段：<span>'+value.startTime+'-'+endtime+'</span></p>'+
+													'<p class="price">'+park_info.parking_lot_price+
 													'<span>/小时</span>'+
 													'<span class="toOrder" data-num="'+park_info.parking_lot_number+'"  data-id="'+value.id+'">去预定&nbsp;></span></p>'+
 												'</div>'+
@@ -138,9 +127,10 @@
 				extras:{
 					parking_lot_num:p_l_num,//停车场编号
 					park_space_id:space_id,//车位id
-					p_b_num:jsonData.p_b_num,
-					p_b_f:jsonData.p_b_f,
-					p_b_area:jsonData.p_b_area
+					//以下数据不再需要
+//					p_b_num:jsonData.p_b_num,
+//					p_b_f:jsonData.p_b_f,
+//					p_b_area:jsonData.p_b_area
 				}
 			})
 		})
