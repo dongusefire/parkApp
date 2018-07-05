@@ -23,17 +23,17 @@
 	    </h1>
 	</header>
 	<div class="mui-content g-content" v-cloak>
-		<div class="tab-box" v-show="items.length==0">
+		<div class="tab-box" v-show="tabIndex==0">
 			<div class="search-title">历史搜索</div>	
-			<div class="records">
-				<span class="his" v-for="search in searchList">{{search}}</span>
+			<div class="records" v-show="searchList.length!=0">
+				<span class="his" v-for="search in searchList" @click="setSearch(search)">{{search}}</span>
 			</div>
 			<div class="search-null" v-show="searchList.length==0">暂无记录</div>
 		</div>
-		<div class="tab-box" v-show="items.length!=0">
+		<div class="tab-box" v-show="tabIndex!=0">
 			<div class="search-title">搜索结果</div>
 			<div class="search-list" v-show="items.length!=0">
-				<div class="parking" v-for="item in items">
+				<div class="parking" v-for="(item,index) in items" :id="index">
 					<div class="parking-l">
 						<div class="top">
 							<span class="name">{{item.parking_lot_name}}</span>
@@ -41,18 +41,17 @@
 						<p class="address">{{item.parking_lot_address}}</p>
 					</div>
 					<div class="parking-r">
-						<div class="parking-img"><span class="goRoute"></span></div>
+						<div class="parking-img"><span class="goRoute" :id="index"></span></div>
 						<p>{{item.distance}}km</p>
 					</div>
 				</div>
 			</div>
+			<div class="search-null" v-show="items.length==0">暂无车场</div>
 		</div>
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/jquery-1.11.2.min.js"></script>
     <script src="../js/search.js" type="text/javascript" charset="utf-8"></script>
-  
-    	
 </body>
 </html>

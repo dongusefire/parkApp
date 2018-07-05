@@ -1,5 +1,6 @@
 var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
 var isNetwork = true; //客户端网络状态  false无网络，true有网络
+var pushServer = "http://demo.dcloud.net.cn/push/?"; 
 //发送验证码  resCallback:ajax成功后的回调；completeCallback:ajax完成后的回调
 function smsSend(phone,type,resCallback,completeCallback){
 	mui.ajax(AJAX_PATH+'/sms/send',{
@@ -37,6 +38,33 @@ function login(str){
 		});
 	});
 };
+//创建本地推送消息
+function createLocalPushMsg(msg){
+	var options = {cover:false};
+	var str = '2018/7/5';
+	str += ":"+str;
+	plus.push.createMessage( msg, "LocalMSG", options );
+}
+//发送"普通通知"消息
+function requireNotiMsg(msg){
+	if(navigator.userAgent.indexOf('StreamApp')>0){
+		plus.nativeUI.toast('当前环境暂不支持发送推送消息');
+		return;
+	}
+	var inf = plus.push.getClientInfo();
+	console.log(JSON.stringify(inf))
+	var url = pushServer+'type=noti&appid='+encodeURIComponent(plus.runtime.appid);
+	inf.id&&(url+='&id='+inf.id);
+	url += ('&cid='+encodeURIComponent(inf.clientid));
+	if(plus.os.name == 'iOS'){
+		url += ('&token='+encodeURIComponent(inf.token));
+	}
+	url += ('&title='+encodeURIComponent('Hello H5+'));
+	url += ('&content='+encodeURIComponent(msg));
+	url += ('&version='+encodeURIComponent(plus.runtime.version));
+	console.log(url,'发送推送的web地址')
+	plus.runtime.openURL( url );
+}
 //设置ajax全局的beforeSend
 mui.ajaxSettings.beforeSend = function(xhr, setting) {
 	if(!isNetwork){

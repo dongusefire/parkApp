@@ -11,6 +11,7 @@ var vm = new Vue({
 		items:[],
 		point:null,
 		keywords:'',
+		tabIndex:0
 	},
 	methods:{
 		getSearch:function(){
@@ -19,7 +20,11 @@ var vm = new Vue({
 				this.searchList = search.split('&');
 			};
 		},
-		setSearch:function(){
+		setSearch:function(s){
+			if(s && s!=''){
+				this.keywords=s;
+				document.getElementById('search-input').value = s;
+			};
 			var str = this.keywords;
 			if(str!=''){
 				var list  = plus.storage.getItem('search');
@@ -27,7 +32,14 @@ var vm = new Vue({
 					plus.storage.setItem('search',str);
 				}else{
 					if(list&&list!=''){
-						plus.storage.setItem('search',list+'&'+str);
+						var arr = list.split('&');
+						var arr2 = [];
+						for(var i=0;i<arr.length;i++){
+							if(str!=arr[i]){
+								arr2.push(arr[i])
+							};
+						};
+						plus.storage.setItem('search',str+'&'+arr2.join('&'));
 					};
 				};
 			};
@@ -35,24 +47,24 @@ var vm = new Vue({
 		},
 		getParking:function(){
 			var _this= this;
-			var jsonData = JSON.stringify({
+			mui.ajax(AJAX_PATH+'/parkinglot/search',{
+				data:{
 					"longitude":this.point.lng,
 					"latitude":this.point.lat,
 					"sort":'distance',
 					"keywords":this.keywords		
-			});
-			mui.ajax(AJAX_PATH+'/parkinglot/search',{
-				data:jsonData,
+				},
 				dataType:'json',
 				type:'POST',
 				success:function(res,textStatus,xhr){
+					_this.tabIndex = 1;
 					if(res.code==200){
 						var _list = res.data.list;
 						for(var i=0;i<_list.length;i++){
 							_list[i].distance = (_list[i].distance/1000).toFixed(3)
 						};
 						_this.items = _list;
-					}else if(res.code!=502 && res.code!=503){
+					}else{
 						mui.alert(res.msg,'系统提示','确定',null);
 					};
 				}
@@ -64,3 +76,13 @@ mui('.header-bar').on('change','#search-input',function(){
 	vm.keywords = this.value.replace(/^\s+|\s+$/g, '');
 	vm.setSearch();
 })
+mui('.search-list').on('tap','.parking',function(){
+	var id = this.getAttribute('id');
+	plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.items[id].parking_lot_number+')');
+});
+mui('.search-list').on('tap','.goRoute',function(e){
+	var id = this.getAttribute('id');
+	localStorage.setItem('parking_lot_address',vm.items[id].parking_lot_address);
+	plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.items[id].longitude+','+vm.items[id].latitude+')');
+    e.stopPropagation();
+});

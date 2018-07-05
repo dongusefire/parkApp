@@ -86,7 +86,9 @@
 				<button type="button" class="mui-btn mui-btn-danger mui-btn-block">退出登录</button>
 			</div>
 		</div>
-		
+		<!--<div class="ceshi">
+			<button type="button" class="mui-btn mui-btn-primary" id="notice">发送通知</button>
+		</div>-->
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
@@ -108,6 +110,9 @@
 			plus.storage.clear();
 			upwo();
 			mui.toast("已清除");
+    	});
+    	mui('.g-content').on('tap','#notice',function(){
+			requireNotiMsg('我是离线消息2')
     	});
     	mui('.g-content').on('tap','.logout',function(){
     		var _this = this;

@@ -270,7 +270,7 @@ var home = {
 					    data:res,
 					    point:point
 					});
-				}else if(res.code!=502 && res.code!=503){
+				}else{
 					mui.alert(res.msg,'系统提示','确定',null);
 				};
 			}

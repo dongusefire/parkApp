@@ -13,7 +13,7 @@
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
 		<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 3px;color:#292929;"></span></a>
-	    <h1 class="mui-title space_name">停车场</h1>
+	    <h1 class="mui-title">停车场</h1>
 	</header>
 	<div class="mui-content g-content">
 		<div class="vehicle-list parkingArea"></div>
@@ -26,9 +26,7 @@
 		var ws = plus.webview.currentWebview();
     	var token = plus.storage.getItem('token');
 		var park_lot_num = ws.parking_lot_num;
-		var park_lot_name = ws.park_name;
     	mui.init();
-    	$('.space_name').text(park_lot_name);
     	mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
     		data:{
     			"park_lot_num":park_lot_num
@@ -62,7 +60,7 @@
 						$('.parkingArea').append(_html);
 						//设置数据
 	    			}
-    			}else if(res.code!=502 && res.code!=503){
+    			}else{
     				mui.alert(res.msg,'系统提示','确定',null);
     			}
     		}

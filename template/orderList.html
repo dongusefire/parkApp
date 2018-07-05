@@ -124,7 +124,7 @@
 											
 								})
 								$('.trans-box').html(html_);
-							}else if(res.code!=502 && res.code!=503){
+							}else{
 								mui.alert(res.msg,'系统提示','确定',null);
 							}
 						}
@@ -216,7 +216,7 @@
 										});
 										$('#trans-box').empty();
 										$('#trans-box').html(r_html);
-									}else if(res.code!=502 && res.code!=503){
+									}else{
 										mui.alert(res.msg,'系统提示','确定',null);
 									}
 								}
@@ -297,7 +297,7 @@
 										});
 										$('#trans-box').empty();
 										$('#trans-box').html(s_html);
-									}else if(res.code!=502 && res.code!=503){
+									}else{
 										mui.alert(res.msg,'系统提示','确定',null);
 									}
 								}
