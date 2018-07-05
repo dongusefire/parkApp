@@ -13,7 +13,7 @@
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
-		<a class="mui-pull-left" id="hideView"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 3px;color:#292929;"></span></a>
+		<a class="mui-pull-left mui-action-back" id="hideView"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 3px;color:#292929;"></span></a>
 	    <h1 class="mui-title">车场列表</h1>
 	</header>
 	<div class="mui-content g-content">
@@ -66,6 +66,11 @@
     <script src="../js/mui.min.js"></script>
     <script type="text/javascript">
     	mui.init();
+    	mui.plusReady(function(){
+    		var ws = plus.webview.currentWebview();
+    		vm.readData(ws.data,ws.point);
+    		console.log(ws.data,ws.point,2323)
+    	});
     	var vm = new Vue({
 			el:'.mui-content',
 			data:{
@@ -83,11 +88,10 @@
 			},
 			methods:{
 				readData:function(res,point){ //初始化第一次的数据
-					var list = res.data.list;
-					for(var i=0;i<list.length;i++){
-						list[i].distance = (list[i].distance/1000).toFixed(3)
+					for(var i=0;i<res.length;i++){
+						res[i].distance = (res[i].distance/1000).toFixed(3)
 					};
-					this.items = list;
+					this.items = res;
 					this.point = point;
 				},
 				getParking:function(){
@@ -138,7 +142,7 @@
 		});
 		//点击返回按钮，隐藏当前webview
 		document.getElementById('hideView').addEventListener('tap',function(){
-			plus.webview.hide("parking.html","auto");
+			//plus.webview.hide("parking.html","auto");
 		});
 		mui('#parking-list').on('tap','.parking',function(){
 			var id = this.getAttribute('id');

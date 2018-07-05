@@ -69,25 +69,28 @@
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
+			mui.init();
 			//获取创建当前窗口的webview对象
 			var ws = plus.webview.currentWebview();
 			var token = plus.storage.getItem('token');
 //			ws.parking_lot_num = 11010200003;
 			var Park_lot_num = ws.parking_lot_num;
 			var park_space_id = ws.park_space_id;
-			var that = this;
 			var park_lot_name = '';
-			
 			//获取从固定车位列表页带来的五条信息
 			var l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area;
 			window.addEventListener('readData',function(){
 				token = plus.storage.getItem('token');
-				load(mui,document,jQuery);
+				setTimeout(function(){
+					load(mui,document,jQuery);
+				},800);
 			});
 			if(!token || token==''){
 				login();
 			}else{
-				load(mui,document,jQuery);
+				setTimeout(function(){
+					load(mui,document,jQuery);
+				},800);
 			};
 			function load($,doc,$$){
 				$.init();
@@ -137,20 +140,26 @@
 					}
 				
 				//车位信息请求ajax函数
-				function ajaxGet(head,data){
+				function ajaxGet(head,data,type){
 					mui.ajax(head,{
-//					mui.ajax(head+'&park_lot_num='+data.park_lot_num,{
 						data:data,
 						dataType:'json',
 						type:'get',
 						success:function(res,status,xhr){
 							console.log(JSON.stringify(res));
 							if( res.code== '200'){
-								if(res.data == ''){
+								console.log(res);
+								if(res.data.userCarInfo == ''){
 									mui.alert('请添加车辆','系统提示','确定',function(){
 										mui.openWindow({
 											id:'add_vehicle',
-											url:'add_vehicle.html'
+											url:'add_vehicle.html',
+											styles:{
+												popGesture: "close",
+												statusbar:{
+													background:"#fff" 
+												}
+											},
 										})
 									})
 								}else{
@@ -193,11 +202,18 @@
 									carnoPicker.setData(picker_data);
 								}
 							}else if(res.code!=502 && res.code!=503){
-								mui.alert(res.msg,'系统提示','确定',null);
+								if(res.code == 507){
+									console.log(JSON.stringify(res),233232)
+									if(type=="noChoose"){
+										mui.alert('无差别车位没有可用车位，请选择自选车位','系统提示','确定',function(){
+											//确定之后做处理
+											$$('.optional').trigger('click');
+										})
+									}							
+								}else{
+									mui.alert(res.msg,'系统提示','确定',null);
+								}
 							}
-						},
-						complete:function(xhr, status){
-							console.log(head,xhr.response,'ajax返回')
 						}
 					})
 				}
@@ -251,12 +267,12 @@
 								"park_lot_num":l_park_lot_num,
 								"p_s_type":'d',
 								"park_space_id":l_park_space_id,
-							}
+							},
+							null
 						);
 					}else{
 						//无差别接口请求
-						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":Park_lot_num});
-//						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":'02051070001'});
+						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":Park_lot_num},"noChoose");
 					}
 					//时间拾取器
 					var btns = $('.time');
@@ -310,12 +326,13 @@
 							}
 						},
 						extras:{
-//							parking_lot_num:'02051070001',
 							parking_lot_num:Park_lot_num,
 							park_name:park_lot_name
 						}
 					};
-					mui.openWindow("parkingArea.html","parkingArea.html",options);
+					setTimeout(function(){
+						mui.openWindow("parkingArea.html","parkingArea.html",options);
+					},500);
 				});
 				//预定部分
 				var ajaxSubmit_off = false;

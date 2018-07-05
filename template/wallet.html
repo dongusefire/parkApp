@@ -8,6 +8,7 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" href="../css/wallet.css" />
+		<script src="../js/vue.min.js"></script>
 	</head>
 
 	<body>
@@ -15,26 +16,44 @@
 			<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
 			<h1 class="mui-title">我的钱包</h1>
 		</header>
-		
-		<div class="balance">
-			<span class="cuteWords">余额:</span>
-			<div class="money">
-				<span class="num">200</span>元
+		<div class="box">
+			<div class="balance">
+				<span class="cuteWords">余额:</span>
+				<div class="money">
+					<span class="num">{{balance}}</span>元
+				</div>
+				<span class="mui-pull-right cuteWords details" @click="getdetails">明细  
+					>
+				</span> 
 			</div>
-			<span class="mui-pull-right cuteWords details">明细  
-				>
-			</span> 
+			
+			<div class="withdraw mui-clearfix" @click="withdraw">
+				<img src="../img/withdrawl.png" alt="" />
+				<span style="visibility: hidden;">￥</span>提现申请
+				<span class="mui-icon mui-icon-arrowright mui-pull-right arrow"></span>
+			</div>
 		</div>
-		
-		<div class="withdraw mui-clearfix">
-			<img src="../img/withdrawl.png" alt="" />
-			<span style="visibility: hidden;">￥</span>提现申请
-			<span class="mui-icon mui-icon-arrowright mui-pull-right arrow"></span>
-		</div>
-		
+
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init()
+			var vm = new Vue({
+				el:'.box',
+				data:{
+					balance:0
+				},
+				created:function(){
+					//此处调用ajax
+				},
+				methods:{
+					getdetails:function(){
+						mui.alert('暂无明细','系统提示','确定',null);
+					},
+					withdraw:function(){
+						mui.alert('没有收益，无法提现','系统提示','确定',null);
+					}
+				}
+			})
 		</script>
 	</body>
 

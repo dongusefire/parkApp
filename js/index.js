@@ -86,17 +86,16 @@ var home = {
 		this.map.addOverlay(marker);
 	},
 	createParkingView:function(){ //创建列表页窗口
-		this.ParkingView = plus.webview.create('parking.html','parking.html',{
-			statusbar:{
-				background:"#fff" 
-			},
-			top:0,
-			left:0,
-			width:'100%',
-			height:'100%',
-			position:"absolute",
-			zindex:9
-		});
+//		this.ParkingView = plus.webview.create('parking.html','parking.html',{
+//			statusbar:{
+//				background:"#fff" 
+//			},
+//			top:0,
+//			left:0,
+//			width:'100%',
+//			height:'100%',
+//			position:"absolute"
+//		});
 	},
 	openSearch:function(){
 		var options = {
@@ -243,12 +242,25 @@ var home = {
 			console.log(JSON.stringify(point),'点击地图')
 		};
 		mui('.header-bar').on('tap','#openMenu',function(){
-			_this.ParkingView.show('pop-in');
-//			if(mui.os.ios){
-//				plus.webview.show("parking.html");
-//			}else{
-//				plus.webview.show("parking.html","fade-in",300);
-//			};
+			mui.openWindow({
+				url:'parking.html',
+				id:'parking.html',
+				styles:{
+				    statusbar:{
+					    background:"#fff" 
+				    },
+				    top:0,
+				    left:0,
+				    position:"absolute"
+			  },
+			  extras:{
+			  	point:{
+					longitude:_this.point.lng,
+					latitude:_this.point.lat
+				},
+			  	data:_this.list
+			  }
+			});
 		});
 	},
 	getParking:function(point,sort){
