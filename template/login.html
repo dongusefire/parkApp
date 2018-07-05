@@ -109,7 +109,9 @@
 								plus.storage.setItem('token',res.data);
 								mui.toast('登陆成功');
 								//获取我的页面的窗口对象
-								var my = plus.webview.currentWebview().opener();
+								var old = plus.webview.currentWebview().opener();
+								var my = plus.webview.getWebviewById('template/my.html');
+								mui.fire(old,'readData');
 								mui.fire(my,'readData');
 								//触发我的页面（readData）,从而进行数据刷新
 								mui.later(function(){

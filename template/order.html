@@ -57,7 +57,7 @@
 		    	<p>欢迎使用，请您在选择车位时确认好选择时间，车牌号等信息，以确保预定信息准确提交<p>
 		    </div>
 		    <div class="fee">
-		    	<span class="tcf">停车费:</span><span class="num" id="num"></span>
+		    	<span class="tcf">停车费:</span><span class="num" id="num">0.00</span><span class="unit">元</span>
 		    	<button class='reserve' id='reserve'>立即预定</button>
 		    </div>
 		    
@@ -76,9 +76,20 @@
 			var Park_lot_num = ws.parking_lot_num;
 			var park_space_id = ws.park_space_id;
 			var that = this;
+			var park_lot_name = '';
+			
 			//获取从固定车位列表页带来的五条信息
 			var l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area;
-			(function($,doc,$$){
+			window.addEventListener('readData',function(){
+				token = plus.storage.getItem('token');
+				load(mui,document,jQuery);
+			});
+			if(!token || token==''){
+				login();
+			}else{
+				load(mui,document,jQuery);
+			};
+			function load($,doc,$$){
 				$.init();
 				//获取当前时间
 				function p(s) {
@@ -128,13 +139,13 @@
 				//车位信息请求ajax函数
 				function ajaxGet(head,data){
 					mui.ajax(head,{
+//					mui.ajax(head+'&park_lot_num='+data.park_lot_num,{
 						data:data,
 						dataType:'json',
 						type:'get',
 						success:function(res,status,xhr){
-							console.log(res);
+							console.log(JSON.stringify(res));
 							if( res.code== '200'){
-								alert(23333);
 								if(res.data == ''){
 									mui.alert('请添加车辆','系统提示','确定',function(){
 										mui.openWindow({
@@ -144,7 +155,7 @@
 									})
 								}else{
 									//设置车场信息
-									var _data = res.data.parking_info[0];
+									var _data = res.data.parkingInfo;
 									var _html ='<div class="name">'+
 										    		'<span class="big">'+_data.parking_lot_name+'</span>'+
 										    		'<span class="price">'+_data.price+'元</span>/小时</div>'+
@@ -152,8 +163,9 @@
 										    	'<p class="num">车位： <span class="occupied">'+_data.free_number +'</span>/'+_data.number+'</p>';
 									$$('.siteInfo').append(_html);
 									parkPrice = _data.price;
+									park_lot_name = _data.parking_lot_name;
 									//这里设置默认车牌号
-									var data = res.data.userCar_info;
+									var data = res.data.userCarInfo;
 									$$.each(data,function(name,value){
 										if(value.default == 1){
 											//设置默认车辆
@@ -169,45 +181,83 @@
 									for(let i=0;i<data.length;i++){
 										picker_data.push({value:data[i].car_id,text:data[i].car_number});
 									}
+									//选择车牌号
+									var carnoPicker = new $.PopPicker();
+									var showCarno = doc.getElementById('showCarno');
+									showCarno.addEventListener('tap',function(event){
+										carnoPicker.show(function(items){
+											showCarno.innerHTML = items[0].text;
+											showCarno.setAttribute('data-id',items[0].value);
+										})
+									},false);
 									carnoPicker.setData(picker_data);
 								}
 							}else if(res.code!=502 && res.code!=503){
 								mui.alert(res.msg,'系统提示','确定',null);
 							}
+						},
+						complete:function(xhr, status){
+							console.log(head,xhr.response,'ajax返回')
 						}
 					})
 				}
 				
-				//预定AJAX函数
+				function AJAXPOST(postData){
+					//提交预定AJAX函数
+					if(!ajaxSubmit_off){
+						ajaxSubmit_off = true;
+						mui.ajax(AJAX_PATH+'/user/reserve?token='+token,{
+							type:'post',
+							dataType:'json',
+							data:postData,
+							beforeSend:function(){
+								var mask = mui.createMask();//callback为用户点击蒙版时自动执行的回调；
+	//								mask.show();//显示遮罩
+								//发送等待过程中加过渡动画
+	//								$$("body").append('<div id="pload" style="text-align:center;line-height:140px;color:#9b9b9b; position:fixed;top:40%;z-index:1200;background:url(../img/icon_loading.png) top center no-repeat;width:100%;height:140px;margin:auto auto;">请稍候...</div>');
+							},
+							success:function(res){
+								ajaxSubmit_off = false;
+								if(res.code == 200){
+									//成功之后做的处理
+									mui.openWindow({
+										url:'successfulBooking.html',
+										id:'suc_book',
+										styles:{
+											popGesture: "close",
+											statusbar:{
+												background:"#fff" 
+											}
+										},
+									})
+								}else if(res.code!=502 && res.code!=503){
+									mui.alert(res.msg,'系统提示','确定',null);
+								}
+							}
+						})
+					}
+				}
 				
-				
+
+				//页面加载函数
 				$.ready(function(){
 					//车位信息获取
 					//这里需要加判断，固定车位和无差别车位的ajax请求有区别,封装请求函数
+					
 					if(l_park_space_id&&l_park_space_id!==''){
 						//固定车位接口请求
-						ajaxGet(AJAX_PATH+'/parking/time_list/d?token='+token,
-							{"park_lot_num":l_park_lot_num,
-							"park_space_sn":l_park_lot_num,
-							"p_b_num":l_p_b_num,
-							"p_b_ﬂoor":l_p_b_floor,
-							"p_b_area":l_p_b_area
+						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,
+							{	
+								"park_lot_num":l_park_lot_num,
+								"p_s_type":'d',
+								"park_space_id":l_park_space_id,
 							}
 						);
 					}else{
-						ajaxGet(AJAX_PATH+'/parking/time_list/c?token='+token,{"park_lot_num":Park_lot_num});
+						//无差别接口请求
+						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":Park_lot_num});
+//						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":'02051070001'});
 					}
-					
-					//选择车牌号
-					var carnoPicker = new $.PopPicker();
-					var showCarno = doc.getElementById('showCarno');
-					showCarno.addEventListener('tap',function(event){
-						carnoPicker.show(function(items){
-							showCarno.innerHTML = items[0].text;
-							showCarno.setAttribute('data-id',items[0].value);
-						})
-					},false);
-					
 					//时间拾取器
 					var btns = $('.time');
 					btns.each(function(i,btn){
@@ -221,7 +271,7 @@
 								});
 							}else{
 								var options = {
-									"value":"",
+									"value":'',
 									"beginYear":year,
 									"endYear":year
 								}
@@ -244,7 +294,7 @@
 										var bookPrice = parkPrice;
 									    var Difference = Math.ceil(timeDifference / 60);
 									    var bookFee = bookPrice * Difference;
-									    $$('#num').html((bookFee / 100).toFixed(2))
+									    $$('#num').html(bookFee);
 									};
 								})
 							}
@@ -260,7 +310,9 @@
 							}
 						},
 						extras:{
-							parking_lot_num:Park_lot_num
+//							parking_lot_num:'02051070001',
+							parking_lot_num:Park_lot_num,
+							park_name:park_lot_name
 						}
 					};
 					mui.openWindow("parkingArea.html","parkingArea.html",options);
@@ -268,8 +320,6 @@
 				//预定部分
 				var ajaxSubmit_off = false;
 				mui('.mui-content').on('tap','.reserve',function(){
-					
-				
 					//计算时间差，并验证
 					var time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html(),time3 = now;
 					var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
@@ -291,38 +341,36 @@
 							"car_id":carId, //上面接口获取到的car_id
 							"park_space_id":""
 					};
-					jsonData = JSON.stringify(jsonData);
-					
 					//3.发送预定请求
-					if(!ajaxSubmit_off){
-						ajaxSubmit_off = true;
-						mui.ajax(AJAX_PATH+'/user/reserve?token='+token,{
-							type:'post',
-							dataType:'json',
-							data:jsonData,
-							beforeSend:function(){
-								var mask = mui.createMask();//callback为用户点击蒙版时自动执行的回调；
-								mask.show();//显示遮罩
-								//发送等待过程中加过渡动画
-								$$("body").append('<div id="pload" style="text-align:center;line-height:140px;color:#9b9b9b; position:fixed;top:40%;z-index:1200;background:url(../img/icon_loading.png) top center no-repeat;width:100%;height:140px;margin:auto auto;">请稍候...</div>');
-							},
-							success:function(res){
-								ajaxSubmit_off = false;
-								if(res.code == 200){
-									//成功之后做的处理
-									mui.openWindow({
-										url:'successfulBooking.html',
-										id:'suc_book',
-									})
-								}else if(res.code!=502 && res.code!=503){
-									mui.alert(res.msg,'系统提示','确定',null);
-								}
-							}
-						})
+					//判断预定车位类型是无差别还是固定
+					if(l_park_space_id&&l_park_space_id!==''){
+						//自选固定车位
+						var jsonData = {
+							"type":"1",
+							"start":time1, //开始时间
+							"end":time2, //结束时间
+							"parking_lot_num":l_park_lot_num,
+//							"parking_lot_num":"02051070001",
+							"car_id":carId, //上面接口获取到的car_id
+//							"park_space_id":"219"
+							"park_space_id":l_park_space_id
+						};
+						var pData = JSON.stringify(jsonData);
+						AJAXPOST(pData);									
+					}else{
+						//无差别车位
+						var jsonData = {
+							"type":"0",
+							"start":time1, //开始时间
+							"end":time2, //结束时间
+							"parking_lot_num":l_park_lot_num,
+							"car_id":carId, //上面接口获取到的car_id
+						}
+						var pData = JSON.stringify(jsonData);
+						AJAXPOST(pData);
 					}
-					
 				});
-			})(mui,document,jQuery);
+			};
 			
 		</script>
 	</body>
