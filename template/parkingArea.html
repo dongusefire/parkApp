@@ -26,8 +26,10 @@
 		var ws = plus.webview.currentWebview();
     	var token = plus.storage.getItem('token');
 		var park_lot_num = ws.parking_lot_num;
+		var park_lot_name = ws.park_name? ws.park_name:localStorage.getItem('parkingName');
     	mui.init();
-    	mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
+    	$('.mui-title').html(park_lot_name);
+    	mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{ 
     		data:{
     			"park_lot_num":park_lot_num
     		},

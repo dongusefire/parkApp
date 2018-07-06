@@ -77,6 +77,7 @@
 			var Park_lot_num = ws.parking_lot_num;
 			var park_space_id = ws.park_space_id;
 			var park_lot_name = '';
+			var mask=mui.createMask();
 			//获取从固定车位列表页带来的五条信息
 			var l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area;
 			window.addEventListener('readData',function(){
@@ -165,6 +166,11 @@
 								}else{
 									//设置车场信息
 									var _data = res.data.parkingInfo;
+									//设置背景图片
+									var img = _data.parking_lot_img;
+									if(img !='' && img){
+										$$('.picture').css('background-image','img')
+									}
 									var _html ='<div class="name">'+
 										    		'<span class="big">'+_data.parking_lot_name+'</span>'+
 										    		'<span class="price">'+_data.price+'元</span>/小时</div>'+
@@ -227,13 +233,16 @@
 							dataType:'json',
 							data:postData,
 							beforeSend:function(){
-								var mask = mui.createMask();//callback为用户点击蒙版时自动执行的回调；
-	//								mask.show();//显示遮罩
+								plus.nativeUI.showWaiting();
+//								var mask = mui.createMask();//callback为用户点击蒙版时自动执行的回调；
+								mask.show();//显示遮罩
 								//发送等待过程中加过渡动画
 	//								$$("body").append('<div id="pload" style="text-align:center;line-height:140px;color:#9b9b9b; position:fixed;top:40%;z-index:1200;background:url(../img/icon_loading.png) top center no-repeat;width:100%;height:140px;margin:auto auto;">请稍候...</div>');
 							},
 							success:function(res){
 								ajaxSubmit_off = false;
+								plus.nativeUI.closeWaiting();
+								mask.close();//关闭遮罩层
 								if(res.code == 200){
 									//成功之后做的处理
 									mui.openWindow({
@@ -247,8 +256,15 @@
 										},
 									})
 								}else if(res.code!=502 && res.code!=503){
+									plus.nativeUI.closeWaiting();
+									mask.close();//关闭遮罩层
 									mui.alert(res.msg,'系统提示','确定',null);
 								}
+							},
+							error:function(){
+									plus.nativeUI.closeWaiting();
+									mask.close();//关闭遮罩层
+									mui.alert('服务器连接超时，请稍后再试','系统提示','确定',null);
 							}
 						})
 					}
@@ -340,12 +356,16 @@
 					//计算时间差，并验证
 					var time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html(),time3 = now;
 					var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
+					if(time1=='请选择开始时间'||time2=='请选择结束时间'){
+						mui.alert('请选择预定起始与结束时间','系统提示','确定',null);
+						return false;
+					}
 					if(TimeDifference < 15){
 						mui.alert('结束时间必须大于起始时间15分钟以上','系统提示','确定',null);
 						return false;
 					}
-					if(diff2 <= 0){
-						mui.alert('起始时间必须大于当前时间1分钟以上','系统提示','确定',null);
+					if(diff2 < 15){
+						mui.alert('起始时间必须大于当前时间15分钟以上','系统提示','确定',null);
 						return false;
 					}
 					//2.组织数据

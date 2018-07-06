@@ -252,7 +252,7 @@ var home = {
 				    top:0,
 				    left:0,
 				    position:"absolute"
-			  },
+			  	},
 			  extras:{
 			  	point:{
 					longitude:_this.point.lng,

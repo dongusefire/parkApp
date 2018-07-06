@@ -78,6 +78,7 @@ mui('.header-bar').on('change','#search-input',function(){
 })
 mui('.search-list').on('tap','.parking',function(){
 	var id = this.getAttribute('id');
+	localStorage.setItem('parkingName',vm.items[id].parking_lot_name);
 	plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.items[id].parking_lot_number+')');
 });
 mui('.search-list').on('tap','.goRoute',function(e){

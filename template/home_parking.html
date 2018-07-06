@@ -68,11 +68,12 @@
     		vm.readData(w);
     	});
     	mui('#body').on('tap','.goRoute',function(e){
-    		localStorage.setItem('parking_lot_address',vm.parking_lot_address)
+    		localStorage.setItem('parking_lot_address',vm.parking_lot_address);
     		plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.longitude+','+vm.latitude+')');
     		e.stopPropagation();
     	});
     	mui('#body').on('tap','#parking-box',function(){
+    		localStorage.setItem('parkingName',vm.parking_lot_name);
     		plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.parking_lot_number+')');
     	});
     </script>
