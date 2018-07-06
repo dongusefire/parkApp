@@ -107,8 +107,8 @@
     		};
     	});
     	mui('.g-content').on('tap','#clear',function(){
-			plus.storage.clear();
-			upwo();
+			localStorage.clear();
+			plus.storage.removeItem('search');
 			mui.toast("已清除");
     	});
     	mui('.g-content').on('tap','#notice',function(){

@@ -44,7 +44,7 @@
 			methods:{
 
 				getData:function(num){
-
+					var _this = this;
 					var jsonData = {
 							"park_lot_num":ws.park_lot_num,
 							"p_b_num":ws.p_b_num,
@@ -91,6 +91,8 @@
 								});
 								$('.space-list').append(html_);
 								
+							}else if(res.code==509){
+								_this.getData(num);
 							}else if(res.code!=502 && res.code!=503){
 								mui.alert(res.msg,'系统提示','确定',null);
 							};

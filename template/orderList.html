@@ -124,21 +124,16 @@
 											
 								})
 								$('.trans-box').html(html_);
-							}else{
+							}else if(res.code==509){
+								auto_ajax();
+							}else if(res.code!=502 && res.code!=503){
 								mui.alert(res.msg,'系统提示','确定',null);
-							}
+							};
 						}
 					})
 				}
 				
-				
-				//未完成
-				$('.choose li').click(function(){
-					var status = $(this).children().attr('data-done');
-					console.log(status);
-					$('#trans-box').html('');
-					$(this).children('span').addClass('active');
-					$(this).siblings().children('span').removeClass('active');
+				function orderList(status){
 					if(status=='running'){
 							r_html = '';
 							mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
@@ -216,9 +211,11 @@
 										});
 										$('#trans-box').empty();
 										$('#trans-box').html(r_html);
-									}else{
+									}else if(res.code==509){
+										orderList(status);
+									}else if(res.code!=502 && res.code!=503){
 										mui.alert(res.msg,'系统提示','确定',null);
-									}
+									};
 								}
 						})
 					}else if(status=='success'){
@@ -297,15 +294,26 @@
 										});
 										$('#trans-box').empty();
 										$('#trans-box').html(s_html);
-									}else{
+									}else if(res.code==509){
+										orderList(status);
+									}else if(res.code!=502 && res.code!=503){
 										mui.alert(res.msg,'系统提示','确定',null);
-									}
+									};
 								}
 						})
 					}else if(status == ''){
 						auto_ajax();
 					}
-					
+				};
+				
+				//未完成
+				$('.choose li').click(function(){
+					var status = $(this).children().attr('data-done');
+					console.log(status);
+					$('#trans-box').html('');
+					$(this).children('span').addClass('active');
+					$(this).siblings().children('span').removeClass('active');
+					orderList(status);
 				});
 				
 				//点击进入订单详情

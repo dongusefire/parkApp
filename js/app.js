@@ -75,11 +75,13 @@ mui.ajaxSettings.beforeSend = function(xhr, setting) {
 };
 //设置ajax全局的complete
 mui.ajaxSettings.complete = function(xhr, status) {
-	console.log('complete:' + status,xhr);
+	console.log('complete:' + status,xhr,xhr.response);
 	if(xhr.response&&xhr.response!=''){
 		var res = mui.parseJSON(xhr.response);
 		if(res.code==502 || res.code==503){
 			login('登录已过期')
+		}else if(res.code==509){
+			plus.storage.setItem('token',res.data.newToken);
 		};
 	};
 };

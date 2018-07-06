@@ -247,13 +247,13 @@
 									//成功之后做的处理
 									mui.openWindow({
 										url:'successfulBooking.html',
-										id:'suc_book',
+										id:'successfulBooking.html',
 										styles:{
 											popGesture: "close",
 											statusbar:{
 												background:"#fff" 
 											}
-										},
+										}
 									})
 								}else if(res.code!=502 && res.code!=503){
 									plus.nativeUI.closeWaiting();

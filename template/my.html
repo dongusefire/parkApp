@@ -71,28 +71,32 @@
 				token:'' 
 			},
 			methods:{
+				getUserInfo:function(){
+					var _this = this;
+					this.token = plus.storage.getItem('token');
+					mui.ajax(AJAX_PATH+'/user/info?token='+this.token,{
+						type:'get',
+						dataType:'json',
+						success:function(res){
+							if(res.code == 200){
+								_this.num = res.data.dcc_score;
+								_this.id = res.data.id;
+								_this.wallet = res.data.wallet;
+							}else if(res.code==509){
+								_this.getUserInfo();
+							}
+						},
+						complete:function(xhr, status){
+							console.log('阻止触发全局的complete事件')
+						}
+					});
+				},
 				readData:function(){
 					var userName = plus.storage.getItem('phone_number');
 					if(userName && userName!=""){
 						userName.replace(userName.substring(3, 8),'*****');
 						this.userName = userName;
 						this.islogin = true;
-						var _this = this;
-						this.token = plus.storage.getItem('token');
-						mui.ajax(AJAX_PATH+'/user/info?token='+this.token,{
-							type:'get',
-							dataType:'json',
-							success:function(res){
-								if(res.code == 200){
-									_this.num = res.data.dcc_score;
-									_this.id = res.data.id;
-									_this.wallet = res.data.wallet;
-								}
-							},
-							complete:function(){
-								console.log('阻止触发全局的complete事件')
-							}
-						});
 					}else{
 						this.islogin = false;
 					};

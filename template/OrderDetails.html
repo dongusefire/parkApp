@@ -77,72 +77,77 @@
 				var fixed = '';
 				var fee = '';
 				var manage = '';
-				mui.ajax(AJAX_PATH+'/user/order/detail?token='+token,{
-					type:'get',
-					dataType:'json',
-					data:{
-						"park_id":park_id,
-						"order_num":order_num
-					},
-					success:function(res){
-						console.log(res);
-						if(res.code == 200){
-							//逻辑操作
-							var park_info = res.data.park_info[0];
-							var order_info = res.data.order_info[0];
-							if(order_info.flag == 'D'){
-								fixed = '固定'
-							}else if(order_info.flag == 'C'){
-								fixed = '不固定'
-							}
-							html_+= '<div class="mui-details">'+
-										'<div class="name">'+
-								    		'<span class="big">'+park_info.parking_lot_name+'</span>'+
-								    		'<a data-id="'+park_info.id+'" class="price">详情&nbsp;></a>'+
-								    	'</div>'+
-								    	'<p class="address"><img src="../img/Page1.png"/>'+park_info.parking_lot_address+'</p>'+
-								    	'<p class="num">车位： <span class="occupied">'+fixed+'</span>'+
-								    	'</p>'+
-									'</div>'+
-									'<div class="car-num">'+
-										'<p class="plate-num">车牌号：<span style="color:#666666">'+order_info.car_num+'</span></p>'+
-									'</div>'+
-									'<div class="park-time">'+
-										'<p class="time lower-time">'+
-											'<span class="state-time">下单时间:</span>'+
-											'<span class="date-time">'+order_info.submit_time+'</span>'+
-										'</p>'+
-										'<p class="time in-time">'+
-											'<span class="state-time">入场时间:</span>'+
-											'<span class="date-time"s>2018.5.20&nbsp;16:45</span>'+
-										'</p>'+
-										'<p class="time out-time">'+
-											'<span class="state-time">离场时间:</span>'+
-											'<span class="date-time">2018.5.20&nbsp;16:45</span>'+
-										'</p>'+
-									'</div>';
-								fee+= '<p class="park-rate">停车费:<span>'+order_info.pay_amount+'</span></p>';
-								//订单状态判断
-								if(order_info.order_status==5||order_info.order_status==6||order_info.order_status==7){
-									manage+='<p class="cancel">删除订单</p>';
-								}else if(order_info.order_status==1){
-									manage+='<p class="cancel">取消订单</p>'+
-											'<p class="Nav">支付</p>';
-								}else if(order_info.order_status==2){
-									manage+='<p class="cancel">取消订单</p>'+
-	    									'<p class="Nav">导航</p>';
-								}else if(order_info.order_status==3){
-									manage+='';
+				function getOrderDetail(){
+					mui.ajax(AJAX_PATH+'/user/order/detail?token='+token,{
+						type:'get',
+						dataType:'json',
+						data:{
+							"park_id":park_id,
+							"order_num":order_num
+						},
+						success:function(res){
+							console.log(res);
+							if(res.code == 200){
+								//逻辑操作
+								var park_info = res.data.park_info[0];
+								var order_info = res.data.order_info[0];
+								if(order_info.flag == 'D'){
+									fixed = '固定'
+								}else if(order_info.flag == 'C'){
+									fixed = '不固定'
 								}
-								//添加dom
-								$('.mui-main').append(html_);
-								$('.Parking-Rate').append(fee);
-								$('.state-btn').append(manage);
-						}else{
-							mui.alert(res.msg,'系统提示','确定',null);
-						};
-					}
-				})
+								html_+= '<div class="mui-details">'+
+											'<div class="name">'+
+									    		'<span class="big">'+park_info.parking_lot_name+'</span>'+
+									    		'<a data-id="'+park_info.id+'" class="price">详情&nbsp;></a>'+
+									    	'</div>'+
+									    	'<p class="address"><img src="../img/Page1.png"/>'+park_info.parking_lot_address+'</p>'+
+									    	'<p class="num">车位： <span class="occupied">'+fixed+'</span>'+
+									    	'</p>'+
+										'</div>'+
+										'<div class="car-num">'+
+											'<p class="plate-num">车牌号：<span style="color:#666666">'+order_info.car_num+'</span></p>'+
+										'</div>'+
+										'<div class="park-time">'+
+											'<p class="time lower-time">'+
+												'<span class="state-time">下单时间:</span>'+
+												'<span class="date-time">'+order_info.submit_time+'</span>'+
+											'</p>'+
+											'<p class="time in-time">'+
+												'<span class="state-time">入场时间:</span>'+
+												'<span class="date-time"s>2018.5.20&nbsp;16:45</span>'+
+											'</p>'+
+											'<p class="time out-time">'+
+												'<span class="state-time">离场时间:</span>'+
+												'<span class="date-time">2018.5.20&nbsp;16:45</span>'+
+											'</p>'+
+										'</div>';
+									fee+= '<p class="park-rate">停车费:<span>'+order_info.pay_amount+'</span></p>';
+									//订单状态判断
+									if(order_info.order_status==5||order_info.order_status==6||order_info.order_status==7){
+										manage+='<p class="cancel">删除订单</p>';
+									}else if(order_info.order_status==1){
+										manage+='<p class="cancel">取消订单</p>'+
+												'<p class="Nav">支付</p>';
+									}else if(order_info.order_status==2){
+										manage+='<p class="cancel">取消订单</p>'+
+		    									'<p class="Nav">导航</p>';
+									}else if(order_info.order_status==3){
+										manage+='';
+									}
+									//添加dom
+									$('.mui-main').append(html_);
+									$('.Parking-Rate').append(fee);
+									$('.state-btn').append(manage);
+							}else if(res.code==509){
+								getOrderDetail();
+							}else if(res.code!=502 && res.code!=503){
+								mui.alert(res.msg,'系统提示','确定',null);
+							};
+						}
+					})
+				};
+				getOrderDetail();
 			})(jQuery)
 		</script>
 	</body>

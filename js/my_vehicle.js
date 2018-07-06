@@ -35,7 +35,9 @@ var vm = new Vue({
 				success:function(res,textStatus,xhr){
 					if(res.code==200){
 						_this.items = res.data;
-					}else{
+					}else if(res.code==509){
+						_this.readData();
+					}else if(res.code!=502 && res.code!=503){
 						mui.alert(res.msg,'系统提示','确定',null);
 					};
 				}
@@ -62,6 +64,8 @@ var vm = new Vue({
 				success:function(res,textStatus,xhr){
 					if(res.code==200){
 						mui.toast(res.msg)
+					}else if(res.code==509){
+						_this.changeDefault(index);
 					}else{
 						for(var i=0;i<list.length;i++){
 							if(i==oid){
@@ -70,7 +74,9 @@ var vm = new Vue({
 								list[i].default = 0;
 							};
 						};
-						mui.alert(res.msg,'系统提示','确定',null);
+						if(res.code!=502 && res.code!=503){
+							mui.alert(res.msg,'系统提示','确定',null);
+						};
 					};
 				}
 			});
@@ -93,7 +99,9 @@ var vm = new Vue({
 							};
 						};
 						_this.items = arr;
-					}else{
+					}else if(res.code==509){
+						_this.removeVehicle(index);
+					}else if(res.code!=502 && res.code!=503){
 						mui.alert(res.msg,'系统提示','确定',null);
 					};
 				}
