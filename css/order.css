@@ -101,7 +101,11 @@ img {
 }
 .fee .num {
 	font-size: 14px;
-	/*color: #000000;*/
+	letter-spacing: 0;
+	line-height: 20px;
+}
+.fee .unit {
+	font-size: 14px;
 	letter-spacing: 0;
 	line-height: 20px;
 }
