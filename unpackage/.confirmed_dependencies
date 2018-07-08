@@ -27,7 +27,8 @@
 			"template/login.html",
 			"template/my_vehicle.html",
 			"template/orderList.html",
-			"template/wallet.html"
+			"template/wallet.html",
+			"template/setting.html"
 		]
 	},
 	"template/my_vehicle.html": {

@@ -46,9 +46,10 @@ var home = {
 	createParking:function(){
 		var _url = 'home_parking.html';
 		var list = this.list;
+		var top = window.innerHeight- 75 -46;
 		for(var i=0;i<list.length;i++){
 			var sub = plus.webview.create(_url,'home_parking'+list[i].parking_lot_number,{
-				bottom:'7px',
+				top:top,
 				left:'3%',
 				height:'96px',
 				width:'94%',
@@ -77,12 +78,12 @@ var home = {
 				return false;
 			};
 			if(mui.os.ios){
-				plus.webview.show(_this.list[marker.uuid].parking_lot_number);
+				plus.webview.show('home_parking'+_this.list[marker.uuid].parking_lot_number);
 			}else{
-				plus.webview.show(_this.list[marker.uuid].parking_lot_number,"fade-in",300);
+				plus.webview.show('home_parking'+_this.list[marker.uuid].parking_lot_number,"fade-in",300);
 			};
 			if(_this.activeParking!=''){
-				plus.webview.hide(_this.activeParking);
+				plus.webview.hide('home_parking'+_this.activeParking);
 			};
 			_this.activeParking = _this.list[marker.uuid].parking_lot_number;
 		};
@@ -241,9 +242,9 @@ var home = {
 	},
 	bindEvent:function(){
 		var _this = this;
-		this.map.onclick = function(point){  //获取当前用户点击的地里位置
-			console.log(JSON.stringify(point),'点击地图')
-		};
+//		this.map.onclick = function(point){  //获取当前用户点击的地里位置
+////			console.log(JSON.stringify(point),'点击地图')
+//		};
 		mui('.header-bar').on('tap','#openMenu',function(){
 			mui.openWindow({
 				url:'parking.html',
