@@ -1,8 +1,8 @@
 mui.init();
 mui.plusReady(function(){
-	vm.getSearch();
 	var ws = plus.webview.currentWebview();
 	vm.point = ws.point;
+	vm.getSearch();
 })
 var vm = new Vue({
 	el:'.mui-content',

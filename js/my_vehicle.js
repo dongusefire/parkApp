@@ -4,16 +4,17 @@ var vm = new Vue({
 	data:{
 		items:[],
 		car_id:'',
-		token:plus.storage.getItem('token')
-	},
-	created:function(){
-		if(this.token && this.token!=''){
-			this.readData();
-		}else{
-			login('尚未登录或登录已过期')
-		};
+		token:null
 	},
 	methods:{
+		getData:function(){
+			this.token = plus.storage.getItem('token');
+			if(this.token && this.token!=''){
+				this.readData();
+			}else{
+				login('尚未登录或登录已过期')
+			};
+		},
 		openView:function(){
 			mui.openWindow('add_vehicle.html','add_vehicle.html',{
 				styles:{
@@ -108,6 +109,9 @@ var vm = new Vue({
 			});
 		}
 	}
+})
+mui.plusReady(function(){
+	vm.getData();
 })
 //设置更新事件
 window.addEventListener('updata',function(){

@@ -31,18 +31,18 @@
 	<script type="text/javascript">
 		mui.init();
 		var html_ = '',floor_ = '',text1 = '', text2 = '';
-		var ws = plus.webview.currentWebview();
-    	var token = plus.storage.getItem('token');
+		var ws,token;
+    	mui.plusReady(function(){
+    		ws = plus.webview.currentWebview();
+    		token = plus.storage.getItem('token');
+    		vm.getData(1);
+    	});
 		var vm = new Vue({
 			el:'.mui-content',
 			data:{
 				
 			},
-			created:function(){
-				this.getData(1);
-			},
 			methods:{
-
 				getData:function(num){
 					var _this = this;
 					var jsonData = {
@@ -53,7 +53,6 @@
 							"page":num,
 							"size":20
 					};
-
 					mui.ajax(AJAX_PATH+'/parking/self/list?token='+token,{
 						data:jsonData,
 						dataType:'json',

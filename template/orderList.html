@@ -29,8 +29,12 @@
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script>
-			var token = plus.storage.getItem('token');
-			(function($){
+			var token;
+			mui.plusReady(function(){
+				token = plus.storage.getItem('token');
+				readData(jQuery);
+			});
+			function readData($){
 				mui.init();
 				auto_ajax();
 				function timestampToTime(timestamp,type) {
@@ -336,7 +340,7 @@
 					})
 				});
 				
-			})(jQuery)
+			};
 		</script>
 	</body>
 </html>

@@ -245,12 +245,13 @@
 					"template/home_search.html",
 					"img/cd.png",
 					"js/index.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"template/home_parking.html"
 				],
 				"refer": [
-					"template/home_parking.html",
 					"template/parking.html",
-					"template/search.html"
+					"template/search.html",
+					"template/order.html"
 				],
 				"priority": 0
 			},
@@ -301,7 +302,9 @@
 					"css/mui.min.css",
 					"js/my_vehicle.js"
 				],
-				"refer": [],
+				"refer": [
+					"template/login.html"
+				],
 				"priority": 0
 			},
 			"template/search.html": {
@@ -325,6 +328,13 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"template/order.html": {
+				"resources": [],
+				"refer": [
+					"template/parkingArea.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -340,7 +350,6 @@
 				"js/mui.picker.js",
 				"css/carportShare.css",
 				"img/Page1.png",
-				"template/order.html",
 				"css/mui.css",
 				"css/order.css",
 				"img/Page 1 Copy.png",

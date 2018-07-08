@@ -70,29 +70,32 @@
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			//获取创建当前窗口的webview对象
-			var ws = plus.webview.currentWebview();
-			var token = plus.storage.getItem('token');
-//			ws.parking_lot_num = 11010200003;
-			var Park_lot_num = ws.parking_lot_num;
-			var park_space_id = ws.park_space_id;
-			var park_lot_name = '';
+			var ws,token,Park_lot_num,park_space_id,park_lot_name;
 			var mask=mui.createMask();
 			//获取从固定车位列表页带来的五条信息
-			var l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area;
+			var l_park_lot_num,l_park_space_id,l_p_b_num,l_p_b_floor,l_p_b_area;
 			window.addEventListener('readData',function(){
 				token = plus.storage.getItem('token');
 				setTimeout(function(){
 					load(mui,document,jQuery);
 				},800);
 			});
-			if(!token || token==''){
-				login();
-			}else{
-				setTimeout(function(){
-					load(mui,document,jQuery);
-				},800);
-			};
+			mui.plusReady(function(){
+				//获取创建当前窗口的webview对象
+				ws = plus.webview.currentWebview();
+				token = plus.storage.getItem('token');
+				Park_lot_num = ws.parking_lot_num;
+				park_space_id = ws.park_space_id;
+				//获取从固定车位列表页带来的五条信息
+				l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area;
+				if(!token || token==''){
+					login();
+				}else{
+					setTimeout(function(){
+						load(mui,document,jQuery);
+					},800);
+				};
+			});
 			function load($,doc,$$){
 				$.init();
 				//获取当前时间

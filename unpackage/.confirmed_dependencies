@@ -1,1 +1,41 @@
-null
+{
+	"index.html": {
+		"resources": [
+			"template/home.html"
+		],
+		"refer": [
+			"template/guide.html",
+			"template/my.html",
+			"template/home.html"
+		]
+	},
+	"template/home.html": {
+		"resources": [
+			"template/home_search.html",
+			"template/home_parking.html"
+		],
+		"refer": [
+			"template/home_search.html",
+			"template/home_parking.html",
+			"template/parking.html",
+			"template/order.html",
+			"template/search.html"
+		]
+	},
+	"template/my.html": {
+		"refer": [
+			"template/login.html",
+			"template/my_vehicle.html"
+		]
+	},
+	"template/my_vehicle.html": {
+		"refer": [
+			"template/login.html"
+		]
+	},
+	"template/order.html": {
+		"refer": [
+			"template/parkingArea.html"
+		]
+	}
+}

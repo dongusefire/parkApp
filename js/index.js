@@ -16,7 +16,7 @@ var home = {
 		var _this=this;
 		this.map.getUserLocation(function(state, point){ //获取用户的当前位置信息
 			if( 0 == state ){
-				console.log(JSON.stringify(point))
+				console.log(JSON.stringify(point),'用户当前位置信息')
 				_this.point={
 					lng:point.longitude,
 					lat:point.latitude
@@ -24,21 +24,24 @@ var home = {
 				_this.setCenter(point);
 				_this.getParking(point,'');
 			}else{
-				alert( "Failed!" );//用户拒绝授权
+				alert( "暂未授权!" );//用户拒绝授权
 			};
 		});
 	},
 	createSearchView:function(){//创建覆盖在地图上的搜索窗口
-		var _url ='home_search.html'
+		var _url ='home_search.html';
+		var bottom = window.innerHeight- 40-56;
 		this.ws.append(plus.webview.create(_url,_url,{
+			height:'40px',
+			bottom:bottom,
 			top:'56px',
 			left:'7%',
-			height:'40px',
 			width:'86%',
 			position:'absolute',
 			scrollIndicator:'none',
 			background:'transparent'
 		}));
+		
 	},
 	createParking:function(){
 		var _url = 'home_parking.html';
