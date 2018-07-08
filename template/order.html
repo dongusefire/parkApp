@@ -153,7 +153,6 @@
 						success:function(res,status,xhr){
 							console.log(JSON.stringify(res));
 							if( res.code== '200'){
-								console.log(res);
 								if(res.data.userCarInfo == ''){
 									mui.alert('请添加车辆','系统提示','确定',function(){
 										mui.openWindow({
@@ -337,7 +336,12 @@
 										var bookPrice = parkPrice;
 									    var Difference = timeDifference / 60;
 									    var bookFee = bookPrice * Difference;
-									    $$('#num').html(bookFee);
+									    if(bookFee <= 0){
+									    	mui.alert('结束时间必须大于起始时间','系统提示','确定',null);
+									    	$$('#num').html('0.00');
+									    }else{
+									    	$$('#num').html(bookFee);
+									    }
 									};
 								})
 							}

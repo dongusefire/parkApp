@@ -40,7 +40,8 @@
 	"template/order.html": {
 		"refer": [
 			"template/parkingArea.html",
-			"template/successfulBooking.html"
+			"template/successfulBooking.html",
+			"template/add_vehicle.html"
 		]
 	},
 	"template/parkingArea.html": {
