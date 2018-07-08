@@ -292,7 +292,8 @@
 					"css/mui.min.css"
 				],
 				"refer": [
-					"template/login.html"
+					"template/login.html",
+					"template/OrderDetails.html"
 				],
 				"priority": 0
 			},
@@ -303,7 +304,8 @@
 					"js/my_vehicle.js"
 				],
 				"refer": [
-					"template/login.html"
+					"template/login.html",
+					"template/add_vehicle.html"
 				],
 				"priority": 0
 			},
@@ -332,7 +334,36 @@
 			"template/order.html": {
 				"resources": [],
 				"refer": [
-					"template/parkingArea.html"
+					"template/parkingArea.html",
+					"template/successfulBooking.html"
+				],
+				"priority": 0
+			},
+			"template/parkingArea.html": {
+				"resources": [],
+				"refer": [
+					"template/parking-spaces.html"
+				],
+				"priority": 0
+			},
+			"template/OrderDetails.html": {
+				"resources": [],
+				"refer": [
+					"template/siteDetails.html"
+				],
+				"priority": 0
+			},
+			"template/siteDetails.html": {
+				"resources": [],
+				"refer": [
+					"template/login.html"
+				],
+				"priority": 0
+			},
+			"template/successfulBooking.html": {
+				"resources": [],
+				"refer": [
+					"template/OrderDetails.html"
 				],
 				"priority": 0
 			}

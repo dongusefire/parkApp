@@ -25,17 +25,46 @@
 	"template/my.html": {
 		"refer": [
 			"template/login.html",
-			"template/my_vehicle.html"
+			"template/my_vehicle.html",
+			"template/orderList.html",
+			"template/wallet.html"
 		]
 	},
 	"template/my_vehicle.html": {
 		"refer": [
-			"template/login.html"
+			"template/login.html",
+			"template/add_vehicle.html"
 		]
 	},
 	"template/order.html": {
 		"refer": [
-			"template/parkingArea.html"
+			"template/parkingArea.html",
+			"template/successfulBooking.html"
+		]
+	},
+	"template/parkingArea.html": {
+		"refer": [
+			"template/parking-spaces.html"
+		]
+	},
+	"template/orderList.html": {
+		"refer": [
+			"template/OrderDetails.html"
+		]
+	},
+	"template/OrderDetails.html": {
+		"refer": [
+			"template/siteDetails.html"
+		]
+	},
+	"template/siteDetails.html": {
+		"refer": [
+			"template/login.html"
+		]
+	},
+	"template/successfulBooking.html": {
+		"refer": [
+			"template/OrderDetails.html"
 		]
 	}
 }

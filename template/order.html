@@ -171,9 +171,13 @@
 									//设置车场信息
 									var _data = res.data.parkingInfo;
 									//设置背景图片
-									var img = _data.parking_lot_img;
-									if(img !='' && img){
-//										$$('.picture').css('background-image');
+									var imgSrc = _data.parking_lot_img;
+									if(imgSrc !='' && imgSrc){
+										if(imgSrc.indexOf('http')!=-1){
+											$$('.picture').css('background-image','url('+imgSrc+')');
+										}else{
+											$$('.picture').css('background-image','url(http://bj.ecosysnet.com:7098/'+imgSrc+')');
+										}
 									}
 									var _html ='<div class="name">'+
 										    		'<span class="big">'+_data.parking_lot_name+'</span>'+
@@ -256,6 +260,10 @@
 											statusbar:{
 												background:"#fff" 
 											}
+										},
+										extras:{
+											order_num:res.data.order_sn,
+											park_id:res.data.park_id
 										}
 									})
 								}else if(res.code!=502 && res.code!=503){
@@ -327,7 +335,7 @@
 									if(time1!='' && time2!=''){
 										var timeDifference = GetDateDiff(time1, time2, "minute");
 										var bookPrice = parkPrice;
-									    var Difference = Math.ceil(timeDifference / 60);
+									    var Difference = timeDifference / 60;
 									    var bookFee = bookPrice * Difference;
 									    $$('#num').html(bookFee);
 									};

@@ -6,6 +6,7 @@
 		<title>预定成功</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" href="../css/successfulBooking.css" />
 	</head>
 
@@ -28,12 +29,38 @@
 	    </div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
+			var ws,pid,order_num;
 			mui.init();
+			mui.plusReady(function(){
+				ws = plus.webview.currentWebview();
+				pid = ws.park_id;
+				order_num = ws.order_num
+			})
 			document.getElementById('returnhome').addEventListener('tap',function(){
-				alert('返回首页')
+				var wss = plus.webview.all();
+				var str = '';
+				for(var i=0;i<wss.length;i++){
+					str+=wss[i].id+'&';
+					if((wss[i].id.indexOf('HBuilder')==-1 && wss[i].id.indexOf('home')==-1)&&(wss[i].id.indexOf('template')==-1)){
+						wss[i].close();
+					};
+				};
 			})
 			document.getElementById('seeorder').addEventListener('tap',function(){
-				alert('查看订单')
+				mui.openWindow({
+					url:'OrderDetails.html',
+					id:'OrderDetails.html',
+					styles:{
+						popGesture: "close",
+						statusbar:{
+							background:"#fff" 
+						}
+					},
+					extras:{
+						park_id:pid,
+						order_num:order_num
+					}
+				})
 			})
 		</script>
 	</body>

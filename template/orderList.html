@@ -321,9 +321,9 @@
 				});
 				
 				//点击进入订单详情
-				$("#trans-box").on('click','.order-nav .order-text,.order-time',function(){
+				$("#trans-box").on('click','.order-text,.order-time',function(){
 					//获取订单编号和停车场编号
-					var order_num = this.getAttribute('data-onum'),park_id = this.getAttribute('data-pid');
+					var order_num = $(this).parents('.order-nav').attr('data-onum'),park_id = $(this).parents('.order-nav').attr('data-pid');
 					mui.openWindow({
 						url:'OrderDetails.html',
 						id:'orderDetails',

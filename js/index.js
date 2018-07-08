@@ -47,7 +47,7 @@ var home = {
 		var _url = 'home_parking.html';
 		var list = this.list;
 		for(var i=0;i<list.length;i++){
-			var sub = plus.webview.create(_url,list[i].parking_lot_number,{
+			var sub = plus.webview.create(_url,'home_parking'+list[i].parking_lot_number,{
 				bottom:'7px',
 				left:'3%',
 				height:'96px',
