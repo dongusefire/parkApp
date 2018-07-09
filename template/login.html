@@ -32,6 +32,7 @@
     	<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 			mui.init();
+			var gpush=null;
 			function sendCode(){
 				if(countdown == 0){
 					seconds.style.display = 'none';
@@ -93,11 +94,19 @@
 					return false;
 				};
 				if(!ajaxSubmit_off){
+					var gpush = plus.push.getClientInfo();
+					var device = plus.os.name;
+					var cid = gpush.clientid;
+					if(cid==''|| cid==null){
+						console.log('未获取到clientid')
+					};
 					ajaxSubmit_off = true;
 					mui.ajax(AJAX_PATH+'/auth/login',{
 						data:{
 							"phone_number":phone_number,
-							"code":code
+							"code":code,
+							"device":device,
+							"cid":cid
 						},
 						dataType:'json',
 						type:'POST',

@@ -45,11 +45,6 @@
 			var showGuide = plus.storage.getItem("lauchFlag");
 			//仅支持竖屏显示
 			plus.screen.lockOrientation("portrait-primary");
-			self.setStyle({
-				statusbar:{
-					background:'#fff'
-				}
-			});
 			for(var i = 0; i < subpages.length; i++) {
 				var temp = {};
 				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);

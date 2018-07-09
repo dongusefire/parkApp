@@ -1,6 +1,63 @@
 var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
-var isNetwork = true; //客户端网络状态  false无网络，true有网络
-var pushServer = "http://demo.dcloud.net.cn/push/?"; 
+var app = {
+	pushServer:"http://demo.dcloud.net.cn/push/?",
+	isNetwork:true, //客户端网络状态  false无网络，true有网络
+	createLocalPushMsg:function(msg){ //创建本地推送消息
+		var options = {cover:false};
+			var str = '2018/7/5';
+			str += ":"+str;
+			plus.push.createMessage( msg, "LocalMSG", options );
+	},
+	requireNotiMsg:function(){ //发送"普通通知"消息
+		if(navigator.userAgent.indexOf('StreamApp')>0){
+			plus.nativeUI.toast('当前环境暂不支持发送推送消息');
+			return;
+		}
+		var inf = plus.push.getClientInfo();
+		console.log(JSON.stringify(inf))
+		var url = app.pushServer+'type=noti&appid='+encodeURIComponent(plus.runtime.appid);
+		inf.id&&(url+='&id='+inf.id);
+		url += ('&cid='+encodeURIComponent(inf.clientid));
+		if(plus.os.name == 'iOS'){
+			url += ('&token='+encodeURIComponent(inf.token));
+		}
+		url += ('&title='+encodeURIComponent('Hello H5+'));
+		url += ('&content='+encodeURIComponent(msg));
+		url += ('&version='+encodeURIComponent(plus.runtime.version));
+		console.log(url,'发送推送的web地址')
+		plus.runtime.openURL( url );
+	},
+	pushEvent:function(){ //绑定全局事件
+		// 监听点击消息事件
+		plus.push.addEventListener( "click", function( msg ) {
+			// 判断是从本地创建还是离线推送的消息
+			switch( msg.payload ) {
+				case "LocalMSG":
+					alert( "点击本地创建消息启动：" +JSON.stringify(msg));
+				break;
+				default:
+					alert( "点击离线推送消息启动："+ +JSON.stringify(msg));
+				break;
+			}
+			// 提示点击的内容
+			//plus.nativeUI.alert( msg.content );
+		},false);
+		// 监听在线消息事件
+		plus.push.addEventListener( "receive", function( msg ) {
+			if ( msg.aps ) {  // Apple APNS message
+				alert( "接收到在线APNS消息：" +JSON.stringify(msg));
+			} else {
+				alert( "接收到在线透传消息：" +JSON.stringify(msg));
+			};
+		},false);
+	},
+	init:function(){
+		this.pushEvent();
+	}
+}
+document.addEventListener('plusready',function(){
+	app.init();
+},false);
 //发送验证码  resCallback:ajax成功后的回调；completeCallback:ajax完成后的回调
 function smsSend(phone,type,resCallback,completeCallback){
 	mui.ajax(AJAX_PATH+'/sms/send',{
@@ -38,36 +95,9 @@ function login(str){
 		});
 	});
 };
-//创建本地推送消息
-function createLocalPushMsg(msg){
-	var options = {cover:false};
-	var str = '2018/7/5';
-	str += ":"+str;
-	plus.push.createMessage( msg, "LocalMSG", options );
-}
-//发送"普通通知"消息
-function requireNotiMsg(msg){
-	if(navigator.userAgent.indexOf('StreamApp')>0){
-		plus.nativeUI.toast('当前环境暂不支持发送推送消息');
-		return;
-	}
-	var inf = plus.push.getClientInfo();
-	console.log(JSON.stringify(inf))
-	var url = pushServer+'type=noti&appid='+encodeURIComponent(plus.runtime.appid);
-	inf.id&&(url+='&id='+inf.id);
-	url += ('&cid='+encodeURIComponent(inf.clientid));
-	if(plus.os.name == 'iOS'){
-		url += ('&token='+encodeURIComponent(inf.token));
-	}
-	url += ('&title='+encodeURIComponent('Hello H5+'));
-	url += ('&content='+encodeURIComponent(msg));
-	url += ('&version='+encodeURIComponent(plus.runtime.version));
-	console.log(url,'发送推送的web地址')
-	plus.runtime.openURL( url );
-}
 //设置ajax全局的beforeSend
 mui.ajaxSettings.beforeSend = function(xhr, setting) {
-	if(!isNetwork){
+	if(!app.isNetwork){
 		xhr.abort();
 		return false;
 	};
