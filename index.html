@@ -43,6 +43,11 @@
 		mui.plusReady(function() {
 			self = plus.webview.currentWebview(); //通过plus.webview可获取应用界面管理对象。 currentWebview方法获取当前窗口的WebviewObject对象
 			var showGuide = plus.storage.getItem("lauchFlag");
+			self.setStyle({
+				statusbar:{
+					background:'#fff'
+				}
+			});
 			//仅支持竖屏显示
 			plus.screen.lockOrientation("portrait-primary");
 			for(var i = 0; i < subpages.length; i++) {

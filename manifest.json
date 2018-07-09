@@ -39,7 +39,7 @@
 	},
 	"plus": {
 		"statusbar": {
-			"immersed": true,
+			"immersed": "supportedDevice",
 			"style": "dark"
 		},
 		"popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，none为无侧滑返回功能，hide为侧滑隐藏Webview窗口。参考ask.dcloud.net.cn/article/102*/
