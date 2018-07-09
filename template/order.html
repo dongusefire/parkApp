@@ -14,7 +14,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
+			<a class="mui-action-back  mui-pull-left back" id="back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
 			<a class="mui-pull-right optional">自选车位</a>
 			<h1 class="mui-title">预定车位</h1>
 		</header>
@@ -76,6 +76,8 @@
 			var l_park_lot_num,l_park_space_id,l_p_b_num,l_p_b_floor,l_p_b_area;
 			window.addEventListener('readData',function(){
 				token = plus.storage.getItem('token');
+				plus.nativeUI.showWaiting('信息加载中，请稍候...');
+				mask.show();//显示遮罩
 				setTimeout(function(){
 					load(mui,document,jQuery);
 				},800);
@@ -91,6 +93,11 @@
 				if(!token || token==''){
 					login();
 				}else{
+					plus.nativeUI.showWaiting('信息加载中，请稍候...',{
+						modal:true,
+						padlock:true
+					});
+					mask.show();//显示遮罩
 					setTimeout(function(){
 						load(mui,document,jQuery);
 					},800);
@@ -150,8 +157,13 @@
 						data:data,
 						dataType:'json',
 						type:'get',
+//						beforeSend:function(){
+//							plus.nativeUI.showWaiting('信息加载中，请稍候...');
+//							mask.show();//显示遮罩
+//						},
 						success:function(res,status,xhr){
-							console.log(JSON.stringify(res));
+							mask.close();
+							plus.nativeUI.closeWaiting();
 							if( res.code== '200'){
 								if(res.data.userCarInfo == ''){
 									mui.alert('请添加车辆','系统提示','确定',function(){
