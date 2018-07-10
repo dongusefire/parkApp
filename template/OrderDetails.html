@@ -20,39 +20,11 @@
 	</header>
 	<div class="mui-content">
 		<div class="mui-main">
-			<!--<div class="mui-details">
-				<div class="name">
-		    		<span class='big'>万科停车场</span><a href="" class="price">详情&nbsp;>
-		    	</div>
-		    	<p class="address"><img src="../img/Page1.png"/> 广东省广州市黄埔区石化路225号</p>
-		    	<p class="num">
-		    		车位： <span class='occupied'>不固定</span>
-		    	</p>
-			</div>
-			<div class="car-num">
-				<p class="plate-num">车牌号：<span style="color:#666666">粤G88888</span></p>
-			</div>
-			<div class="park-time">
-				<p class="time lower-time">
-					<span class="state-time">下单时间:</span>
-					<span class="date-time">2018.5.20&nbsp;16:45</span>
-				</p>
-				<p class="time in-time">
-					<span class="state-time">入场时间:</span>
-					<span class="date-time"s>2018.5.20&nbsp;16:45</span>
-				</p>
-				<p class="time out-time">
-					<span class="state-time">离场时间:</span>
-					<span class="date-time">2018.5.20&nbsp;16:45</span>
-				</p>
-			</div>-->
+			
 	    </div>
 	    <div class="Parking-Rate">
-				<!--<p class="park-rate">停车费:<span>12</span></p>-->
 	    </div>
 	    <div class="state-btn">
-	    	<!--<p class="cancel">取消订单</p>
-	    	<p class="Nav">导航</p>-->
 	    </div>
 	</div>
 	<div class="Remarks">
@@ -95,15 +67,17 @@
 									var order_info = res.data.order_info;
 									var enter_time,leave_time;
 									//出入场时间判断
-									if(order_info.enter_time==null){
-										enter_time = '暂无数据';
+									//入场时间
+									if(order_info.start_time&&order_info.start_time!=''){
+										start_t = timestampToTime(order_info.start_time);
 									}else{
-										enter_time = timestampToTime(order_info.enter_time)
+										start_t = '暂无数据';
 									}
-									if(order_info.leave_time==null){
-										leave_time = '暂无数据'
+									//出场时间
+									if(order_info.end_time&&order_info.end_time!=''){
+										end_t = timestampToTime(order_info.end_time);
 									}else{
-										leave_time = timestampToTime(order_info.leave_time)
+										end_t = '暂无数据';
 									}
 									//类型判断
 									if(order_info.flag == 'D'){
@@ -130,16 +104,16 @@
 												'</p>'+
 												'<p class="time in-time">'+
 													'<span class="state-time">入场时间:</span>'+
-													'<span class="date-time"s>'+enter_time+'</span>'+
+													'<span class="date-time"s>'+start_t+'</span>'+
 												'</p>'+
 												'<p class="time out-time">'+
 													'<span class="state-time">离场时间:</span>'+
-													'<span class="date-time">'+leave_time+'</span>'+
+													'<span class="date-time">'+end_t+'</span>'+
 												'</p>'+
 											'</div>';
 										fee+= '<p class="park-rate">停车费:<span>'+order_info.pay_amount+'</span></p>';
 										//订单状态判断
-										if(order_info.order_status==5||order_info.order_status==6||order_info.order_status==7){
+										if(order_info.order_status==5||order_info.order_status==6||order_info.order_status==7||order_info.order_status==8){
 											manage+='<p class="cancel">删除订单</p>';
 										}else if(order_info.order_status==1){
 											manage+='<p class="cancel">取消订单</p>'+
@@ -147,6 +121,8 @@
 										}else if(order_info.order_status==2){
 											manage+='<p class="cancel">取消订单</p>'+
 			    									'<p class="Nav">导航</p>';
+										}else if(order_info.order_status==4){
+											manage+='<p class="Nav">支付</p>';
 										}else if(order_info.order_status==3){
 											manage+='';
 										}

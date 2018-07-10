@@ -72,8 +72,9 @@
 			mui.init();
 			var ws,token,Park_lot_num,park_space_id,park_lot_name;
 			var mask=mui.createMask();
-			//获取从固定车位列表页带来的五条信息
-			var l_park_lot_num,l_park_space_id,l_p_b_num,l_p_b_floor,l_p_b_area;
+			//获取从固定车位列表页带来的六条信息
+			var l_park_lot_num,l_park_space_id,l_p_b_num,l_p_b_floor,l_p_b_area,l_p_s_num;
+			var info_ = '';
 			window.addEventListener('readData',function(){
 				token = plus.storage.getItem('token');
 				plus.nativeUI.showWaiting('信息加载中，请稍候...');
@@ -88,8 +89,8 @@
 				token = plus.storage.getItem('token');
 				Park_lot_num = ws.parking_lot_num;
 				park_space_id = ws.park_space_id;
-				//获取从固定车位列表页带来的五条信息
-				l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area;
+				//获取从固定车位列表页带来的六条信息
+				l_park_lot_num = ws.parking_lot_num, l_park_space_id = ws.park_space_id, l_p_b_num = ws.p_b_num,l_p_b_floor = ws.p_b_f,l_p_b_area = ws.p_b_area,l_p_s_num=ws.p_s_num;
 				if(!token || token==''){
 					login();
 				}else{
@@ -157,10 +158,6 @@
 						data:data,
 						dataType:'json',
 						type:'get',
-//						beforeSend:function(){
-//							plus.nativeUI.showWaiting('信息加载中，请稍候...');
-//							mask.show();//显示遮罩
-//						},
 						success:function(res,status,xhr){
 							mask.close();
 							plus.nativeUI.closeWaiting();
@@ -190,11 +187,16 @@
 											$$('.picture').css('background-image','url(http://bj.ecosysnet.com:7098/'+imgSrc+')');
 										}
 									}
+									//固定和无差别车位信息分类显示判断
+									if(type=="choose"){
+										info_ = '<p class="num">车位： <span>'+l_p_b_num+'栋'+l_p_b_floor+'层'+l_p_b_area+'区'+l_p_s_num+'号车位'+'</span></p>';
+									}else if(type=="noChoose"){
+										info_ = '<p class="num">车位： <span class="occupied">'+_data.free_number +'</span>/'+_data.number+'</p>';
+									}
 									var _html ='<div class="name">'+
 										    		'<span class="big">'+_data.parking_lot_name+'</span>'+
 										    		'<span class="price">'+_data.price+'元</span>/小时</div>'+
-										    	'<p class="address"><img src="../img/Page1.png"/>'+_data.parking_lot_address+'</p>'+
-										    	'<p class="num">车位： <span class="occupied">'+_data.free_number +'</span>/'+_data.number+'</p>';
+										    	'<p class="address"><img src="../img/Page1.png"/>'+_data.parking_lot_address+'</p>'+info_;
 									$$('.siteInfo').append(_html);
 									parkPrice = _data.price;
 									park_lot_name = _data.parking_lot_name;
@@ -305,7 +307,7 @@
 								"p_s_type":'d',
 								"park_space_id":l_park_space_id,
 							},
-							null
+							"choose"
 						);
 					}else{
 						//无差别接口请求

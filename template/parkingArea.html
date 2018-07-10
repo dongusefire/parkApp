@@ -85,7 +85,7 @@
 		    			"p_b_floor":floor
 		    		},
 		    		type:'get',
-		    		dataTypeL:'json',
+		    		dataType:'json',
 		    		success:function(res){
 		    			if(res.code==509){
 							positionInfo2(floor,vehicle_b,build);
@@ -93,7 +93,7 @@
 						};
 		    			//设置信息，带到下一个页面的信息有停车场编号，p_b_num,p_b_floor,p_b_area,
 		    			var p_b_area = [];
-		    			for(var item in res.data.park_aSn_info){
+		    			for(var item in res.data.park_bf_info){
 		    				p_b_area.push(item);
 		    			};
 		    			mui.openWindow({

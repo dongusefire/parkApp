@@ -33,7 +33,7 @@
 			mui.init();
 			mui.plusReady(function(){
 				ws = plus.webview.currentWebview();
-				pid = ws.park_id;
+				park_id = ws.park_id;
 				order_num = ws.order_num
 			})
 			document.getElementById('returnhome').addEventListener('tap',function(){
@@ -57,7 +57,7 @@
 						}
 					},
 					extras:{
-						park_id:pid,
+						park_id:park_id,
 						order_num:order_num
 					}
 				})

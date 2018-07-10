@@ -73,28 +73,32 @@
 										end = endTime;
 									}
 									//状态判断
-									if(value.order_status==3||value.order_status==2){
-										status = '进行中';
-									}else if(value.order_status==1){
+									if(value.order_status==1){
 										status = '待支付';
-									}else if(value.order_status==4||value.order_status==5||value.order_status==6||value.order_status==7){
+									}else if(value.order_status==2){
+										status = '未使用';
+									}else if(value.order_status==3){
+										status = '已入场';
+									}else if(value.order_status==4){
+										status = '已完成，待支付';
+									}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+										status = '已取消';
+									}else if(value.Order_status==8){
 										status = '已完成';
 									}
 									//按钮条件显示
-									if(value.order_status==1){
-										//支付，取消
+									if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+										manage='<p class="cancel"><button>删除订单</button></p>';	
+									}else if(value.order_status==1){
 										manage='<p class="cancel unpay"><button>去支付</button></p>'+
 												'<p class="cancel"><button>取消订单</button></p>';	
-										
+									}else if(value.order_status==4){
+										manage='<p class="cancel unpay"><button>去支付</button></p>';
 									}else if(value.order_status==2){
-										//导航，取消
-										manage='<p class="cancel unpay"><button>去支付</button></p>'+
-												'<p class="cancel"><button>取消订单</button></p>'
-									}else if(value.order_status==4||value.order_status==5||value.order_status==6||value.order_status==7){
-										//取消
-										manage='<p class="cancel"><button>取消订单</button></p>';
+										manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+												'<p class="cancel"><button>取消订单</button></p>';	
 									}else if(value.order_status==3){
-										manage='<p class="cancel" style="background-color:gray;"><button>取消订单</button></p>';
+										manage='';
 									}
 									//车位类型判断
 									if(value.flag == 'C'){
@@ -122,7 +126,7 @@
 														'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 													'</p>'+
 												'</div>'+
-												'<div class="order-state">'+manage+
+												'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
 												'</div>'+
 											'</div>';
 											
@@ -160,28 +164,32 @@
 												end = endTime;
 											}
 											//状态判断
-											if(value.order_status==3||value.order_status==2){
-												status = '进行中';
-											}else if(value.order_status==1){
+											if(value.order_status==1){
 												status = '待支付';
-											}else if(value.order_status==4||value.order_status==5||value.order_status==6||value.order_status==7){
+											}else if(value.order_status==2){
+												status = '未使用';
+											}else if(value.order_status==3){
+												status = '已入场';
+											}else if(value.order_status==4){
+												status = '已完成，待支付';
+											}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+												status = '已取消';
+											}else if(value.Order_status==8){
 												status = '已完成';
 											}
 											//按钮条件显示
-											if(value.order_status==1){
-												//支付，取消
+											if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+												manage='<p class="cancel"><button>删除订单</button></p>';	
+											}else if(value.order_status==1){
 												manage='<p class="cancel unpay"><button>去支付</button></p>'+
 														'<p class="cancel"><button>取消订单</button></p>';	
-												
+											}else if(value.order_status==4){
+												manage='<p class="cancel unpay"><button>去支付</button></p>';
 											}else if(value.order_status==2){
-												//导航，取消
-												manage='<p class="cancel unpay"><button>去支付</button></p>'+
-														'<p class="cancel"><button>取消订单</button></p>'
-											}else if(value.order_status==4||value.order_status==5||value.order_status==6||value.order_status==7){
-												//取消
-												manage='<p class="cancel"><button>取消订单</button></p>';
+												manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+														'<p class="cancel"><button>取消订单</button></p>';	
 											}else if(value.order_status==3){
-												manage='<p class="cancel" style="background-color:gray;"><button>取消订单</button></p>';
+												manage='';
 											}
 											//车位类型判断
 											if(value.flag == 'C'){
@@ -243,28 +251,32 @@
 												end = endTime;
 											}
 											//状态判断
-											if(value.order_status==3||value.order_status==2){
-												status = '进行中';
-											}else if(value.order_status==1){
+											if(value.order_status==1){
 												status = '待支付';
-											}else if(value.order_status==4||value.order_status==5||value.order_status==6||value.order_status==7){
+											}else if(value.order_status==2){
+												status = '未使用';
+											}else if(value.order_status==3){
+												status = '已入场';
+											}else if(value.order_status==4){
+												status = '已完成，待支付';
+											}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+												status = '已取消';
+											}else if(value.Order_status==8){
 												status = '已完成';
 											}
 											//按钮条件显示
-											if(value.order_status==1){
-												//支付，取消
+											if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+												manage='<p class="cancel"><button>删除订单</button></p>';	
+											}else if(value.order_status==1){
 												manage='<p class="cancel unpay"><button>去支付</button></p>'+
 														'<p class="cancel"><button>取消订单</button></p>';	
-												
+											}else if(value.order_status==4){
+												manage='<p class="cancel unpay"><button>去支付</button></p>';
 											}else if(value.order_status==2){
-												//导航，取消
-												manage='<p class="cancel unpay"><button>去支付</button></p>'+
-														'<p class="cancel"><button>取消订单</button></p>'
-											}else if(value.order_status==4||value.order_status==5||value.order_status==6||value.order_status==7){
-												//取消
-												manage='<p class="cancel"><button>取消订单</button></p>';
+												manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+														'<p class="cancel"><button>取消订单</button></p>';	
 											}else if(value.order_status==3){
-												manage='<p class="cancel" style="background-color:gray;"><button>取消订单</button></p>';
+												manage='';
 											}
 											//车位类型判断
 											if(value.flag == 'C'){
@@ -324,22 +336,34 @@
 				$("#trans-box").on('click','.order-text,.order-time',function(){
 					//获取订单编号和停车场编号
 					var order_num = $(this).parents('.order-nav').attr('data-onum'),park_id = $(this).parents('.order-nav').attr('data-pid');
-					mui.openWindow({
-						url:'OrderDetails.html',
-						id:'orderDetails',
-						styles:{
-							popGesture: "close",
-							statusbar:{
-								background:"#fff" 
+					if(park_id&&park_id!=''){
+						mui.openWindow({
+							url:'OrderDetails.html',
+							id:'orderDetails',
+							styles:{
+								popGesture: "close",
+								statusbar:{
+									background:"#fff" 
+								}
+							},
+							extras:{
+								order_num:order_num,
+								park_id:park_id
 							}
-						},
-						extras:{
-							order_num:order_num,
-							park_id:park_id
-						}
-					})
+						})
+					}else{
+						mui.alert('订单id不存在，无法查看订单详情','系统提示','确定',null)
+					}
 				});
 				
+				//导航
+				mui('#trans-box').on('tap','.order-nav .goRoute',function(e){
+					var data_carrier = $(this).parents('.order-state');
+					var address = data_carrier.attr('data-address'),lat = data_carrier.attr('data-lat'),lng = data_carrier.attr('data-lng');
+					localStorage.setItem('parking_lot_address',address);
+					plus.webview.getWebviewById('template/home.html').evalJS('home.createRoute('+lng+','+lat+')');
+					e.stopPropagation();
+				})
 			};
 		</script>
 	</body>
