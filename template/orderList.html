@@ -219,7 +219,7 @@
 																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 															'</p>'+
 														'</div>'+
-														'<div class="order-state">'+manage+
+														'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
 														'</div>'+
 													'</div>';
 										});
@@ -306,7 +306,7 @@
 																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 															'</p>'+
 														'</div>'+
-														'<div class="order-state">'+manage+
+														'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
 														'</div>'+
 													'</div>';
 										});
@@ -358,7 +358,7 @@
 					}
 				});
 				
-				//导航
+				//调用导航
 				mui('#trans-box').on('tap','.order-nav .goRoute',function(e){
 					var data_carrier = $(this).parents('.order-state');
 					var address = data_carrier.attr('data-address'),lat = data_carrier.attr('data-lat'),lng = data_carrier.attr('data-lng');
