@@ -1,5 +1,6 @@
 var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
 var app = {
+	name:"易惠停",
 	pushServer:"http://demo.dcloud.net.cn/push/?",
 	isNetwork:true, //客户端网络状态  false无网络，true有网络
 	createLocalPushMsg:function(msg){ //创建本地推送消息

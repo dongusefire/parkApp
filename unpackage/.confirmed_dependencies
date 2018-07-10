@@ -1,72 +1,77 @@
 {
-  "index.html": {
-    "resources": [
-      "template/home.html"
-    ],
-    "refer": [
-      "template/guide.html",
-      "template/my.html",
-      "template/home.html"
-    ]
-  },
-  "template/home.html": {
-    "resources": [
-      "template/home_search.html",
-      "template/home_parking.html"
-    ],
-    "refer": [
-      "template/home_search.html",
-      "template/home_parking.html",
-      "template/parking.html",
-      "template/order.html",
-      "template/search.html"
-    ]
-  },
-  "template/my.html": {
-    "refer": [
-      "template/login.html",
-      "template/my_vehicle.html",
-      "template/orderList.html",
-      "template/wallet.html",
-      "template/setting.html"
-    ]
-  },
-  "template/my_vehicle.html": {
-    "refer": [
-      "template/login.html",
-      "template/add_vehicle.html"
-    ]
-  },
-  "template/order.html": {
-    "refer": [
-      "template/parkingArea.html",
-      "template/successfulBooking.html",
-      "template/add_vehicle.html"
-    ]
-  },
-  "template/parkingArea.html": {
-    "refer": [
-      "template/parking-spaces.html"
-    ]
-  },
-  "template/orderList.html": {
-    "refer": [
-      "template/OrderDetails.html"
-    ]
-  },
-  "template/OrderDetails.html": {
-    "refer": [
-      "template/siteDetails.html"
-    ]
-  },
-  "template/siteDetails.html": {
-    "refer": [
-      "template/login.html"
-    ]
-  },
-  "template/successfulBooking.html": {
-    "refer": [
-      "template/OrderDetails.html"
-    ]
-  }
+	"index.html": {
+		"resources": [
+			"template/home.html"
+		],
+		"refer": [
+			"template/guide.html",
+			"template/my.html",
+			"template/home.html"
+		]
+	},
+	"template/home.html": {
+		"resources": [
+			"template/home_search.html",
+			"template/home_parking.html"
+		],
+		"refer": [
+			"template/home_search.html",
+			"template/home_parking.html",
+			"template/parking.html",
+			"template/order.html",
+			"template/search.html"
+		]
+	},
+	"template/my.html": {
+		"refer": [
+			"template/login.html",
+			"template/my_vehicle.html",
+			"template/orderList.html",
+			"template/wallet.html",
+			"template/setting.html"
+		]
+	},
+	"template/my_vehicle.html": {
+		"refer": [
+			"template/login.html",
+			"template/add_vehicle.html"
+		]
+	},
+	"template/order.html": {
+		"refer": [
+			"template/parkingArea.html",
+			"template/successfulBooking.html",
+			"template/add_vehicle.html"
+		]
+	},
+	"template/parkingArea.html": {
+		"refer": [
+			"template/parking-spaces.html"
+		]
+	},
+	"template/orderList.html": {
+		"refer": [
+			"template/OrderDetails.html"
+		]
+	},
+	"template/OrderDetails.html": {
+		"refer": [
+			"template/siteDetails.html"
+		]
+	},
+	"template/siteDetails.html": {
+		"refer": [
+			"template/login.html"
+		]
+	},
+	"template/successfulBooking.html": {
+		"refer": [
+			"template/OrderDetails.html"
+		]
+	},
+	"template/setting.html": {
+		"refer": [
+			"template/orderPay.html"
+		]
+	}
 }

@@ -89,6 +89,9 @@
 		<!--<div class="ceshi">
 			<button type="button" class="mui-btn mui-btn-primary" id="notice">发送通知</button>
 		</div>-->
+		<div class="paytest">
+			<button type="button" class="mui-btn mui-btn-primary" id="openPayView">打开支付页面</button>
+		</div>
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
@@ -112,7 +115,21 @@
 			mui.toast("已清除");
     	});
     	mui('.g-content').on('tap','#notice',function(){
-			requireNotiMsg('我是离线消息2')
+			app.requireNotiMsg('我是离线消息2')
+    	});
+    	mui('.g-content').on('tap','#openPayView',function(){
+    		var options = {
+				styles:{
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				},
+				extras:{
+					order_sn:"20180710151304801"
+				}
+			};
+			mui.openWindow("orderPay.html","orderPay.html",options);
     	});
     	mui('.g-content').on('tap','.logout',function(){
     		var _this = this;

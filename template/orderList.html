@@ -57,6 +57,7 @@
 				var html_ = '', r_html = '', s_html = '', manage = '',status = '',type = '',end = '';
 				function auto_ajax(){
 					$('#trans-box').html('');
+					token = plus.storage.getItem('token');
 					html_ = '';
 					mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
 						dataType:'json',
@@ -142,6 +143,7 @@
 				}
 				
 				function orderList(status){
+					token = plus.storage.getItem('token');
 					if(status=='running'){
 							r_html = '';
 							mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{

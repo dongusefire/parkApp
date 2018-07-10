@@ -41,32 +41,31 @@
 			</div>
 	   </div>
 	    <div class="mui-input-row change">
-	    	  <div style="width:97%">
-                <div class="radio_inline mui-radio">
-                	<span class="item-icon"><img src="../img/yu.png"></span>
-                	<label for="radio_yu">余额支付</label>
-                    <input name="radio1" type="radio" id="radio_man" checked value="1">
-                </div>   
-                <div class="radio_inline mui-radio">
-                    <span class="item-icon"><img src="../img/wei.png"></span>
-                    <label for="radio_wei">微信支付</label> 
-                    <input name="radio1" type="radio" id="radio_woman" value="0">
-                </div>  
-                <div class="radio_inline mui-radio">
-                    <span class="item-icon"><img src="../img/zhi.png"></span>
-                    <label for="radio_zhi">支付宝支付</label> 
-                    <input name="radio1" type="radio" id="radio_woman" value="0">  
-                </div>  
-                </div>
+	    	  <div style="width:97%;">
+	                <!--<div class="radio_inline mui-radio" id="balance">
+	                	<span class="item-icon"><img src="../img/yu.png"></span>
+	                	<label for="radio_yu">余额支付</label>
+	                    <input name="payType" type="radio" checked value="0">
+	                </div>-->
+	                <div class="radio_inline mui-radio" id="alipay">
+	                    <span class="item-icon"><img src="../img/wei.png"></span>
+	                    <label for="radio_wei">微信支付</label> 
+	                    <input name="payType" class="pay-type" type="radio" value="2">
+	                </div>  
+	                <div class="radio_inline mui-radio" id="wxpay">
+	                    <span class="item-icon"><img src="../img/zhi.png"></span>
+	                    <label for="radio_zhi">支付宝支付</label> 
+	                    <input name="payType" class="pay-type" type="radio" value="1">  
+	                </div>  
+              </div>
           </div>
-	   <div class="q-pay">
+	   <div class="q-pay" id="payBtn">
 	   	    <p>立即支付￥<span>12</span>元</p>
 	   </div>
 	</div>
-		<script src="../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init()
-		</script>
+	<script src="../js/mui.min.js"></script>
+	<script src="../js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/order_pay.js" type="text/javascript" charset="utf-8"></script>
 	</body>
-
 </html>

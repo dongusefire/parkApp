@@ -83,6 +83,7 @@
 								_this.id = res.data.id;
 								_this.wallet = res.data.wallet;
 							}else if(res.code==509){
+								plus.storage.setItem('token',res.data.newToken);
 								_this.getUserInfo();
 							}
 						},
