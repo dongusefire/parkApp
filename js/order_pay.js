@@ -7,6 +7,8 @@ var orderPay = {
 	pay_channel:'',
 	payBtn:false,
 	payId:'',
+	orderSns:[20180710110709980,20180710105216350,2018070917184667],
+	orderSns_ind:0,
 	getChannels:function(){//获取支付通道
 		var _this = this;
 		// 获取支付通道
@@ -44,10 +46,11 @@ var orderPay = {
 	},
 	getPayInfo:function(){//获取支付签名
 		var _this = this;
+		alert('wx9cb5cf1e933f25e0')
 		var token = plus.storage.getItem('token');
 		mui.ajax(AJAX_PATH+'/pay?token='+token,{
 			data:{
-				"order_sn":_this.order_sn,
+				"order_sn":"20180711114835598",
 				"pay_channel":_this.pay_channel,
 			},
 			dataType:'json',
@@ -55,17 +58,22 @@ var orderPay = {
 			success:function(res,textStatus,xhr){
 				_this.payBtn = false;
 				if(res.code==200){
-					console.log();
-					plus.payment.request(_this.pays[_this.payId],JSON.stringify(res.data),function(result){
-						mui.alert('支付成功','系统提示','确定',null);
+					var order = JSON.stringify(res.data);
+					if(_this.pay_channel==1){
+						order = res.data;
+					};
+					console.log(123131)
+					mui.alert(order,'支付信息');
+					plus.payment.request(_this.pays[_this.payId],order,function(result){
+						mui.alert('支付成功',"20180711114835598",'确定',null);
 					},function(e){
-						mui.alert('['+e.code+']：'+e.message,'系统提示','确定',null);
+						mui.alert('['+e.code+']：'+e.message,"20180711114835598",'确定',null);
 						//outLine('['+e.code+']：'+e.message);
 					});
 				}else if(res.code==509){
 					_this.getPayInfo();
 				}else if(res.code!=502 && res.code!=503){
-					mui.alert(res.msg,'系统提示','确定',null);
+					mui.alert(JSON.stringify(res),'系统提示','确定',null);
 				};
 			}
 		});

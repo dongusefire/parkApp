@@ -63,15 +63,21 @@ var home = {
 		};
 	},
 	createMarker:function(lng,lat,status,k){//创建地图标点Marker对象
-		var Icon = '/img/ls.png';
+		var Icon = '/img/ls';
+		var Size = '';
 		if(status<=5){
-			Icon = '/img/jh.png';
+			Icon = '/img/jh';
 		}else if(status==0){
-			Icon = '/img/sh.png';
+			Icon = '/img/sh';
+		};
+		if(plus.os.name=='Android'){
+			Size = '72';
+		}else{
+			Size = '28';
 		};
 		var _this = this;
 		var marker=new plus.maps.Marker(new plus.maps.Point(lng,lat));
-		marker.setIcon(Icon);
+		marker.setIcon(Icon+Size+'.png');
 		marker.uuid = k; //给当前的Marker对象自定义一个属性
 		marker.onclick = function(marker){
 			if(_this.activeParking==_this.list[marker.uuid].parking_lot_number){

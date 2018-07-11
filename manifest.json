@@ -50,7 +50,7 @@
 		"runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
-			"plugins": {"payment":{"weixin":{"description":"微信支付","appid":"wx62d3f78776978c14"},"alipay":{"description":"阿里支付","scheme":""}},"push":{"igexin":{"appid":"t5gh52pvlg9qakPxvgTfj8","appkey":"xgACVXLaTl5GCE3QS1UPL6","appsecret":"XY9bNyAHnd79LlR4ML97T9"}},
+			"plugins": {"payment":{"weixin":{"description":"微信支付","appid":"wx9cb5cf1e933f25e0"},"alipay":{"description":"阿里支付","scheme":""}},"push":{"igexin":{"appid":"t5gh52pvlg9qakPxvgTfj8","appkey":"xgACVXLaTl5GCE3QS1UPL6","appsecret":"XY9bNyAHnd79LlR4ML97T9"}},
 				"maps": {"baidu":{"appkey_ios":"","appkey_android":"RR2vQMGFQyb7aQXGxqFBtqmhyuyujupI","appkey":"","description":""}
 					
 				}
