@@ -53,7 +53,9 @@
 			        	return Y+M+D+h+m;
 			        }
 			    }
-			   
+			   	//获取当前时间，并声明过期标识
+			   	var nowTime = Date.parse(new Date());
+			   	//声明下面需要的变量
 				var html_ = '', r_html = '', s_html = '', manage = '',status = '',type = '',end = '';
 				function auto_ajax(){
 					$('#trans-box').html('');
@@ -69,38 +71,59 @@
 									//时间戳处理：把时间戳转换为时间格式，然后再进行比对
 									var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
 									if(startTime.substr(0,10) == endTime.substr(0,10)){
-										end = endTime.substr(11,8)
+										end = endTime.substr(11,8) 
 									}else if(startTime.substr(0,10) != endTime.substr(0,10)){
 										end = endTime;
 									}
-									//状态判断
-									if(value.order_status==1){
-										status = '待支付';
-									}else if(value.order_status==2){
-										status = '未使用';
-									}else if(value.order_status==3){
-										status = '已入场';
-									}else if(value.order_status==4){
-										status = '已完成，待支付';
-									}else if(value.order_status==5||value.order_status==6||value.order_status==7){
-										status = '已取消';
-									}else if(value.Order_status==8){
-										status = '已完成';
+									//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
+									var timeFlag=true;
+									if((value.end_time*1000) < nowTime){
+										timeFlag = false;
 									}
+									//状态判断
+									if(timeFlag){
+										if(value.order_status==1){
+											status = '待支付';
+										}else if(value.order_status==2){
+											status = '未使用';
+										}else if(value.order_status==3){
+											status = '已入场';
+										}else if(value.order_status==4){
+											status = '已完成，待支付';
+										}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+											status = '已取消';
+										}else if(value.Order_status==8){
+											status = '已完成';
+										}
+									}else{
+										if(value.order_status==4){
+											status = '已完成，待支付';
+										}else if(value.order_status==8){
+											status = '已完成';
+										}else{
+											status = '已过期';
+										}
+									}
+
 									//按钮条件显示
-									if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
-										manage='<p class="cancel"><button>删除订单</button></p>';	
-									}else if(value.order_status==1){
-										manage='<p class="cancel unpay"><button>去支付</button></p>'+
-												'<p class="cancel"><button>取消订单</button></p>';	
-									}else if(value.order_status==4){
-										manage='<p class="cancel unpay"><button>去支付</button></p>';
-									}else if(value.order_status==2){
-										manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-												'<p class="cancel"><button>取消订单</button></p>';	
-									}else if(value.order_status==3){
+									if(timeFlag){
+										if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+											manage='';	
+										}else if(value.order_status==1){
+											manage='<p class="cancel unpay"><button>去支付</button></p>'+
+													'<p class="cancel"><button>取消订单</button></p>';	
+										}else if(value.order_status==4){
+											manage='<p class="cancel unpay"><button>去支付</button></p>';
+										}else if(value.order_status==2 && timeFlag){
+											manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+													'<p class="cancel"><button>取消订单</button></p>';	
+										}else if(value.order_status==3){
+											manage='';
+										}
+									}else{
 										manage='';
 									}
+									
 									//车位类型判断
 									if(value.flag == 'C'){
 										type = '不固定';
@@ -165,32 +188,52 @@
 											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
 												end = endTime;
 											}
-											//状态判断
-											if(value.order_status==1){
-												status = '待支付';
-											}else if(value.order_status==2){
-												status = '未使用';
-											}else if(value.order_status==3){
-												status = '已入场';
-											}else if(value.order_status==4){
-												status = '已完成，待支付';
-											}else if(value.order_status==5||value.order_status==6||value.order_status==7){
-												status = '已取消';
-											}else if(value.Order_status==8){
-												status = '已完成';
+											//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
+											var timeFlag=true;
+											if((value.end_time*1000) < nowTime){
+												timeFlag = false;
 											}
+											//状态判断
+											if(timeFlag){
+												if(value.order_status==1){
+													status = '待支付';
+												}else if(value.order_status==2){
+													status = '未使用';
+												}else if(value.order_status==3){
+													status = '已入场';
+												}else if(value.order_status==4){
+													status = '已完成，待支付';
+												}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+													status = '已取消';
+												}else if(value.Order_status==8){
+													status = '已完成';
+												}
+											}else{
+												if(value.order_status==4){
+													status = '已完成，待支付';
+												}else if(value.order_status==8){
+													status = '已完成';
+												}else{
+													status = '已过期';
+												}
+											}
+		
 											//按钮条件显示
-											if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
-												manage='<p class="cancel"><button>删除订单</button></p>';	
-											}else if(value.order_status==1){
-												manage='<p class="cancel unpay"><button>去支付</button></p>'+
-														'<p class="cancel"><button>取消订单</button></p>';	
-											}else if(value.order_status==4){
-												manage='<p class="cancel unpay"><button>去支付</button></p>';
-											}else if(value.order_status==2){
-												manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-														'<p class="cancel"><button>取消订单</button></p>';	
-											}else if(value.order_status==3){
+											if(timeFlag){
+												if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+													manage='';	
+												}else if(value.order_status==1){
+													manage='<p class="cancel unpay"><button>去支付</button></p>'+
+															'<p class="cancel"><button>取消订单</button></p>';	
+												}else if(value.order_status==4){
+													manage='<p class="cancel unpay"><button>去支付</button></p>';
+												}else if(value.order_status==2 && timeFlag){
+													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+															'<p class="cancel"><button>取消订单</button></p>';	
+												}else if(value.order_status==3){
+													manage='';
+												}
+											}else{
 												manage='';
 											}
 											//车位类型判断
@@ -252,32 +295,52 @@
 											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
 												end = endTime;
 											}
-											//状态判断
-											if(value.order_status==1){
-												status = '待支付';
-											}else if(value.order_status==2){
-												status = '未使用';
-											}else if(value.order_status==3){
-												status = '已入场';
-											}else if(value.order_status==4){
-												status = '已完成，待支付';
-											}else if(value.order_status==5||value.order_status==6||value.order_status==7){
-												status = '已取消';
-											}else if(value.Order_status==8){
-												status = '已完成';
+											//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
+											var timeFlag=true;
+											if((value.end_time*1000) < nowTime){
+												timeFlag = false;
 											}
+											//状态判断
+											if(timeFlag){
+												if(value.order_status==1){
+													status = '待支付';
+												}else if(value.order_status==2){
+													status = '未使用';
+												}else if(value.order_status==3){
+													status = '已入场';
+												}else if(value.order_status==4){
+													status = '已完成，待支付';
+												}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+													status = '已取消';
+												}else if(value.Order_status==8){
+													status = '已完成';
+												}
+											}else{
+												if(value.order_status==4){
+													status = '已完成，待支付';
+												}else if(value.order_status==8){
+													status = '已完成';
+												}else{
+													status = '已过期';
+												}
+											}
+		
 											//按钮条件显示
-											if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
-												manage='<p class="cancel"><button>删除订单</button></p>';	
-											}else if(value.order_status==1){
-												manage='<p class="cancel unpay"><button>去支付</button></p>'+
-														'<p class="cancel"><button>取消订单</button></p>';	
-											}else if(value.order_status==4){
-												manage='<p class="cancel unpay"><button>去支付</button></p>';
-											}else if(value.order_status==2){
-												manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-														'<p class="cancel"><button>取消订单</button></p>';	
-											}else if(value.order_status==3){
+											if(timeFlag){
+												if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+													manage='';	
+												}else if(value.order_status==1){
+													manage='<p class="cancel unpay"><button>去支付</button></p>'+
+															'<p class="cancel"><button>取消订单</button></p>';	
+												}else if(value.order_status==4){
+													manage='<p class="cancel unpay"><button>去支付</button></p>';
+												}else if(value.order_status==2 && timeFlag){
+													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+															'<p class="cancel"><button>取消订单</button></p>';	
+												}else if(value.order_status==3){
+													manage='';
+												}
+											}else{
 												manage='';
 											}
 											//车位类型判断
@@ -331,7 +394,11 @@
 					$('#trans-box').html('');
 					$(this).children('span').addClass('active');
 					$(this).siblings().children('span').removeClass('active');
-					orderList(status);
+					if(status==''){
+						auto_ajax();
+					}else{
+						orderList(status);
+					}
 				});
 				
 				//点击进入订单详情
