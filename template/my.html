@@ -44,7 +44,10 @@
 				<span class="item-title">车辆管理</span>
 			</a>
 			<a href="message.html" class="item-box">
-				<span class="item-icon"><img src="../img/xx.png"></span>
+				<span class="item-icon">
+					<img src="../img/xx.png">
+					<span class="tip-num" v-show="t_num!=0&&t_num">{{t_num}}</span>
+				</span>
 				<span class="item-title">我的消息</span>
 			</a>
 			<a id="line-distance" href="#" class="item-box">
@@ -69,7 +72,8 @@
 				num:'0',
 				id:'',
 				wallet:'',
-				token:'' 
+				token:'',
+				t_num:'0'
 			},
 			methods:{
 				getUserInfo:function(){
@@ -93,6 +97,23 @@
 						}
 					});
 				},
+				getUnreadMessage:function(){
+					var that = this;
+					this.token = plus.storage.getItem('token');
+					mui.ajax(AJAX_PATH+'/msg/list?token='+this.token,{
+						type:'get',
+						dataType:'json',
+						success:function(res){
+							if(res.code==200){
+								//获取未读条数
+								that.t_num = res.data[0].extra.un_read;
+							}else if(res.code==509){
+								plus.storage.setItem('token',res.data.newToken);
+								that.getUnreadMessage();
+							}
+						}
+					});
+				},
 				readData:function(){
 					var userName = plus.storage.getItem('phone_number');
 					if(userName && userName!=""){
@@ -100,6 +121,7 @@
 						this.userName = userName;
 						this.islogin = true;
 						this.getUserInfo();
+						this.getUnreadMessage();
 					}else{
 						this.islogin = false;
 					};
@@ -108,6 +130,9 @@
 		});
 		window.addEventListener('readData',function(){
 			vm.readData();
+		},false);
+		window.addEventListener('getUnreadMessage',function(){
+			vm.getUnreadMessage();
 		},false);
 		document.addEventListener('plusready',function(){
 			vm.readData();

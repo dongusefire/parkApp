@@ -101,3 +101,17 @@
 	color:#fff;
 	font-size: 18px;
 }
+.tip-num {
+	color:#ffffff;
+	position: absolute;
+	top:-8px;
+	right:-8px;
+	height: 16px;
+	width: 16px;
+	display: inline-block;
+	line-height: 16px;
+	text-align: center;
+	background-color: #e50b1e;
+	border-radius: 50%;
+}
+
