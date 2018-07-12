@@ -30,18 +30,18 @@ var home = {
 	},
 	createSearchView:function(){//创建覆盖在地图上的搜索窗口
 		var _url ='home_search.html';
-		var bottom = window.innerHeight- 40-56;
+		var top = 56+Number(window.immersed);
+		var bottom = window.innerHeight-40-top;
 		this.ws.append(plus.webview.create(_url,_url,{
 			height:'40px',
 			bottom:bottom,
-			top:'56px',
+			top:top+'px',
 			left:'7%',
 			width:'86%',
 			position:'absolute',
 			scrollIndicator:'none',
 			background:'transparent'
 		}));
-		
 	},
 	createParking:function(){
 		var _url = 'home_parking.html';

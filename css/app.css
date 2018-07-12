@@ -48,6 +48,10 @@ iframe {
     box-shadow:initial;
     background: #fff;
 }
+#immersed-header,#immersed-content,#map,#park-header {
+	-webkit-box-sizing: content-box;
+    box-sizing: content-box;
+}
 .header-bar {
 	height: 46px;
 }
