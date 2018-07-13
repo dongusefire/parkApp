@@ -121,7 +121,6 @@
 						this.userName = userName;
 						this.islogin = true;
 						this.getUserInfo();
-						this.getUnreadMessage();
 					}else{
 						this.islogin = false;
 					};
@@ -136,6 +135,7 @@
 		},false);
 		document.addEventListener('plusready',function(){
 			vm.readData();
+			vm.getUnreadMessage();
 		},false);
 		
 	</script>

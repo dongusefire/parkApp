@@ -37,7 +37,7 @@
 		    	<div class="select">
 		    		<span class="label">入场时间:</span>
 		    		<div>
-		    			<span class="time" id="showStartime">请选择开始时间</span>
+		    			<span class="time time_begin" id="showStartime">请选择开始时间</span>
 		    			<span class="mui-icon mui-icon-arrowright"></span>
 		    		</div>
 		    	</div>
@@ -46,7 +46,7 @@
 		    	<div class="select">
 		    		<span class="label">出场时间:</span>
 		    		<div>
-		    			<span class="time" id="showEndtime">请选择结束时间</span>
+		    			<span class="time time_end" id="showEndtime">请选择结束时间</span>
 		    			<span class="mui-icon mui-icon-arrowright"></span>
 		    		</div>
 		    	</div>
@@ -75,6 +75,7 @@
 			//获取从固定车位列表页带来的六条信息
 			var l_park_lot_num,l_park_space_id,l_p_b_num,l_p_b_floor,l_p_b_area,l_p_s_num;
 			var info_ = '';
+			var time1,time2;
 			window.addEventListener('readData',function(){
 				token = plus.storage.getItem('token');
 				plus.nativeUI.showWaiting('信息加载中，请稍候...');
@@ -162,6 +163,7 @@
 							mask.close();
 							plus.nativeUI.closeWaiting();
 							if( res.code== '200'){
+								console.log(JSON.stringify(res.data));
 								if(res.data.userCarInfo == ''){
 									mui.alert('请添加车辆','系统提示','确定',function(){
 										mui.openWindow({
@@ -318,53 +320,103 @@
 						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":Park_lot_num},"noChoose");
 					}
 					//时间拾取器
-					var btns = $('.time');
-					btns.each(function(i,btn){
-						btn.addEventListener('tap',function(){
-							var _self = this;
-							if(_self.picker){
-								_self.picker.show(function(rs){
-									_self.innerHTML=rs.text;
+//					var btns = $('.time');
+//					btns.each(function(i,btn){
+//						
+//					})
+//					var btn = $('.time_begin')[0];
+//					var btn2 = $('.time_end')[0];
+//					alert(btn);
+					mui('.select-box').on('tap','.time_begin',function(){
+						var _self = this;
+						if(_self.picker){
+							_self.picker.show(function(rs){
+								_self.innerHTML=rs.text;
 									_self.picker.dispose();
 									_self.picker = null;
-								});
-							}else{
-								var options = {
-									"customData":{
-										"i":[{"text":"15","value":"15"},{"text":"30","value":"30"},{"text":"45","value":"45"},{"text":"00","value":"00"}]
-									},
-									"labels":["年", "月", "日", "时","分"]
-								}
-								var id = this.getAttribute('id');
-								/*
-								 *首次显示实例化组件
-								 * 这里把optios放到了按钮的dom上，
-								 * 也可以直接通过代码声明options用于实例化DtPicker
-								*/
-								_self.picker = new $.DtPicker(options);
-								_self.picker.show(function(rs){
-									_self.innerHTML=rs.text;
-									_self.picker.dispose();
-									_self.picker = null;
-									
-									//计算停车时长
-									var time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
-									if(time1!='' && time2!=''){
-										var timeDifference = GetDateDiff(time1, time2, "minute");
-										var bookPrice = parkPrice;
-									    var Difference = timeDifference / 60;
-									    var bookFee = bookPrice * Difference;
-									    if(bookFee <= 0){
-									    	mui.alert('结束时间必须大于起始时间','系统提示','确定',null);
-									    	$$('#num').html('0.00');
-									    }else{
-									    	$$('#num').html(bookFee);
-									    }
-									};
-								})
+							});
+						}else{
+							var options = {
+								"customData":{
+									"i":[{"text":"15","value":"15"},{"text":"30","value":"30"},{"text":"45","value":"45"},{"text":"00","value":"00"}]
+								},
+								"labels":["年", "月", "日", "时","分"]
 							}
-						},false);
-					})
+							var id = this.getAttribute('id');
+							/*
+							 *首次显示实例化组件
+							 * 这里把optios放到了按钮的dom上，
+							 * 也可以直接通过代码声明options用于实例化DtPicker
+							*/
+							_self.picker = new $.DtPicker(options);
+							_self.picker.setSelectedValue(time1);
+							_self.picker.show(function(rs){
+								_self.innerHTML=rs.text;
+									_self.picker.dispose();
+									_self.picker = null;
+								
+								//计算停车时长
+								time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
+								if(time1!='' && time2!=''){
+									var timeDifference = GetDateDiff(time1, time2, "minute");
+									var bookPrice = parkPrice;
+								    var Difference = timeDifference / 60;
+								    var bookFee = bookPrice * Difference;
+								    if(bookFee <= 0){
+								    	mui.alert('结束时间必须大于起始时间','系统提示','确定',null);
+								    	$$('#num').html('0.00');
+								    }else{
+								    	$$('#num').html(bookFee);
+								    }
+								};
+							})
+						}
+					},false);
+					mui('.select-box').on('tap','.time_end',function(){
+						var _self2 = this;
+						if(_self2.picker){
+							_self2.picker.show(function(rs){
+								_self2.innerHTML=rs.text;
+									_self2.picker.dispose();
+									_self2.picker = null;
+							});
+						}else{
+							var options = {
+								"customData":{
+									"i":[{"text":"15","value":"15"},{"text":"30","value":"30"},{"text":"45","value":"45"},{"text":"00","value":"00"}]
+								},
+								"labels":["年", "月", "日", "时","分"],
+							}
+							var id = this.getAttribute('id');
+							/*
+							 *首次显示实例化组件
+							 * 这里把optios放到了按钮的dom上，
+							 * 也可以直接通过代码声明options用于实例化DtPicker
+							*/
+							_self2.picker = new $.DtPicker(options);
+							_self2.picker.setSelectedValue(time2);
+							_self2.picker.show(function(rs){
+								_self2.innerHTML=rs.text;
+									_self2.picker.dispose();
+									_self2.picker = null;
+								
+								//计算停车时长
+								time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
+								if(time1!='' && time2!=''){
+									var timeDifference = GetDateDiff(time1, time2, "minute");
+									var bookPrice = parkPrice;
+								    var Difference = timeDifference / 60;
+								    var bookFee = bookPrice * Difference;
+								    if(bookFee <= 0){
+								    	mui.alert('结束时间必须大于起始时间','系统提示','确定',null);
+								    	$$('#num').html('0.00');
+								    }else{
+								    	$$('#num').html(bookFee);
+								    }
+								};
+							})
+						}
+					},false);
 				});
 				$$('.optional').click(function(){
 					var options = {

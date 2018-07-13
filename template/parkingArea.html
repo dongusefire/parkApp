@@ -9,6 +9,12 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/my_vehicle.css"/>
+    <style type="text/css">
+    	.floor.nop {
+    		background-color: gray;
+    		color:#fff !important;
+    	}
+    </style>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
@@ -41,13 +47,17 @@
 		    				$.each(data[i],function(key,value){
 		    					var text = '地上';
 		    					var text2 = '';
-		    					if(value[0]!='0'){
+		    					if(value!=''&&value){
+		    						if(value[0]!='0'){
 		    						text = '地下'; 
-		    					};
-		    					if(value[2]==1){
-		    						text2 = '夹层' 
-		    					};
-		    					list_ += '<span data-floor="'+value+'" class="floor">'+text+value[1]+'层'+text2+'</span>';
+			    					};
+			    					if(value[2]==1){
+			    						text2 = '夹层' 
+			    					};
+			    					list_ += '<span data-floor="'+value+'" class="floor goList">'+text+value[1]+'层'+text2+'</span>';
+		    					}else{
+		    						list_ += '<span class="floor nop">无可用车位</span>';
+		    					}
 		    				});
 		    				var _html = '<div class="vehicle-box">'+
 		    							'<div class="vehicle-tbar">'+
@@ -115,7 +125,7 @@
 		    		}
 		    });
     	};
-    	$('.parkingArea').on('click','.floor',function(){
+    	$('.parkingArea').on('click','.goList',function(){
     		//获取楼层信息
     		var floor = this.getAttribute('data-floor');
     		var vehicle_b = this.parentNode;
