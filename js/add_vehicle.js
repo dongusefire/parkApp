@@ -135,7 +135,7 @@ var vm = new Vue({
 						//获取我的页面的窗口对象
 			    		var wo = plus.webview.currentWebview().opener();
 						//触发我的页面（readData）,从而进行数据刷新
-						mui.fire(wo,'updata');
+						mui.fire(wo,'readData');
 						setTimeout(function(){
 							mui.back();
 						},1000);

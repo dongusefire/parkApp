@@ -43,11 +43,6 @@
 		mui.plusReady(function() {
 			self = plus.webview.currentWebview(); //通过plus.webview可获取应用界面管理对象。 currentWebview方法获取当前窗口的WebviewObject对象
 			var showGuide = plus.storage.getItem("lauchFlag");
-//			self.setStyle({
-//				statusbar:{
-//					background:'#fff'
-//				}
-//			});
 			//仅支持竖屏显示
 			plus.screen.lockOrientation("portrait-primary");
 			for(var i = 0; i < subpages.length; i++) {
@@ -105,20 +100,6 @@
 					plus.webview.show(targetTab,"fade-in",300);
 					
 				};
-				//根据将要切换的页面来设置不同的状态栏样式
-//				if(targetTab=='template/my.html'){
-//					self.setStyle({
-//						statusbar:{
-//							background:'#3883fd'
-//						}
-//					});
-//				}else{
-//					self.setStyle({
-//						statusbar:{
-//							background:'#fff'
-//						}
-//					});
-//				};
 				//隐藏当前;
 				plus.webview.hide(activeTab);
 			}else{

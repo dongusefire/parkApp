@@ -7,8 +7,7 @@ var orderPay = {
 	pay_channel:'',
 	payBtn:false,
 	payId:'',
-	orderSns:[20180710110709980,20180710105216350,2018070917184667],
-	orderSns_ind:0,
+	paylink:null,
 	getChannels:function(){//获取支付通道
 		var _this = this;
 		// 获取支付通道
@@ -46,11 +45,11 @@ var orderPay = {
 	},
 	getPayInfo:function(){//获取支付签名
 		var _this = this;
-		alert('wx9cb5cf1e933f25e0')
+		alert('wx62d3f78776978c14')
 		var token = plus.storage.getItem('token');
 		mui.ajax(AJAX_PATH+'/pay?token='+token,{
 			data:{
-				"order_sn":"20180711114835598",
+				"order_sn":_this.order_sn,
 				"pay_channel":_this.pay_channel,
 			},
 			dataType:'json',
@@ -62,14 +61,46 @@ var orderPay = {
 					if(_this.pay_channel==1){
 						order = res.data;
 					};
-					console.log(123131)
 					mui.alert(order,'支付信息');
-					plus.payment.request(_this.pays[_this.payId],order,function(result){
-						mui.alert('支付成功',"20180711114835598",'确定',null);
-					},function(e){
-						mui.alert('['+e.code+']：'+e.message,"20180711114835598",'确定',null);
-						//outLine('['+e.code+']：'+e.message);
+					alert(res.data['mweb_url']);
+//					plus.runtime.openURL(res.data['mweb_url']);
+//					var embed = plus.webview.create(res.data['mweb_url'], 'paylink', {additionalHttpHeaders:{Referer:}});
+//					embed.show();
+					_this.paylink = mui.openWindow(res.data['mweb_url'],'paylink',{
+						styles:{
+							popGesture: "close",
+							titleNView:{
+								buttons:[
+									{
+										color:'#292929',
+										colorPressed:'#292929',
+										float:'left',
+										text:'返回',
+										onclick:function(){
+											_this.paylink.close();
+										}
+									}
+								],
+								backgroundColor:'#f7f7f7',
+								titleText:'微信支付',
+								splitLine: {
+									color: '#cccccc'
+								}
+							}
+						},
+						show:{
+							event:'loaded'
+						},
+						waiting:{
+							autoShow:false
+						},
+						extras:{}
 					});
+//					plus.payment.request(_this.pays[_this.payId],order,function(result){
+//						mui.alert('支付成功',"20180711114835598",'确定',null);
+//					},function(e){
+//						mui.alert('['+e.code+']：'+e.message,"20180711114835598",'确定',null);
+//					});
 				}else if(res.code==509){
 					_this.getPayInfo();
 				}else if(res.code!=502 && res.code!=503){

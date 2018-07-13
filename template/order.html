@@ -280,7 +280,9 @@
 											order_num:res.data.order_sn,
 											park_id:res.data.park_id
 										}
-									})
+									});
+									var home = plus.webview.getWebviewById('template/home.html');
+									mui.fire(home,'updata');
 								}else if(res.code!=502 && res.code!=503){
 									plus.nativeUI.closeWaiting();
 									mask.close();//关闭遮罩层

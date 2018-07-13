@@ -114,6 +114,6 @@ mui.plusReady(function(){
 	vm.getData();
 })
 //设置更新事件
-window.addEventListener('updata',function(){
+window.addEventListener('readData',function(){
 	vm.readData();
 });

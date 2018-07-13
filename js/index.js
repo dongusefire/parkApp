@@ -10,7 +10,7 @@ var home = {
 		lat:''
 	},
 	list:[],
-	ParkingView:null,
+	parking_list:[], //用来储存home_parking窗口
 	activeParking:'', //当前显示的Parking
 	getUserLocation:function(){ 
 		var _this=this;
@@ -47,6 +47,7 @@ var home = {
 		var _url = 'home_parking.html';
 		var list = this.list;
 		var top = window.innerHeight- 75 -46;
+		this.parking_list = [];
 		for(var i=0;i<list.length;i++){
 			var sub = plus.webview.create(_url,'home_parking'+list[i].parking_lot_number,{
 				top:top,
@@ -58,6 +59,7 @@ var home = {
 				background:'transparent'
 			},list[i]);
 			sub.hide();
+			this.parking_list.push(sub);
 			this.createMarker(list[i].longitude,list[i].latitude,list[i].free_number,i);
 			this.ws.append(sub);
 		};
@@ -94,18 +96,6 @@ var home = {
 			_this.activeParking = _this.list[marker.uuid].parking_lot_number;
 		};
 		this.map.addOverlay(marker);
-	},
-	createParkingView:function(){ //创建列表页窗口
-//		this.ParkingView = plus.webview.create('parking.html','parking.html',{
-//			statusbar:{
-//				background:"#fff" 
-//			},
-//			top:0,
-//			left:0,
-//			width:'100%',
-//			height:'100%',
-//			position:"absolute"
-//		});
 	},
 	openSearch:function(){
 		var options = {
@@ -246,6 +236,15 @@ var home = {
 		this.map.setCenter(point);
 		this.showUserLocation();
 	},
+	getUpData:function(){ //获取最新数据
+		var items = this.parking_list; //创建的home_parking窗口
+		this.list = [];
+		for(var i=0;i<list.length;i++){
+			items[i].close(); //关闭窗口
+		};
+		this.map.clearOverlays(); //清除所有的覆盖物(此处为了清除所有的标记)
+		this.getParking(); //获取最新的列表数据
+	},
 	bindEvent:function(){
 		var _this = this;
 //		this.map.onclick = function(point){  //获取当前用户点击的地里位置
@@ -272,6 +271,9 @@ var home = {
 			  }
 			});
 		});
+		window.addEventListener('updata',function(){
+			_this.getUpData();
+		});
 	},
 	getParking:function(point,sort){
 		var _this= this;
@@ -287,11 +289,6 @@ var home = {
 				if(res.code==200){
 					_this.list = res.data.list;
 					_this.createParking();
-					//初始化列表页的数据
-					mui.fire(plus.webview.getWebviewById('parking.html'),'readData',{
-					    data:res,
-					    point:point
-					});
 				}else{
 					mui.alert(res.msg,'系统提示','确定',null);
 				};
@@ -304,9 +301,9 @@ var home = {
 		this.wo=this.ws.opener(); //opener获取当前Webview窗口的创建者
 		//创建map对象http://www.html5plus.org/doc/zh_cn/maps.html#plus.maps.Map.Map(id,options)
 		this.map = new plus.maps.Map('map');
+		this.showZoomControls 
 		this.getUserLocation();
 		this.createSearchView();
-		this.createParkingView();
 		this.bindEvent();
 	}
 }

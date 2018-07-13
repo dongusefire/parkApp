@@ -29,49 +29,59 @@
       "template/orderList.html",
       "template/wallet.html",
       "template/setting.html"
-    ]
+    ],
+    "resources": []
   },
   "template/my_vehicle.html": {
     "refer": [
       "template/login.html",
       "template/add_vehicle.html"
-    ]
+    ],
+    "resources": []
   },
   "template/order.html": {
     "refer": [
       "template/parkingArea.html",
       "template/successfulBooking.html",
       "template/add_vehicle.html"
-    ]
+    ],
+    "resources": []
   },
   "template/parkingArea.html": {
     "refer": [
       "template/parking-spaces.html"
-    ]
+    ],
+    "resources": []
   },
   "template/orderList.html": {
     "refer": [
-      "template/OrderDetails.html"
-    ]
+      "template/OrderDetails.html",
+      "template/orderPay.html"
+    ],
+    "resources": []
   },
   "template/OrderDetails.html": {
     "refer": [
       "template/siteDetails.html"
-    ]
+    ],
+    "resources": []
   },
   "template/siteDetails.html": {
     "refer": [
       "template/login.html"
-    ]
+    ],
+    "resources": []
   },
   "template/successfulBooking.html": {
     "refer": [
       "template/OrderDetails.html"
-    ]
+    ],
+    "resources": []
   },
   "template/setting.html": {
     "refer": [
       "template/orderPay.html"
-    ]
+    ],
+    "resources": []
   }
 }

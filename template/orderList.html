@@ -80,6 +80,9 @@
 									if((value.end_time*1000) < nowTime){
 										timeFlag = false;
 									}
+									//测试支付
+									timeFlag = true;
+									value.order_status=1;
 									//状态判断
 									if(timeFlag){
 										if(value.order_status==1){
@@ -110,10 +113,10 @@
 										if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
 											manage='';	
 										}else if(value.order_status==1){
-											manage='<p class="cancel unpay"><button>去支付</button></p>'+
+											manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
 													'<p class="cancel"><button>取消订单</button></p>';	
 										}else if(value.order_status==4){
-											manage='<p class="cancel unpay"><button>去支付</button></p>';
+											manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
 										}else if(value.order_status==2 && timeFlag){
 											manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
 													'<p class="cancel"><button>取消订单</button></p>';	
@@ -223,10 +226,10 @@
 												if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
 													manage='';	
 												}else if(value.order_status==1){
-													manage='<p class="cancel unpay"><button>去支付</button></p>'+
+													manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
 															'<p class="cancel"><button>取消订单</button></p>';	
 												}else if(value.order_status==4){
-													manage='<p class="cancel unpay"><button>去支付</button></p>';
+													manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
 												}else if(value.order_status==2 && timeFlag){
 													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
 															'<p class="cancel"><button>取消订单</button></p>';	
@@ -300,6 +303,8 @@
 											if((value.end_time*1000) < nowTime){
 												timeFlag = false;
 											}
+											timeFlag=true;
+											value.order_status = 1;
 											//状态判断
 											if(timeFlag){
 												if(value.order_status==1){
@@ -330,10 +335,10 @@
 												if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
 													manage='';	
 												}else if(value.order_status==1){
-													manage='<p class="cancel unpay"><button>去支付</button></p>'+
+													manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
 															'<p class="cancel"><button>取消订单</button></p>';	
 												}else if(value.order_status==4){
-													manage='<p class="cancel unpay"><button>去支付</button></p>';
+													manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
 												}else if(value.order_status==2 && timeFlag){
 													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
 															'<p class="cancel"><button>取消订单</button></p>';	
@@ -350,7 +355,7 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											//拼接dom
-											s_html+='<div class="order-nav" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'">'+
+											s_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 														'<div class="order-text">'+
 															'<a href="#" class="item-box">'+
 																'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
@@ -424,7 +429,22 @@
 						mui.alert('订单id不存在，无法查看订单详情','系统提示','确定',null)
 					}
 				});
-				
+				//打开支付页面
+				mui('#trans-box').on('tap','.order-nav .toPay',function(e){
+					var order_num = $(this).parents('.order-nav').attr('data-onum');
+					var options = {
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							order_sn:order_num
+						}
+					};
+					mui.openWindow("orderPay.html","orderPay.html",options);
+				});
 				//调用导航
 				mui('#trans-box').on('tap','.order-nav .goRoute',function(e){
 					var data_carrier = $(this).parents('.order-state');

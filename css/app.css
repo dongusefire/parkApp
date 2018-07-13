@@ -44,8 +44,8 @@ iframe {
 	height: 100%;
 }
 .mui-bar-nav {
-	-webkit-box-shadow:initial;
-    box-shadow:initial;
+	/*-webkit-box-shadow:initial;
+    box-shadow:initial;*/
     background: #fff;
 }
 #immersed-header,#immersed-content,#map,#park-header {
