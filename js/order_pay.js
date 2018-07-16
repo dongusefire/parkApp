@@ -64,8 +64,6 @@ var orderPay = {
 					mui.alert(order,'支付信息');
 					alert(res.data['mweb_url']);
 //					plus.runtime.openURL(res.data['mweb_url']);
-//					var embed = plus.webview.create(res.data['mweb_url'], 'paylink', {additionalHttpHeaders:{Referer:}});
-//					embed.show();
 					_this.paylink = mui.openWindow(res.data['mweb_url'],'paylink',{
 						styles:{
 							popGesture: "close",
