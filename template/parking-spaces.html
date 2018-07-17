@@ -122,8 +122,11 @@
 					p_b_f:ws.p_b_floor,//楼层编号
 					p_b_area:ws.p_b_area[0],//区域编号
 					p_s_num:p_s_num
-				}
+				},
+				createNew:true,
 			})
+			var order = plus.webview.getWebviewById('order.html');
+			mui.fire(order,'reload');
 		})
 	</script>
 </body>

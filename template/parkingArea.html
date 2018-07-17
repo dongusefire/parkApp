@@ -40,7 +40,7 @@
 	    		dataType:'json',
 	    		success:function(res){
 	    			if(res.code==200){
-	    				console.log(res);
+	    				console.log(JSON.stringify(res));
 	    				var data = res.data.park_bf_info;
 		    			for(var i in data){
 		    				var list_ ='';

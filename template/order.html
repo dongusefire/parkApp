@@ -84,6 +84,14 @@
 					load(mui,document,jQuery);
 				},800);
 			});
+//			window.addEventListener('reload',function(){
+//				token = plus.storage.getItem('token');
+//				plus.nativeUI.showWaiting('信息加载中，请稍候...');
+//				mask.show();//显示遮罩
+//				setTimeout(function(){
+//					load(mui,document,jQuery);
+//				},800);
+//			})
 			mui.plusReady(function(){
 				//获取创建当前窗口的webview对象
 				ws = plus.webview.currentWebview();

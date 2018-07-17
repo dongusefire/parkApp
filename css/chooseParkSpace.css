@@ -1,0 +1,60 @@
+.mui-icon {
+    font-size: 28px;
+    margin-top: 4px;
+    vertical-align: sub;
+    color: #b7b7b7;
+}
+.mui-title {
+    font-size: 18px;
+    color: #292929;
+    letter-spacing: 0;
+}
+.mui-bar {
+	background-color: #fff;
+}
+.parking {
+	background-color: #fff;
+	border-bottom: 1px solid #e8e8e8;
+	border-top:1px solid #e8e8e8;
+	padding: 10px 10px;
+	margin-top: -1px;
+}
+.parking p {
+	margin-bottom: 0;
+}
+.parking .title {
+	font-size: 18px;
+	color: #333333;
+	letter-spacing: 0;
+	line-height: 18px;
+}
+.parking .price {
+	font-size: 12px;
+	color: #F25B57;
+	letter-spacing: 0;
+	margin-left: 10px;
+	line-height: 18px;
+}
+.parking .unit {
+	font-size: 12px;
+	color: #8f8f94;
+	letter-spacing: 0;
+	line-height: 17px;
+}
+.parking .address{
+	margin-top: 6px;
+}
+.parking .address img {
+	width: 10px;
+	height: 15px;
+	vertical-align: sub;
+}
+.parking .num {
+	margin-top: 4px;
+}
+.parking .num .free {
+	font-size: 14px;
+	color: #000000;
+	letter-spacing: 0;
+	line-height: 20px;
+}
