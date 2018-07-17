@@ -17,29 +17,34 @@ var vm = new Vue({
 		getSearch:function(){
 			var search = plus.storage.getItem('search');
 			if(search &&search!=''){
-				this.searchList = search.split('&');
+				if(search.substring(search.length-7)=='&-嘿嘿嘿-&'){
+					search = search.substring(0,search.length-7);
+				};
+				this.searchList = search.split('&-嘿嘿嘿-&');
 			};
 		},
-		setSearch:function(s){
-			if(s && s!=''){
-				this.keywords=s;
-				document.getElementById('search-input').value = s;
+		setSearch:function(str){
+			var inp = document.getElementById('search-input');
+			if(str && str!=''){
+				this.keywords = str;
+				inp.value = str;
+			}else{
+				var str = this.keywords;
 			};
-			var str = this.keywords;
 			if(str!=''){
 				var list  = plus.storage.getItem('search');
-				if(!list){ //如果是第一次获取的数据，那么就创建search的storage
+				if(!list || list==''){ //如果是第一次获取的数据，那么就创建search的storage
 					plus.storage.setItem('search',str);
 				}else{
 					if(list&&list!=''){
-						var arr = list.split('&');
+						var arr = list.split('&-嘿嘿嘿-&');
 						var arr2 = [];
 						for(var i=0;i<arr.length;i++){
 							if(str!=arr[i]){
 								arr2.push(arr[i])
 							};
 						};
-						plus.storage.setItem('search',str+'&'+arr2.join('&'));
+						plus.storage.setItem('search',str+'&-嘿嘿嘿-&'+arr2.join('&-嘿嘿嘿-&'));
 					};
 				};
 			};

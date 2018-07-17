@@ -26,20 +26,20 @@
 		<div class="withborder character">
 			<label class="mui-pull-left character">车位性质</label>
 			<div class="check mui-pull-left">
-		        <div>
-		            <input type="radio"  id="owner">
+		        <label>
+		            <input type="radio"  id="owner" name="type">
 		            <div class="user-defined">
 		                <span class="circle"></span>
 		            </div>
-		            <label>拥有产权</label>
-		        </div>
-		        <div>
-		            <input type="radio" id="rent">
+		            <span>拥有产权</span>
+		        </label>
+		        <label>
+		            <input type="radio" id="rent" name="type" />
 		            <div class="user-defined">
 		                <span class="circle"></span>
 		            </div>
-		            <label>租赁</label>
-		        </div>
+		            <span>租赁</span>
+		        </label>
 		    </div>
 		</div>
 		<div class="picture withborder">
@@ -61,14 +61,7 @@
 		</div>
 		<p class="ask">提交信息代表您已同意 <span>《车位共享说明》</span> </p>
 		<button type="submit" class="submit">提 交</button>
-
 		<script src="../js/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript">
-			$("input[type='radio']").click(function() {
-			    $(this).siblings("div").children("span").addClass("active");
-			    $(this).parents("div").siblings("div").find("span").removeClass("active");
-			});
-		</script>
 	</body>
 
 </html>

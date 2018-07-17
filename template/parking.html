@@ -42,6 +42,7 @@
 							<a class="mui-navigate-right">车位数量优先</a>
 						</li>
 					</ul>
+					<button class="mui-btn mui-btn-primary">确定</button>
 				</div>
 			</div>
 		</div>
@@ -131,22 +132,20 @@
 						}
 					});
 				},
-				sortToggle:function(){
+				sortToggle:function(e){
 					this.isSort = !this.isSort;
+					e.stopPropagation();
 				}
 			}
 		});
 		window.addEventListener('readData',function(event){
 		  vm.readData(event.detail.data,event.detail.point);
 		});
-		//点击返回按钮，隐藏当前webview
-		document.getElementById('hideView').addEventListener('tap',function(){
-			//plus.webview.hide("parking.html","auto");
-		});
 		mui('#parking-list').on('tap','.parking',function(){
 			var id = this.getAttribute('id');
 			localStorage.setItem('parkingName',vm.items[id].parking_lot_name);
 			plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.items[id].parking_lot_number+')');
+			e.stopPropagation();
 		});
 		mui('#parking-list').on('tap','.goRoute',function(e){
 			var id = this.getAttribute('id');
@@ -159,6 +158,9 @@
 			vm.getParking();
 			vm.isSort = false;
 		});
+		document.addEventListener('tap',function(){
+			vm.isSort = false;
+		})
     </script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <!--<script src="../js/parking.js" type="text/javascript" charset="utf-8"></script>-->

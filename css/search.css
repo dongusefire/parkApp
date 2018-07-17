@@ -22,6 +22,9 @@
     content: '\e466';
     color:#9497B3;
 }
+.search-box .mui-search .mui-input-clear~.mui-icon-clear {
+	top:4px;
+}
 .tab-box {
 	position: relative;
 	height: 100%;

@@ -301,7 +301,6 @@ var home = {
 		this.wo=this.ws.opener(); //opener获取当前Webview窗口的创建者
 		//创建map对象http://www.html5plus.org/doc/zh_cn/maps.html#plus.maps.Map.Map(id,options)
 		this.map = new plus.maps.Map('map');
-		this.showZoomControls 
 		this.getUserLocation();
 		this.createSearchView();
 		this.bindEvent();

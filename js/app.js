@@ -1,6 +1,7 @@
 var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
 var app = {
 	name:"易惠停",
+	netType:null,
 	pushServer:"http://demo.dcloud.net.cn/push/?",
 	isNetwork:true, //客户端网络状态  false无网络，true有网络
 	createLocalPushMsg:function(msg){ //创建本地推送消息
@@ -8,6 +9,25 @@ var app = {
 			var str = '2018/7/5';
 			str += ":"+str;
 			plus.push.createMessage( msg, "LocalMSG", options );
+	},
+	oneAlert:function(opt){
+		var _this = this;
+		var oAlertId = plus.storage.getItem('oAlertId');
+		if(oAlertId!='' && oAlertId){
+			if(oAlertId.indexOf('&'+opt.id)==-1){
+				oAlertId+=('&'+opt.id);
+			};
+		}else{
+			oAlertId = '';
+		};
+		plus.storage.setItem('oAlertId',oAlertId);
+		mui.alert(opt.msg,this.name+'提示',opt.btn,function(){
+			if(opt.callback){
+				opt.callback();
+			};
+			oAlertId = oAlertId.replace('&'+opt.id,'');
+			plus.storage.setItem('oAlertId',oAlertId);
+		});
 	},
 	requireNotiMsg:function(){ //发送"普通通知"消息
 		if(navigator.userAgent.indexOf('StreamApp')>0){
@@ -28,16 +48,17 @@ var app = {
 		console.log(url,'发送推送的web地址')
 		plus.runtime.openURL( url );
 	},
-	pushEvent:function(){ //绑定全局事件
+	bindEvent:function(){ //绑定全局事件
+		var _this = this;
 		// 监听点击消息事件
 		plus.push.addEventListener( "click", function( msg ) {
 			// 判断是从本地创建还是离线推送的消息
 			switch( msg.payload ) {
 				case "LocalMSG":
-					alert( "点击本地创建消息启动：" +JSON.stringify(msg));
+					mui.alert(JSON.stringify(msg),'本地创建消息');
 				break;
 				default:
-					alert( "点击离线推送消息启动："+ +JSON.stringify(msg));
+					mui.alert(JSON.stringify(msg),'离线推送消息');
 				break;
 			}
 			// 提示点击的内容
@@ -46,14 +67,35 @@ var app = {
 		// 监听在线消息事件
 		plus.push.addEventListener( "receive", function( msg ) {
 			if ( msg.aps ) {  // Apple APNS message
-				alert( "接收到在线APNS消息：" +JSON.stringify(msg));
+				mui.alert(JSON.stringify(msg),'在线APNS消息');
 			} else {
-				alert( "接收到在线透传消息：" +JSON.stringify(msg));
+				mui.alert(JSON.stringify(msg),'在线透传消息');
 			};
 		},false);
+		document.addEventListener("netchange",function(){
+			_this.getNetType();
+		}, false );
+	},
+	getNetType:function(){ //获取网络状态
+		var _this = this;
+		var type2 = plus.networkinfo.getCurrentType();
+	    _this.netType = {};
+	    _this.netType[plus.networkinfo.CONNECTION_UNKNOW] = "未知";
+	    _this.netType[plus.networkinfo.CONNECTION_NONE] = "未连接网络";
+	    _this.netType[plus.networkinfo.CONNECTION_ETHERNET] = "有线网络";
+	    _this.netType[plus.networkinfo.CONNECTION_WIFI] = "WiFi网络";
+	    _this.netType[plus.networkinfo.CONNECTION_CELL2G] = "2G蜂窝网络";
+	    _this.netType[plus.networkinfo.CONNECTION_CELL3G] = "3G蜂窝网络";
+	    _this.netType[plus.networkinfo.CONNECTION_CELL4G] = "4G蜂窝网络";
+	    if(_this.netType[type2]=='未知' || _this.netType[type2]=='未连接'){
+	    	_this.isNetwork = false;
+	    }else{
+	    	_this.isNetwork = true;
+	    };
 	},
 	init:function(){
-		this.pushEvent();
+		this.getNetType();
+		this.bindEvent();
 	}
 }
 document.addEventListener('plusready',function(){
@@ -98,21 +140,35 @@ function login(str){
 };
 //设置ajax全局的beforeSend
 mui.ajaxSettings.beforeSend = function(xhr, setting) {
-	if(!app.isNetwork){
-		xhr.abort();
-		return false;
-	};
+//	if(!app.isNetwork){
+//		var type2 = plus.networkinfo.getCurrentType();
+//		app.oneAlert({
+//			id:'network',
+//			msg:'您当前网络属于'+app.netType[type2],
+//			btn:'确定'
+//		})
+//		xhr.abort();
+//		return false;
+//	};
 	console.log('beforeSend:' + JSON.stringify(setting));
 };
 //设置ajax全局的complete
 mui.ajaxSettings.complete = function(xhr, status) {
 	console.log('complete:' + status,xhr,xhr.response);
+//	if(status=='abort'){
+//		app.oneAlert({
+//			id:'network',
+//			msg:'当前网络有误，请稍后再试',
+//			btn:'确定'
+//		});
+//	};
 	if(xhr.response&&xhr.response!=''){
 		var res = mui.parseJSON(xhr.response);
 		if(res.code==502 || res.code==503){
 			login('登录已过期')
-		}else if(res.code==509){
+		}else if(res.code==509){ 
 			plus.storage.setItem('token',res.data.newToken);
 		};
 	};
 };
+   

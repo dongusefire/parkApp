@@ -17,13 +17,13 @@
 		<div class="mui-content" id="login-box">
 			<div class="phone ban_con">
 				<label for="">手机号</label>
-				<input type="number" id="phone_number" pattern="[0-9]" maxlength="11"  placeholder="请输入手机号"/>
+				<input type="text" id="phone_number" pattern="[0-9]" maxlength="11"  placeholder="请输入手机号"/>
 				<span class="get_code">获取验证码</span>
 				<span class="seconds">重新获取<span class="num"></span>s</span>
 			</div>
 			<div class="ban_con verify_code">
 				<label for="">验证码</label>
-				<input type="number" id="code" placeholder="请输入验证码"/>
+				<input type="text" pattern="[0-9]" id="code" placeholder="请输入验证码"/>
 			</div>
 			<p class="explain">手机号登录时代表您已同意<span id="openPro">《用户协议》</span></p>
 			<button type="button" class="submit">登 录</button>
@@ -59,6 +59,8 @@
 			var ajaxsend_off = false,ajaxSubmit_off = false;
 			mui('#login-box').on('tap','.get_code',function(){
 				var phone_number = mui('#phone_number')[0].value;
+				console.log(phone_number)
+				return false;
 				if(!validate_tel(phone_number)){
 					return false;
 				};

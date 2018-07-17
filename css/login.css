@@ -30,7 +30,7 @@ body {
 .verify_code {
 	margin-top: 2px;
 }
-input[type=number] {
+input[type=text] {
 	width: 54%;
 	border:none;
 	margin:0;

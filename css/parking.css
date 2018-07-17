@@ -120,6 +120,10 @@
 	-moz-transform:translateY(0);
 	-ms-transform:translateY(0);
 }
+#tab-box .tab-sort-group .sort1 button {
+	width: 96%;
+	margin:10px 2%;
+}
 .parkingList-mask {
 	position: absolute;
 	left:0;

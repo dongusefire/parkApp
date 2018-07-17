@@ -8,6 +8,7 @@ var orderPay = {
 	payBtn:false,
 	payId:'',
 	paylink:null,
+	resultOff:false,
 	getChannels:function(){//获取支付通道
 		var _this = this;
 		// 获取支付通道
@@ -43,6 +44,32 @@ var orderPay = {
 			buttons:['是','否']
 		});
 	},
+	payResult:function(){//查询支付状态
+		var loding = plus.nativeUI.showWaiting('正在查询支付状态',{
+			modal:true,
+			padlock:true
+		});
+		var token = plus.storage.getItem('token');
+		var _this = this;
+		mui.ajax(AJAX_PATH+'/pay/result?token='+token,{
+			data:{
+				"order_sn":_this.order_sn,
+			},
+			dataType:'json',
+			type:'get',
+			success:function(res,textStatus,xhr){
+				loding.close();
+				_this.resultOff = false;
+				if(res.code==200){
+					mui.alert(res.msg,'系统提示','确定',null);
+				}else if(res.code==509){
+					_this.payResult();
+				}else if(res.code!=502 && res.code!=503){
+					mui.alert(res.msg,'系统提示','确定',null);
+				}
+			}
+		});
+	},
 	getPayInfo:function(){//获取支付签名
 		var _this = this;
 		alert('wx62d3f78776978c14')
@@ -58,11 +85,11 @@ var orderPay = {
 				_this.payBtn = false;
 				if(res.code==200){
 					var order = JSON.stringify(res.data);
+					var _text = '微信支付'
 					if(_this.pay_channel==1){
-						order = res.data;
+						_text = '支付宝支付'
 					};
 					mui.alert(order,'支付信息');
-					alert(res.data['mweb_url']);
 //					plus.runtime.openURL(res.data['mweb_url']);
 					_this.paylink = mui.openWindow(res.data['mweb_url'],'paylink',{
 						styles:{
@@ -73,17 +100,20 @@ var orderPay = {
 										color:'#292929',
 										colorPressed:'#292929',
 										float:'left',
-										text:'返回',
+										text:' 返回',
 										onclick:function(){
 											_this.paylink.close();
 										}
 									}
 								],
 								backgroundColor:'#f7f7f7',
-								titleText:'微信支付',
+								titleText:_text,
 								splitLine: {
 									color: '#cccccc'
 								}
+							},
+							additionalHttpHeaders:{
+								"Referer":"http://www.ecosysnet.com/"
 							}
 						},
 						show:{
@@ -94,6 +124,9 @@ var orderPay = {
 						},
 						extras:{}
 					});
+					_this.paylink.onclose = function(){
+						_this.payResult();
+					}
 //					plus.payment.request(_this.pays[_this.payId],order,function(result){
 //						mui.alert('支付成功',"20180711114835598",'确定',null);
 //					},function(e){
@@ -102,7 +135,7 @@ var orderPay = {
 				}else if(res.code==509){
 					_this.getPayInfo();
 				}else if(res.code!=502 && res.code!=503){
-					mui.alert(JSON.stringify(res),'系统提示','确定',null);
+					mui.alert(res.msg,'系统提示','确定',null);
 				};
 			}
 		});
@@ -134,11 +167,24 @@ var orderPay = {
 				_this.pay_channel = val;
 			};
 		});
+//		document.addEventListener("pause",function(){
+//			console.log(" 应用从前台切换到后台" );
+//		}, false );
+//		document.addEventListener("resume",function(){
+//			console.log(" 应用从后台切换到前台" );
+//			if(!_this.resultOff){
+//				_this.resultOff = true;
+//				setTimeout(function(){
+//					_this.payResult();
+//				},1000);
+//			};
+//		}, false );
 	},
 	init:function(){
 		this.ws = plus.webview.currentWebview();
 		this.wo = this.ws.opener();
 		this.order_sn = this.ws.order_sn;
+		console.log(this.order_sn,'order')
 		this.getChannels();
 		this.bindEvent();
 	}

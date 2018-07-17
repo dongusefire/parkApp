@@ -33,6 +33,8 @@ var vm = new Vue({
 			this.plateIndex = val==''? 0:val.length-1;
 		},
 		focusInput:function(event){
+			this.provinceBox = false;
+			this.cityBox = false;
 			this.plateIndex = event.target.value==''? 0:event.target.value.length-1;
 			event.currentTarget.style.marginLeft = '-100%';
 		},
@@ -61,8 +63,17 @@ var vm = new Vue({
 		toggleProvince:function(str){
 			if(str=='open'){
 				this.provinceBox = true;
+				this.cityBox = false;
 			}else{
 				this.provinceBox = false;
+			};
+		},
+		toggleCity:function(str){
+			if(str=='open'){
+				this.provinceBox = false;
+				this.cityBox = true;
+			}else{
+				this.cityBox = false;
 			};
 		},
 		validate_tel:function(num){
@@ -72,13 +83,6 @@ var vm = new Vue({
 				return false;
 			};
 			return true;
-		},
-		toggleCity:function(str){
-			if(str=='open'){
-				this.cityBox = true;
-			}else{
-				this.cityBox = false;
-			};
 		},
 		sendCode:function(){
 			var _this = this;
