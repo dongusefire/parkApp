@@ -6,7 +6,8 @@
     "refer": [
       "template/guide.html",
       "template/my.html",
-      "template/home.html"
+      "template/home.html",
+      "template/issue.html"
     ]
   },
   "template/home.html": {

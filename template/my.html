@@ -13,20 +13,20 @@
     <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-	<div class="mui-content">
+	<div id="my-content" class="mui-content">
 		<div class="park-header" id="park-header">
 		    <div class="mipark-top">
-		      	   <div class="Headportrait"></div>
-		      	   <div class="information" v-show="islogin" :data-id="id">
-		      	   	 <span class="person_W">{{userName}}</span>
-		      	     <span class="ewallet">信用值:{{num}}</span>
-		      	   </div>
-		      	   <div class="no-login" v-show="!islogin">
-		      	   	 <a id="openLogin">未登录</a>
-		      	   </div>
+	      	   <div class="Headportrait"></div>
+	      	   <div class="information" v-show="islogin" :data-id="id">
+	      	   	 <span class="person_W">{{userName}}</span>
+	      	     <span class="ewallet">信用值:{{num}}</span>
+	      	   </div>
+	      	   <div class="no-login" v-show="!islogin">
+	      	   	 <a id="openLogin">未登录</a>
+	      	   </div>
 		    </div>
 		</div>
-		<div class="park-nav">
+		<div class="park-nav" id="park-nav">
 			<a href="wallet.html" class="item-box" :data-wallet="wallet">
 				<span class="item-icon"><img src="../img/wdqb.png"></span>
 				<span class="item-title">我的钱包</span>
@@ -49,6 +49,14 @@
 					<span class="tip-num" v-show="t_num!=0&&t_num">{{t_num}}</span>
 				</span>
 				<span class="item-title">我的消息</span>
+			</a>
+			<a id="line-distance" href="#" class="item-box">
+				<span class="item-icon"><img src="../img/zn.png"></span>
+				<span class="item-title">用户指南</span>
+			</a>
+			<a id="line-distance" href="#" class="item-box">
+				<span class="item-icon"><img src="../img/zn.png"></span>
+				<span class="item-title">用户指南</span>
 			</a>
 			<a id="line-distance" href="#" class="item-box">
 				<span class="item-icon"><img src="../img/zn.png"></span>

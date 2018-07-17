@@ -6,34 +6,37 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" href="../css/issue.css" />
 		<link rel="stylesheet" href="../css/plug/ion.rangeSlider.css" />
 		<link rel="stylesheet" href="../css/plug/ion.rangeSlider.skinHTML5.css" />
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav" id="immersed-header">
 			<h1 class="mui-title">发布</h1>
 			<a href="" class="mui-pull-right tolist"><span>放租列表</span></a>
 		</header>
-		<div class="paaddSpace">
-			<div class="addSpace"><img src="../img/add_ld.png" alt="" />添加发布车位</div>
-			<div class="mySpace">
-				<div>上地三街玫瑰园小区一单元A001号</div>
+		<div class="mui-content g-content" id="immersed-content">
+			<div class="paaddSpace">
+				<div class="addSpace"><img src="../img/add_ld.png" alt="" />添加发布车位</div>
+				<div class="mySpace">
+					<div>上地三街玫瑰园小区一单元A001号</div>
+				</div>
 			</div>
+			<div class="index" style="padding:0 15px;">
+				<input id="range_44" /> 
+				<div class="demo-big__extra">
+					<pre id="result_44"></pre>
+				</div>
+	        </div>
+	        <div>
+	        	<div id="test">
+	        		
+	        	</div>
+	        </div>
 		</div>
-		<div class="index" style="padding:0 15px;">
-			<input id="range_44" /> 
-			<div class="demo-big__extra">
-				<pre id="result_44"></pre>
-			</div>
-        </div>
-        <div>
-        	<div id="test">
-        		
-        	</div>
-        </div>
-		
+		<script src="../js/immersed.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script src="../js/plug/ion.rangeSlider.min.js"></script>

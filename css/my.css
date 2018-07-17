@@ -1,5 +1,30 @@
-.park-header{
-	margin-bottom:10px;
+#my-content {
+	height: 100%;
+	width: 100%;
+	position: relative;
+}
+#my-content #park-header {
+	min-height:145px;
+	position: relative;
+}
+#my-content #park-header .mipark-top {
+	height: 100%;
+	position: absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	z-index: 2;
+}
+#my-content #park-nav {
+	position: absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:145px;
+	padding: 10px 0;
+	overflow-y: auto;
+	width:100%;
 }
 .mipark-top{
 	height:145px;
@@ -9,8 +34,11 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-	background: url(../img/gwbj.png) no-repeat center #ffffff;
+	background: url(../img/gwbj.png) no-repeat center;
     background-size:100% 100%;
+    -webkit-background-size:100% 100%;
+    -moz-background-size:100% 100%;
+    -ms-background-size:100% 100%;
 }
 .mipark-top .Headportrait{
 	width:71px;

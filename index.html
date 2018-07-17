@@ -15,7 +15,7 @@
 	        <span class="mui-icon home"></span>
 	        <span class="mui-tab-label">预定</span>
 	    </a>
-	    <a class="mui-tab-item" href="template/carportShare.html" data-type="open">
+	    <a class="mui-tab-item" href="template/issue.html">
 	        <span class="mui-icon push"></span>
 	        <span class="mui-tab-label">发布</span>
 	    </a>
@@ -29,13 +29,10 @@
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
     	mui.init();
-    	var subpages = ['template/home.html', 'template/my.html'];
+    	var subpages = ['template/home.html','template/issue.html','template/my.html'];
     	var subpage_style = {
 			top: '0',
-			bottom: '51px',
-			statusbar:{
-				background:"#fff" 
-			}
+			bottom: '51px'
 		};
 		var aniShow = {};
 		var self = null;
@@ -86,37 +83,20 @@
 			if (targetTab == activeTab) {
 				return;
 			};
-			//判断是使用选项卡还是打开新的页面
-			if(this.dataset.type!='open'){
-				//显示目标选项卡
-				//若为iOS平台或非首次显示，则直接显示
-				if(mui.os.ios||aniShow[targetTab]){
-					plus.webview.show(targetTab); //show方法显示Webview窗口
-				}else{
-					//否则，使用fade-in动画，且保存变量
-					var temp = {};
-					temp[targetTab] = "true";
-					mui.extend(aniShow,temp);
-					plus.webview.show(targetTab,"fade-in",300);
-					
-				};
-				//隐藏当前;
-				plus.webview.hide(activeTab);
+			//显示目标选项卡
+			//若为iOS平台或非首次显示，则直接显示
+			if(mui.os.ios||aniShow[targetTab]){
+				plus.webview.show(targetTab); //show方法显示Webview窗口
 			}else{
-				//打开窗口的相关参数
-				var options = {
-					styles:{
-						popGesture: "close", //popGesture窗口的侧滑返回功能。可取值"none"：无侧滑返回功能；"close"：侧滑返回关闭Webview窗口；"hide"：侧滑返回隐藏webview窗口
-						statusbar:{  //statusbar窗口状态栏样式。仅在应用设置为沉浸式状态栏样式下有效，设置此属性后将自动保留系统状态栏区域不被Webview窗口占用。http://www.dcloud.io/docs/api/zh_cn/webview.html#plus.webview.WebviewStatusbarStyles
-							background:"#fff" 
-						}
-					},
-					extras:{}
-				};
-				mui.alert('敬请期待个人分享','系统提示','确定');
-				//打开新窗口
-//				mui.openWindow(targetTab,targetTab,options);
+				//否则，使用fade-in动画，且保存变量
+				var temp = {};
+				temp[targetTab] = "true";
+				mui.extend(aniShow,temp);
+				plus.webview.show(targetTab,"fade-in",300);
+				
 			};
+			//隐藏当前;
+			plus.webview.hide(activeTab);
 			//更改当前活跃的选项卡
 			activeTab = targetTab;
 		});

@@ -25,4 +25,8 @@
 	if(ph && immersed>20){
 		ph.style.paddingTop = (immersed-20)+'px';
 	};
+	var pn = document.getElementById('park-nav');
+	if(pn && immersed>20){
+		pn.style.top = ((immersed-20)+145)+'px';
+	};
 })(window);

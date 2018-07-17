@@ -134,7 +134,7 @@
 										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 									}
 									//拼接dom
-									html_+='<div class="order-nav" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'">'+
+									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 												'<div class="order-text">'+
 													'<a href="#" class="item-box">'+
 														'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
@@ -246,7 +246,7 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											//拼接dom
-											r_html+='<div class="order-nav" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'">'+
+											r_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 														'<div class="order-text">'+
 															'<a href="#" class="item-box">'+
 																'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
@@ -431,7 +431,11 @@
 				});
 				//打开支付页面
 				mui('#trans-box').on('tap','.order-nav .toPay',function(e){
-					var order_num = $(this).parents('.order-nav').attr('data-onum');
+					var order_num = $(this).parents('.order-nav').attr('data-onum'),
+					order_start = $(this).parents('.order-nav').attr('data-start'),
+					order_end = $(this).parents('.order-nav').attr('data-end'),
+					order_type = $(this).parents('.order-nav').attr('data-type'),
+					park_id = $(this).parents('.order-nav').attr('data-pid');
 					var options = {
 						styles:{
 							popGesture: "close",
@@ -440,7 +444,11 @@
 							}
 						},
 						extras:{
-							order_sn:order_num
+							order_sn:order_num,
+							parkType:order_type,
+							stateTime:order_start,
+							endTime:order_end,
+							park_id:park_id
 						}
 					};
 					mui.openWindow("orderPay.html","orderPay.html",options);

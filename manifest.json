@@ -150,7 +150,7 @@
 			}
 		}
 	},
-	"fullscreen": true,
+	"fullscreen": false,
 	"dependencies": {
 		"pages": {
 			"index.html": {
@@ -171,7 +171,8 @@
 				"refer": [
 					"template/my.html",
 					"template/carportShare.html",
-					"template/guide.html"
+					"template/guide.html",
+					"template/issue.html"
 				],
 				"priority": 0
 			},

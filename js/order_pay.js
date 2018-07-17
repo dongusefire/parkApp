@@ -4,6 +4,7 @@ var orderPay = {
 	wo:null,
 	pays:[],
 	order_sn:'',
+	park_id:'',
 	pay_channel:'',
 	payBtn:false,
 	payId:'',
@@ -180,11 +181,41 @@ var orderPay = {
 //			};
 //		}, false );
 	},
+	orderDetail:function(){
+		var _this = this;
+		var token = plus.storage.getItem('token');
+		mui.ajax(AJAX_PATH+'/user/order/detail?token='+token,{
+			data:{
+				"order_num":_this.order_sn,
+				"park_id":_this.park_id,
+			},
+			dataType:'json',
+			type:'get',
+			success:function(res,textStatus,xhr){
+				if(res.code==200){
+					var order_info = res.data.order_info;
+					document.getElementById('parkName').innerHTML = res.data.park_info.parking_lot_name;
+					document.getElementById('parkAddress').innerHTML = res.data.park_info.parking_lot_address;
+					document.getElementById('parkType').innerHTML = _this.ws.parkType;
+					document.getElementById('plateNum').innerHTML = order_info.car_num;
+					document.getElementById('stateTime').innerHTML = _this.ws.stateTime;
+					document.getElementById('endTime').innerHTML = _this.ws.endTime;
+					document.getElementById('parkPrice').innerHTML = order_info.pay_amount;
+					$('[v-cloak]').removeAttr('v-cloak');
+				}else if(res.code==509){
+					_this.orderDetail();
+				}else if(res.code!=502 && res.code!=503){
+					mui.alert(res.msg,'系统提示','确定',null);
+				};
+			}
+		});
+	},
 	init:function(){
 		this.ws = plus.webview.currentWebview();
 		this.wo = this.ws.opener();
 		this.order_sn = this.ws.order_sn;
-		console.log(this.order_sn,'order')
+		this.park_id = this.ws.park_id;
+		this.orderDetail();
 		this.getChannels();
 		this.bindEvent();
 	}
