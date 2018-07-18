@@ -24,7 +24,7 @@
 				</div>
 			</div>
 			<div class="filter">
-				<span @click="sortToggle">{{sort}}<i></i></span>
+				<span id="sort1">{{sort}}<i></i></span>
 				<!--<span>停车时长<i></i></span>-->
 			</div>
 		</div>
@@ -112,29 +112,11 @@
 									_list[i].distance = (_list[i].distance/1000).toFixed(3)
 								};
 								_this.items = _list;
-//								if(_this.keywords!=''){
-//									var list  = plus.storage.getItem('search');
-//									if(!list){ //如果是第一次获取的数据，那么就创建search的storage
-//										plus.storage.setItem('search',JSON.stringify(_list));
-//									}else{
-//										if(_list&&_list.length!=0){
-//											var old = JSON.parse(list);
-//											for(var i=0;i<_list.length;i++){
-//												old.push(_list[i])
-//											};
-//											plus.storage.setItem('search',JSON.stringify(old));
-//										};
-//									};
-//								};
 							}else{
 								mui.alert(res.msg,'系统提示','确定',null);
 							};
 						}
 					});
-				},
-				sortToggle:function(e){
-					this.isSort = !this.isSort;
-					e.stopPropagation();
 				}
 			}
 		});
@@ -158,6 +140,10 @@
 			vm.getParking();
 			vm.isSort = false;
 		});
+		document.getElementById('sort1').addEventListener('tap',function(e){
+			vm.isSort = !vm.isSort;
+			e.stopPropagation();
+		})
 		document.addEventListener('tap',function(){
 			vm.isSort = false;
 		})

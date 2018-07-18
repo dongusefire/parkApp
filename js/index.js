@@ -22,10 +22,14 @@ var home = {
 					lat:point.latitude
 				};
 				_this.setCenter(point);
-				_this.getParking(point,'');
 			}else{
-				alert( "暂未授权!" );//用户拒绝授权
+				console.log( "暂未授权!" );//用户拒绝授权地里位置
+				var point = {
+					longitude:'',
+					latitude:'',
+				};
 			};
+			_this.getParking(point,'');
 		});
 	},
 	createSearchView:function(){//创建覆盖在地图上的搜索窗口
