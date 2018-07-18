@@ -66,3 +66,33 @@
 	letter-spacing: 0;
 	line-height: 20px;
 }
+#search-box {
+	width: 86%;
+	margin:10px auto;
+}
+#search-box .mui-icon-search::before{
+	content: initial;
+}
+#search-box .mui-search::before {
+	font-family: Muiicons;
+    font-size: 24px;
+    font-weight: 400;
+    position: absolute;
+    top: 50%;
+    right: auto;
+    left: 20px;
+    display: block;
+    margin-right: 0;
+    margin-top: -9px;
+    margin-right: 0;
+    content: '\e466';
+    color:#9497B3;
+}
+#search-box .mui-search input[type=search] {
+	padding: 0;
+	height: 40px;
+	border-radius: 40px;
+	background: rgba(255,255,255,0.90);
+	margin:0;
+	padding-left: 45px;
+}

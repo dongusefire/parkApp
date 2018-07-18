@@ -1,5 +1,5 @@
 mui.init();
-var myParking = {
+var newParkSpace = {
 	webviewOptions:{
 		styles:{
 			bottom:0,
@@ -13,8 +13,8 @@ var myParking = {
 	},
 	bindeEvent:function(){
 		var mc = mui('.mui-content'),_this = this;
-		mc.on('tap','.addvehicle',function(){
-			mui.openWindow('newParkSpace.html','newParkSpace.html',_this.webviewOptions);
+		mc.on('tap','#openChooseParkSpace',function(){
+			mui.openWindow('chooseParkSpace.html','chooseParkSpace.html',_this.webviewOptions);
 		})
 	},
 	init:function(){
@@ -22,5 +22,5 @@ var myParking = {
 	}
 }
 mui.plusReady(function(){
-	myParking.init();
+	newParkSpace.init();
 })

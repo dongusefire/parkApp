@@ -1,27 +1,27 @@
 <!doctype html>
 <html>
-
-	<head>
-		<meta charset="UTF-8">
-		<title>新增车位</title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../css/newParkSpace.css" />
-	</head>
-
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
-			<h1 class="mui-title">新增车位</h1>
-		</header>
-		<div class="content">
-		    <p class="annotation">注：您所填写信息仅用于验证，惠停车不会透露给第三方。</p>
-		</div>
-		<div class="withdraw mui-clearfix withborder">
+<head>
+	<meta charset="UTF-8">
+	<title>新增车位</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+	<link rel="stylesheet" href="../css/newParkSpace.css" />
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav header-bar">
+		<a class="mui-action-back mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
+		<h1 class="mui-title">新增车位</h1>
+	</header>
+	<div class="mui-content g-content">
+		<p class="annotation">注：您所填写信息仅用于验证，惠停车不会透露给第三方。</p>
+		<div class="withdraw mui-clearfix withborder" id="openChooseParkSpace">
 			<label>车位所在区域</label>
 			<span class="mui-icon mui-icon-arrowright mui-pull-right arrow"></span>
 		</div>
-		<textarea name="" rows="3" cols="" placeholder="请输入地址" class="withborder"></textarea>
+		<div class="parkInfo">
+			
+		</div>
 		<input type="number"  placeholder="联系电话" />
 		<div class="withborder character">
 			<label class="mui-pull-left character">车位性质</label>
@@ -61,7 +61,10 @@
 		</div>
 		<p class="ask">提交信息代表您已同意 <span>《车位共享说明》</span> </p>
 		<button type="submit" class="submit">提 交</button>
-		<script src="../js/jquery-1.11.2.min.js"></script>
-	</body>
-
+	</div>
+	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery-1.11.2.min.js"></script>
+	<script src="../js/newParkSpace.js" type="text/javascript" charset="utf-8"></script>
+</body>
 </html>
