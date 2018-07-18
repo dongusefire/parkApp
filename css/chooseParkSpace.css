@@ -27,6 +27,14 @@
 	color: #333333;
 	letter-spacing: 0;
 	line-height: 18px;
+	width: 100%;
+}
+.parking .pName {
+	width: 60%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
 }
 .parking .price {
 	font-size: 12px;
@@ -42,7 +50,7 @@
 	line-height: 17px;
 }
 .parking .address{
-	margin-top: 6px;
+	margin-top: 12px;
 }
 .parking .address img {
 	width: 10px;
@@ -50,7 +58,7 @@
 	vertical-align: sub;
 }
 .parking .num {
-	margin-top: 4px;
+	margin-top: 10px;
 }
 .parking .num .free {
 	font-size: 14px;

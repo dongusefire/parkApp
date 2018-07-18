@@ -190,7 +190,7 @@
 									var _data = res.data.parkingInfo;
 									//设置背景图片
 									var imgSrc = _data.parking_lot_img;
-									if(imgSrc !='' && imgSrc){
+									if(imgSrc!=''&&imgSrc){
 										if(imgSrc.indexOf('http')!=-1){
 											$$('.picture').css('background-image','url('+imgSrc+')');
 										}else{
@@ -327,14 +327,7 @@
 						//无差别接口请求
 						ajaxGet(AJAX_PATH+'/parking/time_list?token='+token,{"park_lot_num":Park_lot_num},"noChoose");
 					}
-					//时间拾取器
-//					var btns = $('.time');
-//					btns.each(function(i,btn){
-//						
-//					})
-//					var btn = $('.time_begin')[0];
-//					var btn2 = $('.time_end')[0];
-//					alert(btn);
+
 					mui('.select-box').on('tap','.time_begin',function(){
 						var _self = this;
 						if(_self.picker){
@@ -365,17 +358,25 @@
 								
 								//计算停车时长
 								time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
+								var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
 								if(time1!='' && time2!=''){
 									var timeDifference = GetDateDiff(time1, time2, "minute");
 									var bookPrice = parkPrice;
 								    var Difference = timeDifference / 60;
 								    var bookFee = bookPrice * Difference;
 								    if(bookFee <= 0){
-								    	mui.alert('结束时间必须大于起始时间','系统提示','确定',null);
 								    	$$('#num').html('0.00');
 								    }else{
 								    	$$('#num').html(bookFee);
 								    }
+								    if(TimeDifference < 15){
+										mui.alert('起始时间必须小于结束时间15分钟以上','系统提示','确定',null);
+										return false;
+									}
+									if(diff2 < 15){
+										mui.alert('起始时间必须大于当前时间15分钟以上','系统提示','确定',null);
+										return false;
+									}
 								};
 							})
 						}
@@ -398,7 +399,7 @@
 							var id = this.getAttribute('id');
 							/*
 							 *首次显示实例化组件
-							 * 这里把optios放到了按钮的dom上，
+							 * 这里把options放到了按钮的dom上，
 							 * 也可以直接通过代码声明options用于实例化DtPicker
 							*/
 							_self2.picker = new $.DtPicker(options);
@@ -410,17 +411,25 @@
 								
 								//计算停车时长
 								time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
+								var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
 								if(time1!='' && time2!=''){
 									var timeDifference = GetDateDiff(time1, time2, "minute");
 									var bookPrice = parkPrice;
 								    var Difference = timeDifference / 60;
 								    var bookFee = bookPrice * Difference;
 								    if(bookFee <= 0){
-								    	mui.alert('结束时间必须大于起始时间','系统提示','确定',null);
 								    	$$('#num').html('0.00');
 								    }else{
 								    	$$('#num').html(bookFee);
 								    }
+								    if(TimeDifference < 15){
+										mui.alert('结束时间必须大于起始时间15分钟以上','系统提示','确定',null);
+										return false;
+									}
+									if(diff2 < 15){
+										mui.alert('起始时间必须大于当前时间15分钟以上','系统提示','确定',null);
+										return false;
+									}
 								};
 							})
 						}
@@ -451,14 +460,6 @@
 					var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
 					if(time1=='请选择开始时间'||time2=='请选择结束时间'){
 						mui.alert('请选择预定起始与结束时间','系统提示','确定',null);
-						return false;
-					}
-					if(TimeDifference < 15){
-						mui.alert('结束时间必须大于起始时间15分钟以上','系统提示','确定',null);
-						return false;
-					}
-					if(diff2 < 15){
-						mui.alert('起始时间必须大于当前时间15分钟以上','系统提示','确定',null);
 						return false;
 					}
 					//2.组织数据

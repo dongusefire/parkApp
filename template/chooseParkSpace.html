@@ -17,7 +17,10 @@
 		    <div class="list-box">
 		    	<div class="parking" v-for="item in items">
 		    		<!--title-->
-		    		<div class="title">{{item.parking_lot_name}}<span class="price">{{item.price}}元</span><span class="unit">/小时</span></div>
+		    		<div class="title">
+		    			<span class="pName">{{item.parking_lot_name}}</span>
+		    			<div class="priceContent mui-pull-right"><span class="price">{{item.price}}元</span><span class="unit">/小时</span></div>
+		    		</div>
 		    		<!--address-->
 		    		<p class="address">
 		    			<img src="../img/dwt.png">
