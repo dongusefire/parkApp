@@ -158,7 +158,21 @@
 					      break;
 					  }
 					  return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
-					}
+				}
+				//小数乘法浮点数处理
+				function accMul(arg1,arg2){ 
+					var m=0,s1=arg1.toString(),
+					s2=arg2.toString(); 
+					try{
+						m+=s1.split(".")[1].length
+					}catch(e)
+					{}
+					try{
+						m+=s2.split(".")[1].length
+					}catch(e)
+					{}
+					return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
+				}
 				//picker显示时间段的算法
 				
 				//车位信息请求ajax函数
@@ -246,7 +260,7 @@
 								if(res.code == 507){
 									console.log(JSON.stringify(res),233232)
 									if(type=="noChoose"){
-										mui.alert('无差别车位没有可用车位，请选择自选车位','系统提示','确定',function(){
+										mui.alert('该车场没有发布无差别车位，请预定自选车位','系统提示','确定',function(){
 											//确定之后做处理
 											$$('.optional').trigger('click');
 										})
@@ -363,7 +377,7 @@
 									var timeDifference = GetDateDiff(time1, time2, "minute");
 									var bookPrice = parkPrice;
 								    var Difference = timeDifference / 60;
-								    var bookFee = bookPrice * Difference;
+								    var bookFee = accMul(bookPrice,Difference);
 								    if(bookFee <= 0){
 								    	$$('#num').html('0.00');
 								    }else{
@@ -416,7 +430,7 @@
 									var timeDifference = GetDateDiff(time1, time2, "minute");
 									var bookPrice = parkPrice;
 								    var Difference = timeDifference / 60;
-								    var bookFee = bookPrice * Difference;
+								    var bookFee = accMul(bookPrice,Difference);
 								    if(bookFee <= 0){
 								    	$$('#num').html('0.00');
 								    }else{

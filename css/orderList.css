@@ -29,15 +29,42 @@
 .order-nav .order-time{
 	padding:10px 0 0 14px;
 	background: #f8f8f8;
+	position: relative;
+}
+.order-nav .order-time .time-part {
+	margin-top: -5px;
+}
+.order-nav .order-time .hash {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+.order-nav .order-time .hash .ha_content {
+	color:#007AFF;
+	width: 57%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+    padding-left: 8px;
+}
+.order-nav .order-time .out-time{
+	margin-bottom: 0;
 }
 .order-time .time span{
 	font-size:13px;
 	color:#333333;
 }
 .order-time .amount {
-	font-size: 14px;
+	font-size: 32px;
 	color: #292929;
 	letter-spacing: 0;
+	position: absolute;
+	top:40px;
+	right:10px;
+	display: inline-block;
+	font-weight:inherit;
 } 
 .order-state{
 	height:58px;
