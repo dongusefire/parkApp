@@ -131,29 +131,57 @@
 										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 									}
 									//拼接dom
-									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
-												'<div class="order-text">'+
-													'<a href="#" class="item-box">'+
-														'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
-														'<span class="item-title">'+value.park_name+'</span>'+
-														'<span class="mui-pull-right pay">'+status+'</span>'+
-												   '</a>'+
-												'</div>'+
-												'<div class="order-time">'+
-													'<p class="time place-time">'+
-														'<span>车位:</span>'+
-														'<span>'+type+'</span>'+
-													'</p>'+
-													'<p class="amount">￥'+value.order_amount+'</p>'+
-													'<p class="time out-time">'+
-														'<span>预约时间段:</span>'+
-														'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
-													'</p>'+
-												'</div>'+
-												'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
-												'</div>'+
-											'</div>';
+//									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
+//												'<div class="order-text">'+
+//													'<a href="#" class="item-box">'+
+//														'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
+//														'<span class="item-title">'+value.park_name+'</span>'+
+//														'<span class="mui-pull-right pay">'+status+'</span>'+
+//												   '</a>'+
+//												'</div>'+
+//												'<div class="order-time">'+
+//													'<p class="time place-time">'+
+//														'<span>车位:</span>'+
+//														'<span>'+type+'</span>'+
+//													'</p>'+
+//													'<p class="amount">￥'+value.order_amount+'</p>'+
+//													'<p class="time out-time">'+
+//														'<span>预约时间段:</span>'+
+//														'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
+//													'</p>'+
+//												'</div>'+
+//												'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
+//												'</div>'+
+//											'</div>';
 											
+											
+									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
+											'<div class="order-text">'+
+												'<a href="#" class="item-box">'+
+													'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
+													'<span class="item-title">'+value.park_name+'</span>'+
+													'<span class="mui-pull-right pay">'+status+'</span>'+
+											  ' </a>'+
+											'</div>'+
+											'<div class="order-time">'+
+												'<p class="time place-time">'+
+													'<span>车位:</span>'+
+													'<span>'+type+'</span>'+
+												'</p>'+
+												'<span class="amount">￥'+value.order_amount+'</span>'+
+												'<p class="time out-time">'+
+													'<span>预约时间段:</span>'+
+												'</p>'+
+												'<p class="time time-part">'+
+													'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
+												'</p>'+
+												'<p class="time hash">'+
+													'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+												'</p>'+
+											'</div>'+
+											'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
+											'</div>'+
+										'</div>';
 								})
 								$('.trans-box').html(html_);
 							}else if(res.code==509){
@@ -244,27 +272,32 @@
 											}
 											//拼接dom
 											r_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
-														'<div class="order-text">'+
-															'<a href="#" class="item-box">'+
-																'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
-																'<span class="item-title">'+value.park_name+'</span>'+
-																'<span class="mui-pull-right pay">'+status+'</span>'+
-														   '</a>'+
-														'</div>'+
-														'<div class="order-time">'+
-															'<p class="time place-time">'+
-																'<span>车位:</span>'+
-																'<span>'+type+'</span>'+
-															'</p>'+
-															'<p class="amount">￥'+value.order_amount+'</p>'+
-															'<p class="time out-time">'+
-																'<span>预约时间段:</span>'+
-																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
-															'</p>'+
-														'</div>'+
-														'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
-														'</div>'+
-													'</div>';
+													'<div class="order-text">'+
+														'<a href="#" class="item-box">'+
+															'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
+															'<span class="item-title">'+value.park_name+'</span>'+
+															'<span class="mui-pull-right pay">'+status+'</span>'+
+													  ' </a>'+
+													'</div>'+
+													'<div class="order-time">'+
+														'<p class="time place-time">'+
+															'<span>车位:</span>'+
+															'<span>'+type+'</span>'+
+														'</p>'+
+														'<span class="amount">￥'+value.order_amount+'</span>'+
+														'<p class="time out-time">'+
+															'<span>预约时间段:</span>'+
+														'</p>'+
+														'<p class="time time-part">'+
+															'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
+														'</p>'+
+														'<p class="time hash">'+
+															'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+														'</p>'+
+													'</div>'+
+													'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
+													'</div>'+
+												'</div>';
 										});
 										$('#trans-box').empty();
 										$('#trans-box').html(r_html);
@@ -353,27 +386,32 @@
 											}
 											//拼接dom
 											s_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
-														'<div class="order-text">'+
-															'<a href="#" class="item-box">'+
-																'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
-																'<span class="item-title">'+value.park_name+'</span>'+
-																'<span class="mui-pull-right pay">'+status+'</span>'+
-														   '</a>'+
-														'</div>'+
-														'<div class="order-time">'+
-															'<p class="time place-time">'+
-																'<span>车位:</span>'+
-																'<span>'+type+'</span>'+
-															'</p>'+
-															'<p class="amount">￥'+value.order_amount+'</p>'+
-															'<p class="time out-time">'+
-																'<span>预约时间段:</span>'+
-																'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
-															'</p>'+
-														'</div>'+
-														'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
-														'</div>'+
-													'</div>';
+													'<div class="order-text">'+
+														'<a href="#" class="item-box">'+
+															'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
+															'<span class="item-title">'+value.park_name+'</span>'+
+															'<span class="mui-pull-right pay">'+status+'</span>'+
+													  ' </a>'+
+													'</div>'+
+													'<div class="order-time">'+
+														'<p class="time place-time">'+
+															'<span>车位:</span>'+
+															'<span>'+type+'</span>'+
+														'</p>'+
+														'<span class="amount">￥'+value.order_amount+'</span>'+
+														'<p class="time out-time">'+
+															'<span>预约时间段:</span>'+
+														'</p>'+
+														'<p class="time time-part">'+
+															'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
+														'</p>'+
+														'<p class="time hash">'+
+															'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+														'</p>'+
+													'</div>'+
+													'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
+													'</div>'+
+												'</div>';
 										});
 										$('#trans-box').empty();
 										$('#trans-box').html(s_html);
