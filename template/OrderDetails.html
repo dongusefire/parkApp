@@ -117,7 +117,9 @@
 													'<span class="date-time">'+end_t+'</span>'+
 												'</p>'+
 											'</div>';
-										fee+= '<p class="park-rate">停车费:<span>'+order_info.order_amount+'</span></p>';
+										var bookFee = order_info.order_amount;
+										bookFee = bookFee/100;
+										fee+= '<p class="park-rate">停车费:<span>'+bookFee+'元</span></p>';
 										//订单状态判断
 										if(timeFlag){
 											if(order_info.order_status==5||order_info.order_status==6||order_info.order_status==7||order_info.order_status==8){

@@ -6,6 +6,7 @@
 	border-radius: 8px;
 	overflow: hidden;
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+	background-color: #f8f8f8;
 }
 .order-nav .order-text{
 	background: #ffffff;
@@ -13,18 +14,26 @@
 .order-nav .order-text .item-box{
 	display: block;
 	padding:18px 0 16px 13px;
+	width: 100%;
 }
 #item-icon img{
 	width:21px;
 	height:21px;
+	vertical-align: middle;
 }
 .order-nav .order-text .item-title{
 	font-size:17px;
 	color:#3b3b3b;
 	padding-left: 4px;
+	display:  inline-block;
+	width: 52%;
+	overflow:  hidden;
+	white-space:  nowrap;
+	text-overflow:  ellipsis;
+	line-height: 23px;
 }
 .order-nav .order-text .pay {
-	margin-right: 10px;
+	margin-right: 15px;
 }
 .order-nav .order-time{
 	padding:10px 0 0 14px;
@@ -34,20 +43,36 @@
 .order-nav .order-time .time-part {
 	margin-top: -5px;
 }
-.order-nav .order-time .hash {
+.order-nav  .hash {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 100%;
 }
-.order-nav .order-time .hash .ha_content {
+.order-nav .hash .ha_title {
+	margin-left: 14px;
+	color:#333333;
+} 
+.order-nav  .hash .ha_content {
 	color:#007AFF;
-	width: 57%;
+	width: 56%;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: bottom;
     padding-left: 8px;
+    position: relative;
+}
+.order-nav  .hash .ha_content::after{
+	content: " ";
+	background-image: url("../img/hash_arrow.png");
+	background-size: 20px 12px;
+	background-repeat: no-repeat;
+	position: absolute;
+	height: 12px;
+	width: 20px;
+	top:5px;
+	right:-6px;
 }
 .order-nav .order-time .out-time{
 	margin-bottom: 0;
@@ -62,7 +87,7 @@
 	letter-spacing: 0;
 	position: absolute;
 	top:40px;
-	right:10px;
+	right:15px;
 	display: inline-block;
 	font-weight:inherit;
 } 
@@ -100,6 +125,9 @@
 	color:#333333;
 	border:1px solid #d2d2d2;
 	border-radius: 50px;
+}
+.order-state .cancel-order {
+	display: none;
 }
 .order-state .cancel.unpay button{
 	/*color:#fff;

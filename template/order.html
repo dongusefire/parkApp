@@ -84,6 +84,9 @@
 					load(mui,document,jQuery);
 				},800);
 			});
+			window.addEventListener('alr',function(){
+				mui.back();
+			})
 //			window.addEventListener('reload',function(){
 //				token = plus.storage.getItem('token');
 //				plus.nativeUI.showWaiting('信息加载中，请稍候...');
@@ -262,7 +265,8 @@
 									if(type=="noChoose"){
 										mui.alert('该车场没有发布无差别车位，请预定自选车位','系统提示','确定',function(){
 											//确定之后做处理
-											$$('.optional').trigger('click');
+//											$$('.optional').trigger('click');
+											chooseSpace('haveNo');
 										})
 									}							
 								}else{
@@ -449,7 +453,11 @@
 						}
 					},false);
 				});
+
 				$$('.optional').click(function(){
+					chooseSpace();
+				});
+				function chooseSpace(recive){
 					var options = {
 						styles:{
 							popGesture: "close",
@@ -459,13 +467,15 @@
 						},
 						extras:{
 							parking_lot_num:Park_lot_num,
-							park_name:park_lot_name
+							park_name:park_lot_name,
+							noSpace:recive
 						}
 					};
 					setTimeout(function(){
 						mui.openWindow("parkingArea.html","parkingArea.html",options);
 					},500);
-				});
+				}
+				
 				//预定部分
 				var ajaxSubmit_off = false;
 				mui('.mui-content').on('tap','.reserve',function(){

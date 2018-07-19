@@ -28,9 +28,32 @@
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/jquery-1.11.2.min.js"></script>
     <script>
+    	function init(){
+    		mui.init({
+	    		beforeback:function(){
+	    			var list = plus.webview.getWebviewById('order.html');
+	    			mui.fire(list,'alr');
+	    			return true;
+	    		}
+	    	});
+    	}
     	mui.init();
     	//获取创建当前窗口的webview对象
-		var ws,token,park_lot_num,park_lot_name;
+		var ws,token,park_lot_num,park_lot_name,noSpace;
+		mui.plusReady(function(){
+    		//获取创建当前窗口的webview对象
+			ws = plus.webview.currentWebview();
+	    	token = plus.storage.getItem('token');
+			park_lot_num = ws.parking_lot_num;
+			park_lot_name = ws.park_name? ws.park_name:localStorage.getItem('parkingName');
+			noSpace = ws.noSpace;
+			if(noSpace=='haveNo'){
+				init();
+			}
+	    	$('.mui-title').html(park_lot_name);
+	    	getData();
+    	});
+		
     	function getData(){
     		mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
 	    		data:{
@@ -77,15 +100,8 @@
 	    		}
 	    	})
     	};
-    	mui.plusReady(function(){
-    		//获取创建当前窗口的webview对象
-			ws = plus.webview.currentWebview();
-	    	token = plus.storage.getItem('token');
-			park_lot_num = ws.parking_lot_num;
-			park_lot_name = ws.park_name? ws.park_name:localStorage.getItem('parkingName');
-	    	$('.mui-title').html(park_lot_name);
-	    	getData();
-    	});
+    	
+    	
     	function positionInfo2(floor,vehicle_b,build){
     		//数据请求
 			mui.ajax(AJAX_PATH+'/parking/self/positionInfo?token='+token,{
