@@ -1,3 +1,6 @@
+.g-content {
+	overflow-y: auto;
+}
 .mui-icon {
 	font-size: 28px;
 	margin-top: 4px;
@@ -112,6 +115,7 @@ input::-webkit-input-placeholder {
 }
 .check {
 	font-size: 0;
+	padding-top: 5px;
 }
 .check label {
 	display: inline-block;
@@ -204,6 +208,9 @@ input::-webkit-input-placeholder {
 	position: absolute;
 	top:100%;
 	left:0;
+	right: 0;
+	padding-top: 10px;
+	text-align: center;
 	color: #666666;
 }
 .ask {
@@ -225,4 +232,111 @@ input::-webkit-input-placeholder {
 	height: 54px;
 	color:#ffffff;
 	font-size: 16px;
+}
+.form-item {
+	width: 100%;
+	background: #fff;
+	margin-bottom: 10px;
+}
+.form-item .input-item {
+	height: 50px;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    align-items: center;
+	border-bottom: 1px solid #ececec;
+}
+.form-item .input-item:last-child {
+	border:none;
+}
+.form-item .input-item .item-label {
+	width: 90px;
+	padding-right: 10px;
+	text-align:right;
+	font-size: 14px;
+    color: #333333;
+}
+.form-item .input-item .item-content {
+	-webkit-box-flex: 1.0;
+    -moz-flex-grow: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    line-height: 50px;
+    font-size: 14px;
+}
+.form-item .input-item .item-content input:not(.min-input) {
+	padding-left: 0;
+}
+.form-item .input-item .item-content .min-input {
+	max-width: 70px;
+}
+.form-item .input-item .item-content .min-inputbox {
+	position: relative;
+	display: inline-block;
+	height: 100%;
+}
+.form-item .input-item .item-content .min-inputbox:after{
+	content: '';
+	position: absolute;
+	left:5px;
+	right:5px;
+	bottom: 10px;
+	height: 1px;
+	border-bottom:1px #999 solid;
+}
+.form-item .input-item input {
+	border:none;
+	margin: 0;
+	font-size: 14px;
+}
+.parkName {
+	width:200px;
+	display: inline-block;
+	overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.upload-box {
+	position: absolute;
+	left:0;
+	right:0;
+	bottom:0;
+	top:0;
+	background: url(../img/plus.png) no-repeat center;
+	overflow: hidden;
+}
+.upload-box .file-box {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.upload-box .file-box .webuploader-pick {
+	width:100%;
+	height:100%;
+}
+.upload-box .file-box input {
+	opacity: 0;
+}
+.upload-box .upload-fileInfo {
+	position: absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	z-index: 3;
+	display: none;
+}
+.upload-box .upload-fileInfo span.mui-icon {
+	position: absolute;
+	top:0;
+	right:0;
+	margin:0;
+	border-radius: 14px;
+	background: #f00;
+	color:#fff;
 }
