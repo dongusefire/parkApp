@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>我的钱包</title>
@@ -8,7 +7,6 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" href="../css/wallet.css" />
-		<script src="../js/vue.min.js"></script>
 	</head>
 
 	<body>
@@ -20,10 +18,10 @@
 			<div class="balance">
 				<span class="cuteWords">余额:</span>
 				<div class="money">
-					<span class="num">{{balance}}</span>元
+					<!--<span class="num">{{balance}}</span>元-->
 				</div>
-				<span class="mui-pull-right cuteWords details" @click="getdetails">明细  
-					>
+				<span class="mui-pull-right cuteWords details" id="details" @click="getdetails">明细 > 
+					
 				</span> 
 			</div>
 			
@@ -33,28 +31,10 @@
 				<span class="mui-icon mui-icon-arrowright mui-pull-right arrow"></span>
 			</div>
 		</div>
-
-		<script src="../js/mui.min.js"></script>
-		<script type="text/javascript">
-			mui.init()
-			var vm = new Vue({
-				el:'.box',
-				data:{
-					balance:0
-				},
-				created:function(){
-					//此处调用ajax
-				},
-				methods:{
-					getdetails:function(){
-						mui.alert('暂无明细','系统提示','确定',null);
-					},
-					withdraw:function(){
-						mui.alert('没有收益，无法提现','系统提示','确定',null);
-					}
-				}
-			})
-		</script>
-	</body>
+	    <script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
+		<script src="../js/wallet.js"></script>
+</body>
 
 </html>

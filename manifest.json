@@ -190,7 +190,9 @@
 					"css/index.css",
 					"css/mui.min.css",
 					"js/mui.min.js",
-					"js/vue.min.js"
+					"js/vue.min.js",
+					"img/dwt.png",
+					"img/dhicon.png"
 				],
 				"refer": [],
 				"priority": 0
@@ -230,7 +232,9 @@
 					"template/login.html",
 					"template/wallet.html",
 					"template/orderList.html",
-					"template/my_vehicle.html"
+					"template/my_vehicle.html",
+					"template/userGuide.html",
+					"template/message.html"
 				],
 				"priority": 0
 			},
@@ -241,7 +245,8 @@
 					"img/cd.png",
 					"js/index.js",
 					"css/mui.min.css",
-					"template/home_parking.html"
+					"template/home_parking.html",
+					"js/immersed.js"
 				],
 				"refer": [
 					"template/parking.html",
@@ -276,9 +281,15 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/wallet.css",
-					"img/withdrawl.png"
+					"img/withdrawl.png",
+					"js/wallet.js",
+					"js/app.js",
+					"js/jquery-1.11.2.min.js",
+					"js/mui.min.js"
 				],
-				"refer": [],
+				"refer": [
+					"template/balance.html"
+				],
 				"priority": 0
 			},
 			"template/orderList.html": {
@@ -364,6 +375,45 @@
 				"refer": [
 					"template/OrderDetails.html"
 				],
+				"priority": 0
+			},
+			"template/issue.html": {
+				"resources": [
+					"js/plug/ion.rangeSlider.min.js",
+					"js/jquery-1.11.2.min.js",
+					"css/plug/ion.rangeSlider.skinHTML5.css",
+					"css/plug/ion.rangeSlider.css",
+					"img/add_ld.png",
+					"css/issue.css",
+					"js/immersed.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/userGuide.html": {
+				"resources": [
+					"img/appUserGuide.jpg",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/message.html": {
+				"resources": [
+					"css/message.css",
+					"css/mui.min.css",
+					"js/vue.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"template/balance.html": {
+				"resources": [
+					"css/balance.css",
+					"css/mui.min.css",
+					"js/balance.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
