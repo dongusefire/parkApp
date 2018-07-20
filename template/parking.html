@@ -123,7 +123,7 @@
 		window.addEventListener('readData',function(event){
 		  vm.readData(event.detail.data,event.detail.point);
 		});
-		mui('#parking-list').on('tap','.parking',function(){
+		mui('#parking-list').on('tap','.parking',function(e){
 			var id = this.getAttribute('id');
 			localStorage.setItem('parkingName',vm.items[id].parking_lot_name);
 			plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.items[id].parking_lot_number+')');

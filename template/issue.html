@@ -7,9 +7,10 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" href="../css/mui.picker.css" />
+		<link rel="stylesheet" href="../css/mui.poppicker.css" />
+		<link rel="stylesheet" href="../css/mui.picker.min.css" />
 		<link rel="stylesheet" href="../css/issue.css" />
-		<link rel="stylesheet" href="../css/plug/ion.rangeSlider.css" />
-		<link rel="stylesheet" href="../css/plug/ion.rangeSlider.skinHTML5.css" />
 	</head>
 
 	<body>
@@ -24,54 +25,47 @@
 					<div>上地三街玫瑰园小区一单元A001号</div>
 				</div>
 			</div>
-			<div class="index" style="padding:0 15px;">
-				<input id="range_44" /> 
-				<div class="demo-big__extra">
-					<pre id="result_44"></pre>
-				</div>
-	        </div>
-	        <div>
-	        	<div id="test">
-	        		
+	        <div class="chooseDate">
+	        	<div class="row">
+	        		<span class="title">开始时间:</span>
+	        		<span class="startDate" data-options='{"type":"date"}'>请选择开始日期</span>
+	        	</div>
+	        	<div class="row">
+	        		<span class="title">结束时间:</span>
+	        		<span class="endDate" data-options='{"type":"date"}'>请选择结束日期</span>
 	        	</div>
 	        </div>
+	        <div class="chooseTime">
+	        	<div class="row mui-clearfix">
+	        		<span class="title mui-pull-left">发布时段:</span>
+	        		<div class="mui-pull-left time_box">
+	        			<span class="start_time with_circle">选择开始时间</span>
+		        		<span>至</span>
+		        		<span class="end_time with_circle">选择结束时间</span>
+	        		</div>
+	        	</div>
+	        </div>
+	        <div class="repeat">
+	        	<span class="title">重复:</span>
+	        	<ul class="week_day">
+	        		<li>日</li>
+	        		<li>一</li>
+	        		<li>二</li>
+	        		<li>三</li>
+	        		<li>四</li>
+	        		<li>五</li>
+	        		<li>六</li>
+	        	</ul>
+	        </div>
+	        <button class="issue">立即发布</button>
 		</div>
 		<script src="../js/immersed.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/mui.min.js"></script>
+		<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/mui.picker.min.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
-		<script src="../js/plug/ion.rangeSlider.min.js"></script>
-		<script>
-			$(document).ready(function () {
-				var $range = $("#range_44"),
-					$result = $("#result_44");
-				var track = function (data) {
-					delete data.input;
-					delete data.slider;
-					if (JSON) {
-						var xx = JSON.stringify(data, null, 2);
-						var xxx = JSON.parse(xx);
-						console.log(xxx.to - xxx.from);
-					} else {
-						console.log(data);
-					}
-				};
-				$range.ionRangeSlider({
-					type: "double",
-					min: 0,
-					max: 24,
-					from: 8,
-					to: 16,
-					step: 1,
-					onStart: track,
-					onChange: track,
-					onFinish: track,
-					onUpdate: track,
-					grid: false,
-					min_interval: 4,
-				});
-
-			});
-		</script>
+		<script src="../js/issue.js"></script>
 	</body>
 
 </html>

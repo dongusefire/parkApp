@@ -62,6 +62,7 @@ var orderPay = {
 				loding.close();
 				_this.resultOff = false;
 				if(res.code==200){
+					//支付成功之后的回调
 					mui.alert(res.msg,'系统提示','确定',null);
 				}else if(res.code==509){
 					_this.payResult();
@@ -73,7 +74,6 @@ var orderPay = {
 	},
 	getPayInfo:function(){//获取支付签名
 		var _this = this;
-		alert('wx62d3f78776978c14')
 		var token = plus.storage.getItem('token');
 		mui.ajax(AJAX_PATH+'/pay?token='+token,{
 			data:{
@@ -90,7 +90,6 @@ var orderPay = {
 					if(_this.pay_channel==1){
 						_text = '支付宝支付'
 					};
-					mui.alert(order,'支付信息');
 //					plus.runtime.openURL(res.data['mweb_url']);
 					_this.paylink = mui.openWindow(res.data['mweb_url'],'paylink',{
 						styles:{
@@ -193,13 +192,34 @@ var orderPay = {
 			type:'get',
 			success:function(res,textStatus,xhr){
 				if(res.code==200){
+					console.log(JSON.stringify(res.data));
 					var order_info = res.data.order_info;
+					var parkType = '',start='',end='';
+					//类型判断
+					if(order_info.flag == 'D'){
+						parkType = '固定'
+					}else if(order_info.flag == 'C'){
+						parkType = '不固定'
+					};
+					//出入场时间判断
+					//入场时间
+					if(order_info.start_time&&order_info.start_time!=''){
+						start = _this.timestampToTime(order_info.start_time);
+					}else{
+						start = '暂无数据';
+					}
+					//出场时间
+					if(order_info.end_time&&order_info.end_time!=''){
+						end = _this.timestampToTime(order_info.end_time);
+					}else{
+						end = '暂无数据';
+					}
 					document.getElementById('parkName').innerHTML = res.data.park_info.parking_lot_name;
 					document.getElementById('parkAddress').innerHTML = res.data.park_info.parking_lot_address;
-					document.getElementById('parkType').innerHTML = _this.ws.parkType;
+					document.getElementById('parkType').innerHTML = parkType;
 					document.getElementById('plateNum').innerHTML = order_info.car_num;
-					document.getElementById('stateTime').innerHTML = _this.ws.stateTime;
-					document.getElementById('endTime').innerHTML = _this.ws.endTime;
+					document.getElementById('stateTime').innerHTML = start;
+					document.getElementById('endTime').innerHTML = end;
 					document.getElementById('parkPrice').innerHTML = order_info.pay_amount;
 					$('[v-cloak]').removeAttr('v-cloak');
 				}else if(res.code==509){
@@ -210,11 +230,26 @@ var orderPay = {
 			}
 		});
 	},
+	//时间戳转换为时间格式
+	timestampToTime:function(timestamp){
+		function p(s) {
+		    return s < 10 ? '0' + s: s;
+		}
+        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        h = date.getHours() + ':';
+        m = date.getMinutes();
+        s = date.getSeconds();
+        return Y+M+p(D)+p(h)+p(m);
+    },
 	init:function(){
 		this.ws = plus.webview.currentWebview();
 		this.wo = this.ws.opener();
 		this.order_sn = this.ws.order_sn;
 		this.park_id = this.ws.park_id;
+		console.log(222,this.order_sn)
 		this.orderDetail();
 		this.getChannels();
 		this.bindEvent();

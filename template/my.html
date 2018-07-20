@@ -87,6 +87,7 @@
 								_this.num = res.data.dcc_score;
 								_this.id = res.data.id;
 								_this.wallet = res.data.wallet;
+								plus.storage.setItem('dccScore',res.data.dcc_score);
 							}else if(res.code==509){
 								plus.storage.setItem('token',res.data.newToken);
 								_this.getUserInfo();
