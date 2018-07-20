@@ -4,6 +4,9 @@ var app = {
 	netType:null,
 	pushServer:"http://demo.dcloud.net.cn/push/?",
 	isNetwork:true, //客户端网络状态  false无网络，true有网络
+	trim:function(str){
+		return str.replace(/(^\s*)|(\s*$)/g,"");
+	},
 	createLocalPushMsg:function(msg){ //创建本地推送消息
 		var options = {cover:false};
 			var str = '2018/7/5';

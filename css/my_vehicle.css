@@ -107,3 +107,13 @@
   display: inline-block;
   
 }
+.my-parking .vehicle-name {
+	font-size: 14px;
+}
+.my-parking .vehicle-b {
+	font-size: 14px;
+	color:#999;
+	overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}

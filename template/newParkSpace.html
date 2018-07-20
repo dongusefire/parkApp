@@ -25,13 +25,13 @@
 			<div class="input-item">
 		    	<label class="item-label">楼栋位置</label>
 		    	<div class="item-content">
-		    		<input type="text" name="p_s_num" pattern="[A-Ba-z0-9]" placeholder="例如:A1、E2" />
+		    		<input type="text" name="p_s_num" class="input-change" pattern="[A-Ba-z0-9]" placeholder="例如:A1、E2" />
 		    	</div>
 		    </div>
 		    <div class="input-item">
 		    	<label class="item-label">是否为地下</label>
 		    	<div class="item-content">
-		    		<div class="mui-switch mui-switch-blue mui-switch-mini" id="floorSwitch">
+		    		<div class="mui-switch mui-switch-blue mui-switch-mini floorSwitch" id="zf">
 					  <div class="mui-switch-handle"></div>
 					</div>
 		    	</div>
@@ -39,31 +39,39 @@
 		    <div class="input-item">
 		    	<label class="item-label">楼层位置</label>
 		    	<div class="item-content">
-		    		<span class="switch-zf">地上</span><span class="min-inputbox"><input type="text" name="p_s_f" class="min-input" pattern="[0-9]" maxlength="1" value="1" /></span><span>层</span>
+		    		<span class="switch-zf">地上</span><span class="min-inputbox"><input type="text" name="p_s_f" class="min-input input-change" pattern="[0-9]" maxlength="1" value="1" /></span><span>层</span>
+		    	</div>
+		    </div>
+		    <div class="input-item">
+		    	<label class="item-label">是否为夹层</label>
+		    	<div class="item-content">
+		    		<div class="mui-switch mui-switch-blue mui-switch-mini floorSwitch" id="jc">
+					  <div class="mui-switch-handle"></div>
+					</div>
 		    	</div>
 		    </div>
 		    <div class="input-item">
 		    	<label class="item-label">楼区位置</label>
 		    	<div class="item-content">
-		    		<input type="text" name="p_s_area" placeholder="例如:A、E、G" pattern="[A-Ba-z0-9]"  />
+		    		<input type="text" name="p_s_area" class="input-change" maxlength="2" placeholder="例如:03、01" pattern="[A-Ba-z0-9]"  />
 		    	</div>
 		    </div>
 		    <div class="input-item">
 		    	<label class="item-label">车位编号</label>
 		    	<div class="item-content">
-		    		<input type="text" name="p_s_sn" placeholder="例如:010" pattern="[0-9]" />
+		    		<input type="text" name="p_s_sn" class="input-change" maxlength="4" placeholder="例如:010" pattern="[0-9]" />
 		    	</div>
 		    </div>
 		    <div class="input-item">
 		    	<label class="item-label">车位长度</label>
 		    	<div class="item-content">
-		    		<span class="min-inputbox"><input type="text" pattern="[0-9.]" name="p_s_length" class="min-input" /></span><span>米</span>
+		    		<span class="min-inputbox"><input type="text" pattern="[0-9.]" name="p_s_length" class="min-input input-change" /></span><span>米</span>
 		    	</div>
 		    </div>
 		    <div class="input-item">
 		    	<label class="item-label">车位宽度</label>
 		    	<div class="item-content">
-		    		<span class="min-inputbox"><input type="text" pattern="[0-9.]" name="p_s_width" class="min-input" /></span><span>米</span>
+		    		<span class="min-inputbox"><input type="text" pattern="[0-9.]" name="p_s_width" class="min-input input-change" /></span><span>米</span>
 		    	</div>
 		    </div>
 		    <div class="input-item">
@@ -72,30 +80,30 @@
 		    		<input type="text" name="valid_time" placeholder="请设置发布有效期" id="valid_time" readonly="readonly" />
 		    	</div>
 		    </div>
-		</div>
-		<div class="withborder character">
-			<label class="mui-pull-left character">权属类型</label>
-			<div class="check mui-pull-left">
-		        <label>
-		            <input type="radio" id="owner" name="nature" value="1" checked="checked">
-		            <div class="user-defined">
-		                <span class="circle"></span>
-		            </div>
-		            <span>个人租赁</span>
-		        </label>
-		        <label>
-		            <input type="radio" id="rent" name="nature" value="2" />
-		            <div class="user-defined">
-		                <span class="circle"></span>
-		            </div>
-		            <span>个人权属</span>
-		        </label>
+		    <div class="input-item">
+		    	<label class="item-label">权属类型</label>
+		    	<div class="item-content check">
+		    		<div class="radio-inner">
+			            <input type="radio" name="nature" value="1" checked="checked">
+			            <div class="user-defined" id="owner">
+			                <span class="circle"></span>
+			                <span>个人租赁</span>
+			            </div>
+			        </div>
+			        <div class="radio-inner">
+			            <input type="radio" name="nature" value="2" />
+			            <div class="user-defined" id="rent">
+			                <span class="circle"></span>
+			                <span>个人权属</span>
+			            </div>
+			        </div>
+		    	</div>
 		    </div>
 		</div>
-		<div class="picture withborder">
+		<div class="picture">
 			<label>证明材料</label>
 			<div class="addPic mui-clearfix">
-				<div class="mui-pull-left add">
+				<div class="add">
 					<div id="pImg" class="upload-box">
 						<div class="upload-fileInfo">
 							<div class="img-box"></div>
@@ -105,13 +113,13 @@
 					</div>
 					<span class="tip">添加车位照片</span>
 				</div>
-				<div class="mui-pull-left add">
+				<div class="add">
 					<div id="cardImg" class="upload-box">
 						<div class="file-box upfileBtn" id="upCardBtn"></div>
 					</div>
 					<span class="tip">添加身份证正反面照片</span>
 				</div>
-				<div class="mui-pull-left add">
+				<div class="add">
 					<div id="fileImg" class="upload-box">
 						<div class="file-box upfileBtn" id="upFileBtn"></div>
 					</div>

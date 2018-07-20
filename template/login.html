@@ -101,6 +101,12 @@
 					var cid = gpush.clientid;
 					if(cid==''|| cid==null){
 						console.log('未获取到clientid')
+						var _cid = plus.storage.getItem('cid');
+						if(_cid!='' && _cid!=null){
+							cid = _cid;
+						};
+					}else if(cid=='' && cid==null){
+						plus.storage.setItem('cid',cid);
 					};
 					ajaxSubmit_off = true;
 					mui.ajax(AJAX_PATH+'/auth/login',{
