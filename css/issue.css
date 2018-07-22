@@ -44,6 +44,17 @@ body {
 	font-size: 18px;
 	color: #333333;
 	letter-spacing: 0;
+	position: relative;
+}
+.paaddSpace .mySpace img {
+	/*vertical-align: middle;*/
+	width:30px;
+	position: absolute;
+	top:23px;
+	right:15px;
+}
+.paaddSpace .mySpace .spaceName {
+	width: 85%;
 }
 .chooseDate {
 	background-color: #fff;

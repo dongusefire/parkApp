@@ -1,7 +1,106 @@
 mui.init();
 var date1,date2,time_start,time_end;
+var x = '';
+var p_week = [],mapResult;
+var token;
+var ajax_submit = false;
+var mask=mui.createMask();
 var issue = {
+	//获取车位列表
+	getCarSpace:function(){
+		var this_ = this;
+		token = plus.storage.getItem('token');
+		mui.ajax(AJAX_PATH+'/user/park/space/list?token='+token,{
+			type:'get',
+			dataType:'json',
+			success:function(res){
+				console.log(JSON.stringify(res.data),23333);
+				var spaceData = res.data;
+				if(res.code==200){
+					if(res.data==''){
+						//数据为空，跳转到添加车位页面
+						jQuery(".mySpace").css('display','none');
+						jQuery(".addSpace").css('display','block');
+						//此处加判断出问题，需要在点击发布的时候做判断
+					}else{
+						//处理车位数据填充到页面
+						jQuery.each(spaceData,function(key,value){
+							//循环遍历数组，取status为1的车位信息才可以发布
+							if(value.status==1){
+								console.log(value);
+								jQuery(".spaceName").html(spaceData[0].parking_lot_address);
+								jQuery(".spaceName").attr('data-id',spaceData[0].id);
+							}
+						});
+						var picker_data = [];
+						for(let i=0;i<spaceData.length;i++){
+							picker_data.push({value:spaceData[i].id,text:spaceData[i].parking_lot_address});
+						}
+						//车位拾取器的处理
+						var spacePicker = new mui.PopPicker();
+						var spaceName = jQuery(".spaceName");
+						mui(".mySpace").on('tap','.chooseSpace',function(event){
+							spacePicker.show(function(items){
+								spaceName.innerHTML = items[0].text;
+								spaceName.attr('data-id',items[0].value);
+							})
+						},false);
+						spacePicker.setData(picker_data);
+					}
+				}else if(res.code==509){
+					getCarSpace();
+				}else if(res.code!=502 && res.code!=503){
+					mui.alert(res.msg,'系统提示','确定',null);
+				}
+			}
+		})
+	},
+	//获取时间差
+	getTimeDiff:function(startTime, endTime, diffType){
+			  //将计算间隔类型字符串转换为小写
+			  diffType = diffType.toLowerCase();
+			  var sTime = new Date(startTime); //开始时间
+			  var eTime = new Date(endTime); //结束时间
+			  //作为除数的数字
+			  var divNum = 1;
+			  switch (diffType) {
+			    case "second":
+			      divNum = 1000;
+			      break;
+			    case "minute":
+			      divNum = 1000 * 60;
+			      break;
+			    case "hour":
+			      divNum = 1000 * 3600;
+			    case "day":
+			      divNum = 1000 * 3600 * 24;
+			      break;
+			    default:
+			      break;
+			  }
+			  return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+	},
+	//获取当前时间
+	getTimeNow:function(){
+		function p(s) {
+		    return s < 10 ? '0' + s: s;
+		}
+		var myDate = new Date();
+		//获取当前年
+		var year=myDate.getFullYear();
+		//获取当前月
+		var month=myDate.getMonth()+1;
+		//获取当前日
+		var date=myDate.getDate(); 
+		var h=myDate.getHours();       //获取当前小时数(0-23)
+		var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+		var m2=myDate.getMinutes()+15; 
+		var s=myDate.getSeconds();  
+		var now=year+'-'+p(month)+"-"+p(date);
+		return now;
+	},
 	bindEvent:function(){
+		var _this = this;
 		$('.week_day').on('tap','li',function(){
 			jQuery(this).toggleClass('active');
 		});
@@ -22,7 +121,18 @@ var issue = {
 					_self.picker.dispose();
 					_self.picker = null;
 					date1 = _self.innerText;
-					
+					var nowDate = _this.getTimeNow();
+					var diff = _this.getTimeDiff(date1,date2,'day');
+					var diff_now = _this.getTimeDiff(nowDate,date1,'day');
+					console.log(diff_now);
+					if(diff<1){
+						mui.alert('结束日期必须大于起始日期，请重新选择','系统提示','确定',null);
+						return false;
+					}
+					if(diff_now<0){
+						mui.alert('开始日期必须大于当前日期，请重新选择','系统提示','确定',null);
+						return false;
+					}
 				});
 				_self.picker.setSelectedValue(date1);
 			}
@@ -44,8 +154,14 @@ var issue = {
 					_self.picker.dispose();
 					_self.picker = null;
 					date2 = _self.innerText;
+					var diff = _this.getTimeDiff(date1,date2,'day');
+					if(diff<0){
+						mui.alert('结束日期必须大于起始日期，请重新选择','系统提示','确定',null);
+						return false;
+					}
 				});
 				_self.picker.setSelectedValue(date2);
+				
 			}
 		}, false);
 		mui('.chooseTime').on('tap','.start_time',function() {
@@ -95,12 +211,106 @@ var issue = {
 				});
 			}
 		}, false);
+		//获取自定义的data-day
+		mui(".repeat").on('tap','.week_day li',function(){
+			if($(this).hasClass('active')){
+				var day = $(this).attr('data-day');
+				p_week.push(day)
+				mapResult = p_week.map(function(item,index,array){
+									return item-0;
+								});
+				console.log(mapResult.toString());
+			}else{
+				var day = $(this).attr('data-day');
+				var index = jQuery.inArray(day,p_week);
+				p_week.splice(index,1);
+				mapResult = p_week.map(function(item,index,array){
+					return item-0;
+				});
+				console.log(mapResult.toString());
+			}
+		});
 		mui('.mui-content').on('tap','.issue',function(){
+			var data_start_date = jQuery(".startDate").html();
+			var data_end_date = jQuery(".endDate").html();
+			var data_start_time = jQuery(".start_time").html();
+			var data_end_time = jQuery(".end_time").html();
+			var id = jQuery(".spaceName").attr('data-id');
+			if(data_start_date=='请选择开始日期'||data_end_date=='请选择结束日期'){
+				mui.alert('请选择预定起始与结束日期','系统提示','确定',null);
+				return false;
+			};
+			if(data_start_time=='请选择开始时间'||data_end_time=='请选择结束时间'){
+				mui.alert('请选择预定起始与结束时间','系统提示','确定',null);
+				return false;
+			};
+			if(mapResult.length<0){
+				mui.alert('请选择每周共享的星期数','系统提示','确定',null);
+				return false;
+			}
+			var week = mapResult.toString().replace(/,/g, "");
+			var jsonData = {
+				"id":id,
+				"p_s_week":week,
+				"start_date":data_start_date,
+				"start_time":data_start_time,
+				"end_date":data_end_date,
+				"end_time":data_end_time
+			};
+			if(!ajax_submit){
+				ajax_submit = true;
+				token = plus.storage.getItem('token');
+				mui.ajax(AJAX_PATH+'/user/park/space/release?token='+token,{
+					type:'post',
+					dataType:'json',
+					data:JSON.stringify(jsonData),
+					beforeSend:function(){
+						plus.nativeUI.showWaiting();
+						mask.show();//显示遮罩
+					},
+					success:function(res){
+						ajax_submit = false;
+						plus.nativeUI.closeWaiting();
+						mask.close();//关闭遮罩层
+						if(res.code==200){
+							console.log('发布成功!');
+							//跳转到发布成功页面
+							mui.openWindow({
+								url:'successfulIssue.html',
+								id:'successfulIssue.html',
+								styles:{
+									popGesture: "close",
+									statusbar:{
+										background:"#fff" 
+									}
+								}
+							})
+						}else if(res.code!=502 && res.code!=503){
+							mui.alert(res.msg,'系统提示','确定',null);
+						}
+					}
+				})
+			}
 			
-		})
+		});
+		mui('.paaddSpace').on("tap",".addSpace",function(){
+			mui.openWindow({
+				url:'newParkSpace.html',
+				id:'newParkSpace.html',
+				styles:{
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				}
+			})
+		});
 	},
 	init:function(){
 		this.bindEvent();
+		this.getCarSpace();
 	}
 }
-issue.init();
+mui.plusReady(function(){
+	issue.init();
+})
