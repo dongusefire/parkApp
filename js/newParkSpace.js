@@ -211,7 +211,7 @@ var newParkSpace = {
 			        mimeTypes: 'image/*'
 			    },
 //			    fileNumLimit:1,
-			    fileVal:'photo'
+			    fileVal:'file'
 			});
 			_this[id].on( 'uploadSuccess',function(file,response) {
 			    console.log(file,response)
