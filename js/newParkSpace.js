@@ -3,11 +3,12 @@ var newParkSpace = {
 	ws:null,
 	wo:null,
 	dtPicker:null,
+	SfPicker:null,
 	spaceData:{
 		p_s_sn:'',
-		p_img:'/upload/AppImg/2018-07-12/20180712141329289.jpg',
-		file_img:'/upload/AppImg/2018-07-12/20180712141329289.jpg',
-		card_img:'/upload/AppImg/2018-07-12/20180712141329289.jpg',
+		p_img:'',
+		file_img:'',
+		card_img:'',
 		p_s_num:'',
 		p_s_f:'',
 		p_s_area:'',
@@ -15,7 +16,7 @@ var newParkSpace = {
 		p_s_width:'',
 		park_id:'',
 		valid_time:'',
-		nature:''
+		nature:'1'
 	},
 	addOff:false,
 	floorZF:0,
@@ -23,6 +24,7 @@ var newParkSpace = {
 	upPBtn:null,
 	upCardBtn:null,
 	upFileBtn:null,
+	loading:null,
 	webviewOptions:{
 		styles:{
 			bottom:0,
@@ -44,14 +46,15 @@ var newParkSpace = {
 			}else if(status=='p_s_f' && !p2.test(value)){
 				str='楼层位置只能为数字';
 			}else if(status=='p_s_area' && !p1.test(value)){
-				str='楼区位置只能为字母和数字';
-			}else if(status=='p_s_sn' && !p2.test(value)){
-				str='车位编号只能为数字';
-			}else if(status=='p_s_length' && !p3.test(value)){
-				str='车位长度只能为小数或整数';
-			}else if(status=='p_s_width' && !p3.test(value)){
-				str='车位宽度只能为小数或整数';
-			}
+				str='层区编号只能为字母和数字';
+			}else if(status=='p_s_sn' && (!p2.test(value) || value.length!=4)){
+				str='车位编号只能为4位的数字';
+			};
+//			else if(status=='p_s_length' && !p3.test(value)){
+//				str='车位长度只能为小数或整数';
+//			}else if(status=='p_s_width' && !p3.test(value)){
+//				str='车位宽度只能为小数或整数';
+//			}
 		}else{
 			if(spaceData.park_id==''){
 				str='请选择车场';
@@ -60,22 +63,23 @@ var newParkSpace = {
 			}else if(spaceData.p_s_f==''){
 				str='请填写楼层位置';
 			}else if(spaceData.p_s_area==''){
-				str='请填写楼区位置';
+				str='请填写层区编号';
 			}else if(spaceData.p_s_sn==''){
 				str='请填写车位编号';
-			}else if(spaceData.p_s_length==''){
-				str='请填写车位长度';
-			}else if(spaceData.p_s_width==''){
-				str='请填写车位宽度';
 			}else if(spaceData.valid_time==''){
-				str='请选择发布有效期';
+				str='请选择共享截至日期';
 			}else if(spaceData.p_img==''){
 				str='请添加车位图片';
 			}else if(spaceData.file_img==''){
 				str='请添加车位产权证明';
-			}else if(spaceData.file_img==''){
+			}else if(spaceData.card_img==''){
 				str='请添加身份证照片';
 			};
+//			else if(spaceData.p_s_length==''){
+//				str='请填写车位长度';
+//			}else if(spaceData.p_s_width==''){
+//				str='请填写车位宽度';
+//			}
 		};
 		if(str!=''){
 			mui.toast(str);
@@ -86,8 +90,8 @@ var newParkSpace = {
 	},
 	spaceAdd:function(){
 		var token = plus.storage.getItem('token'),_this=this;
-		if(_this.spaceData['p_s_f'].length==1){
-			_this.spaceData['p_s_f']=_this.floorZF+_this.spaceData['p_s_f']+_this.floorJC;
+		if(_this.spaceData['p_s_f'].length==2){
+			_this.spaceData['p_s_f']=_this.spaceData['p_s_f']+_this.floorJC;
 		};
 		mui.ajax(AJAX_PATH+'/user/park/space/add?token='+token,{
 			data:JSON.stringify(_this.spaceData),
@@ -129,6 +133,18 @@ var newParkSpace = {
 			_this.dtPicker.show(function(selectItems) { 
 		        _self.value = selectItems.text;
 		        _this.spaceData['valid_time'] = selectItems.text;
+		    })
+		});
+		//选择楼层位置
+		mc.on('tap','#p_s_f',function(){
+			var _self = this;
+			var inps = mui('.input-change');
+			for(var i=0;i<inps.length;i++){
+				inps[i].blur();
+			};
+			_this.SfPicker.show(function(selectItems) {
+		        _self.value = selectItems[0].text;
+		        _this.spaceData['p_s_f'] = selectItems[0].value;
 		    })
 		});
 		//判断并设置属性值
@@ -185,7 +201,7 @@ var newParkSpace = {
 			var data = event.detail;
 			_this.spaceData.park_id = data.id;
 			_this.spaceData.park_lot_num = data.num;
-			mui('.parkName')[0].innerHTML = '已选择: '+data.name;
+			mui('.parkName')[0].innerHTML = '已选车场: '+data.name;
 		});
 	},
 	createWebuploader:function(){
@@ -213,8 +229,30 @@ var newParkSpace = {
 //			    fileNumLimit:1,
 			    fileVal:'file'
 			});
-			_this[id].on( 'uploadSuccess',function(file,response) {
-			    console.log(file,response)
+//			_this[id].on( 'uploadStart',function(file) {
+//				_this.loading = plus.nativeUI.showWaiting('正在上传');
+//			});
+//			_this[id].on( 'uploadError',function(file,reason) {
+//				_this.loading.close();
+//				mui.alert(reason,app.name+'提示');
+//			});
+			_this[id].on( 'uploadSuccess',function(file,res) {
+//				_this.loading.close();
+				var k = 'p_img';
+				if(this.options.pick=='#upCardBtn'){
+					k = 'card_img';
+				}else if(this.options.pick=='#upFileBtn'){
+					k = 'file_img';
+				};
+			    if(res.code==200){
+			    	_this.spaceData[k] = res.data;
+			    	var fileBox = $(this.options.pick).siblings('.upload-fileInfo');
+			    	fileBox.show();
+			    	fileBox.find('.img-box').html('<img src="'+AJAX_HOST+res.data+'" />');
+			    	mui.toast('上传成功');
+			    }else{
+			    	mui.alert(res.msg,app.name+'提示');
+			    };
 			});
 		});
 	},
@@ -228,9 +266,32 @@ var newParkSpace = {
 			beginDate:now
 		});
 	},
+	setSfPicker:function(){
+		//初始化时间选择器
+		this.SfPicker = new mui.PopPicker();
+		this.SfPicker.setData([
+			{
+				value:'03',
+				text:'地下三层'
+			},
+			{
+				value:'02',
+				text:'地下二层'
+			},
+			{
+				value:'01',
+				text:'地下一层'
+			},
+			{
+				value:'11',
+				text:'地面一层'
+			}
+		])
+	},
 	init:function(){
 		this.createWebuploader();
 		this.setDtPicker();
+		this.setSfPicker();
 		this.bindeEvent();
 	}
 }

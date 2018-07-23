@@ -28,7 +28,7 @@
 		    		<input type="text" name="p_s_num" class="input-change" pattern="[A-Ba-z0-9]" placeholder="例如:A1、E2" />
 		    	</div>
 		    </div>
-		    <div class="input-item">
+		    <div class="input-item" style="display:none;">
 		    	<label class="item-label">是否为地下</label>
 		    	<div class="item-content">
 		    		<div class="mui-switch mui-switch-blue mui-switch-mini floorSwitch" id="zf">
@@ -39,7 +39,7 @@
 		    <div class="input-item">
 		    	<label class="item-label">楼层位置</label>
 		    	<div class="item-content">
-		    		<span class="switch-zf">地上</span><span class="min-inputbox"><input type="text" name="p_s_f" class="min-input input-change" pattern="[0-9]" maxlength="1" value="1" /></span><span>层</span>
+		    		<input type="text" name="p_s_f" placeholder="请选择楼层位置" id="p_s_f" readonly="readonly" />
 		    	</div>
 		    </div>
 		    <div class="input-item">
@@ -51,18 +51,21 @@
 		    	</div>
 		    </div>
 		    <div class="input-item">
-		    	<label class="item-label">楼区位置</label>
+		    	<label class="item-label">层区编号</label>
 		    	<div class="item-content">
-		    		<input type="text" name="p_s_area" class="input-change" maxlength="2" placeholder="例如:03、01" pattern="[A-Ba-z0-9]"  />
+		    		<input type="text" name="p_s_area" class="input-change" maxlength="2" placeholder="请输入层区如01区" pattern="[A-Ba-z0-9]"  />
 		    	</div>
 		    </div>
 		    <div class="input-item">
 		    	<label class="item-label">车位编号</label>
 		    	<div class="item-content">
-		    		<input type="text" name="p_s_sn" class="input-change" maxlength="4" placeholder="例如:010" pattern="[0-9]" />
+		    		<input type="text" name="p_s_sn" placeholder="请输入四位车位编号如0001" class="input-change" maxlength="4" pattern="[0-9]" />
 		    	</div>
 		    </div>
-		    <div class="input-item">
+		    <div class="input-prompt">
+		    	<p>车位编号不足4位请在前面补0</p>
+		    </div>
+		    <!--<div class="input-item">
 		    	<label class="item-label">车位长度</label>
 		    	<div class="item-content">
 		    		<span class="min-inputbox"><input type="text" pattern="[0-9.]" name="p_s_length" class="min-input input-change" /></span><span>米</span>
@@ -73,11 +76,11 @@
 		    	<div class="item-content">
 		    		<span class="min-inputbox"><input type="text" pattern="[0-9.]" name="p_s_width" class="min-input input-change" /></span><span>米</span>
 		    	</div>
-		    </div>
+		    </div>-->
 		    <div class="input-item">
-		    	<label class="item-label">发布有效期</label>
+		    	<label class="item-label">共享截至日期</label>
 		    	<div class="item-content">
-		    		<input type="text" name="valid_time" placeholder="请设置发布有效期" id="valid_time" readonly="readonly" />
+		    		<input type="text" name="valid_time" placeholder="请设置共享截至日期" id="valid_time" readonly="readonly" />
 		    	</div>
 		    </div>
 		    <div class="input-item">
@@ -107,7 +110,7 @@
 					<div id="pImg" class="upload-box">
 						<div class="upload-fileInfo">
 							<div class="img-box"></div>
-							<span class="mui-icon mui-icon-closeempty"></span>
+							<!--<span class="mui-icon mui-icon-closeempty"></span>-->
 						</div>
 						<div class="file-box upfileBtn" id="upPBtn"></div>
 					</div>
@@ -115,19 +118,30 @@
 				</div>
 				<div class="add">
 					<div id="cardImg" class="upload-box">
+						<div class="upload-fileInfo">
+							<div class="img-box"></div>
+						</div>
 						<div class="file-box upfileBtn" id="upCardBtn"></div>
 					</div>
 					<span class="tip">添加身份证正反面照片</span>
 				</div>
 				<div class="add">
 					<div id="fileImg" class="upload-box">
+						<div class="upload-fileInfo">
+							<div class="img-box"></div>
+						</div>
 						<div class="file-box upfileBtn" id="upFileBtn"></div>
 					</div>
 					<span class="tip">添加车位产权证明</span>
 				</div>
 			</div>
 		</div>
-		<p class="ask">提交信息代表您已同意 <span>《车位共享说明》</span> </p>
+		<div class="reminder">
+			<h6>温馨提示</h6>
+			<p>1. 如果您是车位的所有者，请选择“个人权属”，如果您是租用车位，请选择“个人租赁”。</p>
+			<p>2. 为了确保您车位审核通过，请您提交正确的车位信息与材料。</p>
+			<p>3. 车位审核通过后，在共享截至日期内可自由分享车位。</p>
+		</div>
 		<button type="submit" class="submit" id="spaceAdd">提 交</button>
 	</div>
 	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>

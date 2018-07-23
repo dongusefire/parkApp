@@ -211,7 +211,7 @@
 										if(imgSrc.indexOf('http')!=-1){
 											$$('.picture').css('background-image','url('+imgSrc+')');
 										}else{
-											$$('.picture').css('background-image','url(http://bj.ecosysnet.com:7098/'+imgSrc+')');
+											$$('.picture').css('background-image','url('+AJAX_HOST+'/'+imgSrc+')');
 										}
 									}else{
 										$$('.picture').css('background-image','url(../img/parkbackground.png)');
