@@ -43,13 +43,13 @@ var myParking = {
 						name +=(data[i].p_s_building_area+'区'+data[i].p_s_sn);
 						_html +='<div class="vehicle-box">'+
 							'<div class="vehicle-tbar">'+
-								'<span class="mui-pull-left vehicle-title">'+name+'</span>'+
+								'<span class="mui-pull-left vehicle-name">'+name+'</span>'+
 								'<span class="mui-left vehicle-status mui-pull-right '+_cls+'">'+status+'</span>'+
 							'</div>'+
 							'<div class="vehicle-b">'+data[i].parking_lot_address+'</div>'+
 						'</div>';
 					};
-//					vl.innerHTML = _html;
+					vl.innerHTML = _html;
 					vl.removeAttribute('v-cloak');
 				}else if(res.code==509){
 					_this.spaceList();

@@ -1,4 +1,5 @@
 var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
+var AJAX_HOST = 'http://bj.ecosysnet.com:7098';
 var app = {
 	name:"易惠停",
 	netType:null,
