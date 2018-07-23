@@ -80,7 +80,7 @@
 									var timeFlag=true;
 									if((value.end_time*1000) < nowTime){
 										timeFlag = false;
-									};
+									}
 									//状态判断
 									if(timeFlag){
 										if(value.order_status==1){
@@ -483,15 +483,13 @@
 						styles:{
 							popGesture: "close",
 							statusbar:{
-								background:"#3882fd" 
-							},
-							userSelect:true
+								background:"#fff" 
+							}
 						},
 						extras:{
 							hash:hash
 						}
 					};
-					mui.openWindow('number_deal.html','number_deal.html',options2)
 				})
 			};
 		</script>

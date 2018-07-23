@@ -100,8 +100,7 @@ var orderPay = {
 										color:'#292929',
 										colorPressed:'#292929',
 										float:'left',
-										text:'关闭',
-										fontSize:'16px',
+										text:' 返回',
 										onclick:function(){
 											_this.paylink.close();
 										}
@@ -113,8 +112,6 @@ var orderPay = {
 									color: '#cccccc'
 								}
 							},
-							popGesture:'none',
-							backButtonAutoControl:'none',
 							additionalHttpHeaders:{
 								"Referer":"http://www.ecosysnet.com/"
 							}
@@ -223,7 +220,7 @@ var orderPay = {
 					document.getElementById('plateNum').innerHTML = order_info.car_num;
 					document.getElementById('stateTime').innerHTML = start;
 					document.getElementById('endTime').innerHTML = end;
-					document.getElementById('parkPrice').innerHTML = res.data.park_info.price;
+					document.getElementById('parkPrice').innerHTML = order_info.pay_amount;
 					$('[v-cloak]').removeAttr('v-cloak');
 				}else if(res.code==509){
 					_this.orderDetail();
@@ -252,6 +249,7 @@ var orderPay = {
 		this.wo = this.ws.opener();
 		this.order_sn = this.ws.order_sn;
 		this.park_id = this.ws.park_id;
+		console.log(222,this.order_sn)
 		this.orderDetail();
 		this.getChannels();
 		this.bindEvent();

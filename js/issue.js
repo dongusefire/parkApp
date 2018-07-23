@@ -15,7 +15,7 @@ var issue = {
 			dataType:'json',
 			success:function(res){
 				console.log(JSON.stringify(res.data),23333);
-				var spaceData = res.data;
+				var spaceData = res.data;	
 				if(res.code==200){
 					if(res.data==''){
 						//数据为空，跳转到添加车位页面

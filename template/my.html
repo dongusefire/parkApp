@@ -105,6 +105,7 @@
 						type:'get',
 						dataType:'json',
 						success:function(res){
+							console.log(JSON.stringify(res.data));
 							if(res.code==200){
 								//获取未读条数
 								that.t_num = res.data[0].extra.un_read;
@@ -131,6 +132,9 @@
 		});
 		window.addEventListener('readData',function(){
 			vm.readData();
+		},false);
+		window.addEventListener('getMessage',function(){
+			vm.getUnreadMessage();
 		},false);
 		document.addEventListener('plusready',function(){
 			vm.readData();

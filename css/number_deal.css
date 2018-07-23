@@ -8,14 +8,9 @@
 	color:#fff;
 	font-size:18px;
 }
-.g-content{
+.mui-contain{
 	background: #fff;
 	padding-bottom:57px;
-	overflow-y: auto;
-	user-select:text;
-	-webkit-user-select:text;
-	-moz-user-select:text;
-	-ms-user-select:text;
 }
 .mui-content .mui-input{
 	padding:26px 22px 20px 16px;
@@ -24,8 +19,8 @@
 .mui-content .mui-input:after{
 	content: '';
 	position: absolute;
-	left:0;
-	right:0;
+	left:-16px;
+	right:-22px;
 	bottom:0;
 	height:1px;
 	background: #efecec;

@@ -62,8 +62,6 @@
 									if(res.data.length==0){
 										that.flag=true;
 									}else{
-										
-										
 										that.flag=false;
 									}
 								}else if(res.code==509){
@@ -82,9 +80,10 @@
 							data:{
 							},
 							success:function(res){
+								console.log(JSON.stringify(res),33332222)
 								if(res.code==200){
 									var myo = plus.webview.currentWebview().opener();
-									mui.fire(myo,'getUnreadMessage');
+									mui.fire(myo,'getMessage');
 								}else if(res.code!=502 && res.code!=503){
 									mui.alert(res.msg,'系统提示','确定',null); 
 								}
