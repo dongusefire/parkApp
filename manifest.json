@@ -302,7 +302,9 @@
 				"refer": [
 					"template/login.html",
 					"template/OrderDetails.html",
-					"template/orderPay.html"
+					"template/orderPay.html",
+					"template/number_deal.html.html",
+					"template/number_deal.html"
 				],
 				"priority": 0
 			},
@@ -387,7 +389,9 @@
 					"css/issue.css",
 					"js/immersed.js"
 				],
-				"refer": [],
+				"refer": [
+					"template/login.html"
+				],
 				"priority": 0
 			},
 			"template/userGuide.html": {

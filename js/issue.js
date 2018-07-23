@@ -48,7 +48,7 @@ var issue = {
 						spacePicker.setData(picker_data);
 					}
 				}else if(res.code==509){
-					getCarSpace();
+					this_.getCarSpace();
 				}else if(res.code!=502 && res.code!=503){
 					mui.alert(res.msg,'系统提示','确定',null);
 				}
