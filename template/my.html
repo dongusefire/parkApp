@@ -101,14 +101,14 @@
 				getUnreadMessage:function(){
 					var that = this;
 					this.token = plus.storage.getItem('token');
-					mui.ajax(AJAX_PATH+'/msg/list?token='+this.token,{
+					mui.ajax(AJAX_PATH+'/msg/unread?token='+this.token,{
 						type:'get',
 						dataType:'json',
 						success:function(res){
-							console.log(JSON.stringify(res.data));
+							console.log(JSON.stringify(res.data),2333);
 							if(res.code==200){
 								//获取未读条数
-								that.t_num = res.data[0].extra.un_read;
+								that.t_num = res.data;
 							}else if(res.code==509){
 								plus.storage.setItem('token',res.data.newToken);
 								that.getUnreadMessage();
@@ -139,7 +139,9 @@
 		document.addEventListener('plusready',function(){
 			vm.readData();
 		},false);
-		
+		setInterval(function(){
+			vm.getUnreadMessage();
+		},300000);
 	</script>
     <script src="../js/my.js"></script>    
 </body>

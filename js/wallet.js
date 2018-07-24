@@ -35,7 +35,7 @@ function readData(){
 			if(res.code==200){
 				var _data=res.data;
 				console.log(JSON.stringify(_data));
-				html_+= '<span class="num">'+_data.profitTotal+'</span>元';
+				html_+= '<span class="num">'+(_data.profitTotal/100)+'</span>元';
 				$('.money').append(html_);
 			}else if(res.code==509){
 				readData();

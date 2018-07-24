@@ -132,7 +132,6 @@
 										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 									}
 									var bookFee = value.order_amount;
-									bookFee = bookFee/100;
 									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 											'<div class="order-text">'+
 												'<a href="#" class="item-box">'+
@@ -146,7 +145,7 @@
 													'<span>车位:</span>'+
 													'<span>'+type+'</span>'+
 												'</p>'+
-												'<span class="amount">￥'+bookFee+'</span>'+
+												'<span class="amount">￥'+(bookFee/100)+'</span>'+
 												'<p class="time out-time">'+
 													'<span>预约时间段:</span>'+
 												'</p>'+
@@ -249,7 +248,6 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											var bookFee = value.order_amount;
-											bookFee = bookFee/100;
 											//拼接dom
 											r_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 													'<div class="order-text">'+
@@ -264,7 +262,7 @@
 															'<span>车位:</span>'+
 															'<span>'+type+'</span>'+
 														'</p>'+
-														'<span class="amount">￥'+bookFee+'</span>'+
+														'<span class="amount">￥'+(bookFee/100)+'</span>'+
 														'<p class="time out-time">'+
 															'<span>预约时间段:</span>'+
 														'</p>'+
@@ -363,7 +361,6 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											var bookFee = value.order_amount;
-											bookFee = bookFee/100;
 											//拼接dom
 											s_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 													'<div class="order-text">'+
@@ -378,7 +375,7 @@
 															'<span>车位:</span>'+
 															'<span>'+type+'</span>'+
 														'</p>'+
-														'<span class="amount">￥'+bookFee+'</span>'+
+														'<span class="amount">￥'+(bookFee/100)+'</span>'+
 														'<p class="time out-time">'+
 															'<span>预约时间段:</span>'+
 														'</p>'+

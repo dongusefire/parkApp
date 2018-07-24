@@ -224,12 +224,12 @@
 									}
 									var _html ='<div class="name">'+
 										    		'<span class="big">'+_data.parking_lot_name+'</span>'+
-										    		'<span class="price">'+_data.price+'元</span>/小时</div>'+
+										    		'<span class="price">'+(_data.price/100)+'元</span>/小时</div>'+
 										    	'<p class="address"><img src="../img/Page1.png"/>'+_data.parking_lot_address+'</p>'+info_;
 									$$('.siteInfo').append(_html);
 									parkPrice = _data.price/100;
 									park_lot_name = _data.parking_lot_name;
-									//这里设置默认车牌号
+									//这里设置默认车牌号szx
 									var data = res.data.userCarInfo;
 									$$.each(data,function(name,value){
 										if(value.default == 1){
