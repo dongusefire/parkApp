@@ -30,7 +30,7 @@ var vm = new Vue({
 			};
 			this.carArr = val.toUpperCase().split('');
 			this.plateInput = val;
-			this.plateIndex = val==''? 0:val.length-1;
+			this.plateIndex = val.length==this.maxlen? val.length-1:val.length;
 		},
 		focusInput:function(event){
 			this.provinceBox = false;
