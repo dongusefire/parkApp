@@ -18,6 +18,7 @@ var issue = {
 			success:function(res){
 				var spaceData = res.data;
 				if(res.code==200){
+					this.isOpen = true;
 					if(res.data==''){
 						mui.alert('您还未添加车位，请先添加车位',app.name+'提示','去添加',function(){
 							mui.trigger(mui('.addSpace')[0],'tap');
