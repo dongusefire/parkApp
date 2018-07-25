@@ -75,7 +75,7 @@
 	<div class="mui-content g-content">
 		<div class="edi">
 			<p class="photo"><img src="../img/edi.png"></p>
-			<p class="ver">Version 1.0</p>
+			<p class="ver">Version <span id="v"></span></p>
 			<p class="introduce">易惠停是一款应用区块链技术打造的停车服务APP。为用户提供公开可信的预约服务，用户也可将自己的闲置车位共享，获取收益，参与缓解停车难问题。</p>
 		</div>
 		<div class="servation">
@@ -108,6 +108,7 @@
     		if(token){
     			mui('.logout')[0].style.display = 'block';
     		};
+    		mui('#v')[0].innerHTML = plus.runtime.version;
     	});
     	mui('.g-content').on('tap','#clear',function(){
 			localStorage.clear();

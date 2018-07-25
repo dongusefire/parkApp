@@ -126,8 +126,9 @@ var vm = new Vue({
 			};
 			this.car_number = _this.province+_this.city+_this.plateInput;
 			this.token = plus.storage.getItem('token');
+			var phone_number = this.car_number.toUpperCase();
 			var jsonData = JSON.stringify({
-				phone_number:this.phone_number,code:this.code,car_number:this.car_number
+				phone_number:phone_number,code:this.code,car_number:this.car_number
 			});
 			mui.ajax(AJAX_PATH+'/user/car/add?token='+this.token,{
 				data:jsonData,

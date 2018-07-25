@@ -284,7 +284,7 @@ var newParkSpace = {
 			},
 			{
 				value:'11',
-				text:'地面一层'
+				text:'地面车位'
 			}
 		])
 	},

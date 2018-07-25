@@ -100,6 +100,7 @@ var vm = new Vue({
 							};
 						};
 						_this.items = arr;
+						_this.readData();
 					}else if(res.code==509){
 						_this.removeVehicle(index);
 					}else if(res.code!=502 && res.code!=503){

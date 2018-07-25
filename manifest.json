@@ -234,7 +234,8 @@
 					"template/orderList.html",
 					"template/my_vehicle.html",
 					"template/userGuide.html",
-					"template/message.html"
+					"template/message.html",
+					"template/my_parking.html"
 				],
 				"priority": 0
 			},
@@ -390,7 +391,8 @@
 					"js/immersed.js"
 				],
 				"refer": [
-					"template/login.html"
+					"template/login.html",
+					"template/newParkSpace.html"
 				],
 				"priority": 0
 			},
@@ -418,6 +420,13 @@
 					"js/balance.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"template/parking-spaces.html": {
+				"resources": [],
+				"refer": [
+					"template/order.html"
+				],
 				"priority": 0
 			}
 		},

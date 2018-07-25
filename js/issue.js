@@ -6,6 +6,8 @@ var token;
 var ajax_submit = false;
 var mask=mui.createMask();
 var issue = {
+	isShow:false,
+	spacePicker:null,
 	//获取车位列表
 	getCarSpace:function(){
 		var this_ = this;
@@ -14,15 +16,19 @@ var issue = {
 			type:'get',
 			dataType:'json',
 			success:function(res){
-				console.log(JSON.stringify(res.data),23333);
-				var spaceData = res.data;	
+				var spaceData = res.data;
 				if(res.code==200){
 					if(res.data==''){
+						mui.alert('您还未添加车位，请先添加车位',app.name+'提示','去添加',function(){
+							mui.trigger(mui('.addSpace')[0],'tap');
+						});
 						//数据为空，跳转到添加车位页面
 						jQuery(".mySpace").css('display','none');
 						jQuery(".addSpace").css('display','block');
 						//此处加判断出问题，需要在点击发布的时候做判断
 					}else{
+						jQuery(".mySpace").css('display','block');
+						jQuery(".addSpace").css('display','none');
 						//处理车位数据填充到页面
 						jQuery.each(spaceData,function(key,value){
 							//循环遍历数组，取status为1的车位信息才可以发布
@@ -36,22 +42,13 @@ var issue = {
 						for(let i=0;i<spaceData.length;i++){
 							picker_data.push({value:spaceData[i].id,text:spaceData[i].parking_lot_address});
 						}
-						//车位拾取器的处理
-						var spacePicker = new mui.PopPicker();
-						var spaceName = jQuery(".spaceName");
-						mui(".mySpace").on('tap','.chooseSpace',function(event){
-							spacePicker.show(function(items){
-								spaceName.innerHTML = items[0].text;
-								spaceName.attr('data-id',items[0].value);
-							})
-						},false);
-						spacePicker.setData(picker_data);
+						this_.spacePicker.setData(picker_data);
 					}
 				}else if(res.code==509){
 					this_.getCarSpace();
 				}else if(res.code!=502 && res.code!=503){
 					mui.alert(res.msg,'系统提示','确定',null);
-				}
+				};
 			}
 		})
 	},
@@ -305,10 +302,29 @@ var issue = {
 				}
 			})
 		});
+		//车位拾取器的处理
+		var spaceName = jQuery(".spaceName");
+		mui(".mySpace").on('tap','.chooseSpace',function(event){
+			_this.spacePicker.show(function(items){
+				spaceName.innerHTML = items[0].text;
+				spaceName.attr('data-id',items[0].value);
+			})
+		});
+		window.addEventListener('isShow',function(){
+			var token = plus.storage.getItem('token');
+			if(token && token!=''){
+				_this.getCarSpace();
+			}else{
+				login('请先登录');
+			};
+		});
+		window.addEventListener('readData',function(){
+			_this.getCarSpace();
+		});
 	},
 	init:function(){
 		this.bindEvent();
-		this.getCarSpace();
+		this.spacePicker = new mui.PopPicker();
 	}
 }
 mui.plusReady(function(){

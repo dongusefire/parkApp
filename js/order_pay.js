@@ -13,18 +13,18 @@ var orderPay = {
 	getChannels:function(){//获取支付通道
 		var _this = this;
 		// 获取支付通道
-	    plus.payment.getChannels(function(channels){
-	    	for(var i in channels){
-	    		var channel=channels[i];
-				if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
-					continue;
-				}
-				_this.pays[channel.id] = channel;
-				console.log(channel.id+':'+JSON.stringify(channel))
-	    	};
-	    },function(e){
-	    	console.log("获取支付通道失败："+e.message);
-	    });
+//	    plus.payment.getChannels(function(channels){
+//	    	for(var i in channels){
+//	    		var channel=channels[i];
+//				if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
+//					continue;
+//				}
+//				_this.pays[channel.id] = channel;
+//				console.log(channel.id+':'+JSON.stringify(channel))
+//	    	};
+//	    },function(e){
+//	    	console.log("获取支付通道失败："+e.message);
+//	    });
 	},
 	promptInstall:function(channel){//提示安装客户端支付工具
 		var txt=null;
@@ -163,12 +163,8 @@ var orderPay = {
 			if(val==2){
 				id = 'wxpay';
 			};
-			if(!(_this.pays[id].serviceReady)){
-				_this.promptInstall(_this.pays[id]);
-			}else{
-				_this.payId = id;
-				_this.pay_channel = val;
-			};
+			_this.payId = id;
+			_this.pay_channel = val;
 		});
 //		document.addEventListener("pause",function(){
 //			console.log(" 应用从前台切换到后台" );
@@ -223,7 +219,7 @@ var orderPay = {
 					document.getElementById('plateNum').innerHTML = order_info.car_num;
 					document.getElementById('stateTime').innerHTML = start;
 					document.getElementById('endTime').innerHTML = end;
-					document.getElementById('parkPrice').innerHTML = res.data.park_info.price;
+					document.getElementById('parkPrice').innerHTML = res.data.order_info.order_amount/100;
 					$('[v-cloak]').removeAttr('v-cloak');
 				}else if(res.code==509){
 					_this.orderDetail();

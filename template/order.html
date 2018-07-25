@@ -243,7 +243,7 @@
 									})
 									//这里填充picker的数据
 									var picker_data = [];
-									for(let i=0;i<data.length;i++){
+									for(var i=0;i<data.length;i++){
 										picker_data.push({value:data[i].car_id,text:data[i].car_number});
 									}
 									//选择车牌号
@@ -332,19 +332,17 @@
 					//提交预定AJAX函数
 					if(!ajaxSubmit_off){
 						ajaxSubmit_off = true;
+						plus.nativeUI.showWaiting();
+						mask.show();//显示遮罩
 						mui.ajax(AJAX_PATH+'/user/reserve?token='+token,{
 							type:'post',
 							dataType:'json',
 							data:postData,
-							beforeSend:function(){
-								plus.nativeUI.showWaiting();
-								mask.show();//显示遮罩
-							},
 							success:function(res){
 								ajaxSubmit_off = false;
 								plus.nativeUI.closeWaiting();
 								mask.close();//关闭遮罩层
-								
+								console.log('信用值低于120',JSON.stringify(res));
 								if(res.code == 200){
 									//成功之后做的处理
 									mui.openWindow({

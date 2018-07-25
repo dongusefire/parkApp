@@ -45,7 +45,8 @@
 			"template/wallet.html",
 			"template/setting.html",
 			"template/userGuide.html",
-			"template/message.html"
+			"template/message.html",
+			"template/my_parking.html"
 		],
 		"resources": [
 			"img/cw.png",
@@ -140,7 +141,8 @@
 			"js/immersed.js"
 		],
 		"refer": [
-			"template/login.html"
+			"template/login.html",
+			"template/newParkSpace.html"
 		]
 	},
 	"template/home_parking.html": {
@@ -188,6 +190,11 @@
 			"css/balance.css",
 			"css/mui.min.css",
 			"js/balance.js"
+		]
+	},
+	"template/parking-spaces.html": {
+		"refer": [
+			"template/order.html"
 		]
 	}
 }
