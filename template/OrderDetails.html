@@ -125,12 +125,12 @@
 												manage+='';
 											}else if(order_info.order_status==1){
 												manage+='<p class="cancel">取消订单</p>'+
-														'<p class="Nav">支付</p>';
+														'<p class="Nav to_pay">支付</p>';
 											}else if(order_info.order_status==2){
 												manage+='<p class="cancel">取消订单</p>'+
 				    									'<p class="Nav goRoute">导航</p>';
 											}else if(order_info.order_status==4){
-												manage+='<p class="Nav">支付</p>';
+												manage+='<p class="Nav to_pay">支付</p>';
 											}else if(order_info.order_status==3){
 												manage+='';
 											}
@@ -170,7 +170,7 @@
 							lng:lon
 						}
 					})
-				})
+				});
 				//点击导航
 				mui('.state-btn').on('tap','.goRoute',function(e){
 					var boss = $(this).parents('.mui-content');
@@ -180,7 +180,24 @@
 					localStorage.setItem('parking_lot_address',address);
 					plus.webview.getWebviewById('template/home.html').evalJS('home.createRoute('+data_lng+','+data_lat+')');
 				    e.stopPropagation();
-				})
+				});
+				//跳去支付
+				mui('.state-btn').on('tap','.to_pay',function(){
+					var options = {
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							order_sn:order_num,
+							park_id:park_id
+						}
+					};
+					mui.openWindow("orderPay.html","orderPay.html",options);
+				});
+				
 			};
 			//时间戳转换为时间格式
 			function timestampToTime(timestamp) {
