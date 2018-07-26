@@ -34,7 +34,7 @@ var issue = {
 						jQuery.each(spaceData,function(key,value){
 							//循环遍历数组，取status为1的车位信息才可以发布
 							if(value.status==1){
-								console.log(value);
+								console.log(value,33332);
 								jQuery(".spaceName").html(spaceData[0].parking_lot_address);
 								jQuery(".spaceName").attr('data-id',spaceData[0].id);
 							}
@@ -307,7 +307,7 @@ var issue = {
 		var spaceName = jQuery(".spaceName");
 		mui(".mySpace").on('tap','.chooseSpace',function(event){
 			_this.spacePicker.show(function(items){
-				spaceName.innerHTML = items[0].text;
+				spaceName.html(items[0].text);
 				spaceName.attr('data-id',items[0].value);
 			})
 		});
