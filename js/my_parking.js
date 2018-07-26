@@ -6,7 +6,7 @@ var myParking = {
 			bottom:0,
 			top:0,
 			width:'100%',
-			popGesture: "close",
+			popGesture: "none",
 			statusbar:{
 				background:"#fff" 
 			}
@@ -23,10 +23,10 @@ var myParking = {
 					_this.itemList = data;
 					for(var i=0;i<data.length;i++){
 						var status = '已提交',_cls='status1',name='';
-						if(data.status==2){
+						if(data[i].status==2){
 							status='已审核'
 							_cls='status2';
-						}else if(data.status==3){
+						}else if(data[i].status==3){
 							status='未通过';
 							_cls='status3';
 						};
@@ -35,7 +35,7 @@ var myParking = {
 							name +='负';	
 						};
 						name+=data[i].p_s_building_floor[1];
-						if(data[i].p_s_building_floor[3]=='1'){
+						if(data[i].p_s_building_floor[2]=='1'){
 							name +='夹层';	
 						}else{
 							name+='层';
@@ -43,10 +43,10 @@ var myParking = {
 						name +=(data[i].p_s_building_area+'区'+data[i].p_s_sn);
 						_html +='<div class="vehicle-box">'+
 							'<div class="vehicle-tbar">'+
-								'<span class="mui-pull-left vehicle-name">'+name+'</span>'+
+								'<span class="mui-pull-left vehicle-name">'+data[i].parking_lot_name+'</span>'+
 								'<span class="mui-left vehicle-status mui-pull-right '+_cls+'">'+status+'</span>'+
 							'</div>'+
-							'<div class="vehicle-b">'+data[i].parking_lot_address+'</div>'+
+							'<div class="vehicle-b">'+name+'</div>'+
 						'</div>';
 					};
 					vl.innerHTML = _html;

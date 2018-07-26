@@ -1,4 +1,8 @@
-mui.init();
+mui.init({
+	keyEventBind: {
+		backbutton: false  //关闭back按键监听
+	}
+});
 var newParkSpace = {
 	ws:null,
 	wo:null,
@@ -6,9 +10,9 @@ var newParkSpace = {
 	SfPicker:null,
 	spaceData:{
 		p_s_sn:'',
-		p_img:'',
-		file_img:'',
-		card_img:'',
+		p_img:'\/upload\/AppImg\/2018-07-26\/20180726122925712.jpeg',
+		file_img:'\/upload\/AppImg\/2018-07-26\/20180726122925712.jpeg',
+		card_img:'\/upload\/AppImg\/2018-07-26\/20180726122925712.jpeg',
 		p_s_num:'',
 		p_s_f:'',
 		p_s_area:'',
@@ -203,6 +207,26 @@ var newParkSpace = {
 			_this.spaceData.park_lot_num = data.num;
 			mui('.parkName')[0].innerHTML = '已选车场: '+data.name;
 		});
+		var old_back = mui.back;
+		mui.back = function(){
+		  if($('#waiting').length==0){
+		  	old_back();
+		  };
+		}
+	},
+	waiting:function(str){
+		var waitingHtml = '<div id="waiting-mask"></div><div id="waiting"><span>'+str+'</span></div>';
+		$('body').append(waitingHtml);
+		var mask = $('#waiting-mask'),waiting=$('#waiting');
+		return {
+			close:function(){
+				mask.remove();
+				waiting.remove();
+			},
+			setTitile:function(str){
+				waiting.find('span').html(str);
+			}
+		};
 	},
 	createWebuploader:function(){
 		var _this = this;
@@ -229,15 +253,19 @@ var newParkSpace = {
 //			    fileNumLimit:1,
 			    fileVal:'file'
 			});
-//			_this[id].on( 'uploadStart',function(file) {
-//				_this.loading = plus.nativeUI.showWaiting('正在上传');
-//			});
-//			_this[id].on( 'uploadError',function(file,reason) {
-//				_this.loading.close();
-//				mui.alert(reason,app.name+'提示');
-//			});
+			_this[id].on( 'uploadStart',function(file) {
+				_this.loading = newParkSpace.waiting('正在上传,请稍后...0%')
+			});
+			_this[id].on( 'uploadProgress',function(file,percentage) {
+				_this.loading.setTitile('正在上传,请稍后...'+(percentage*100).toFixed(2)+'%');
+			});
+			_this[id].on( 'uploadError',function(file,reason) {
+				_this.loading.close();
+				console.log(reason,'上传失败')
+				mui.alert('上传出错，请重新上传',app.name+'提示');
+			});
 			_this[id].on( 'uploadSuccess',function(file,res) {
-//				_this.loading.close();
+				_this.loading.close();
 				var k = 'p_img';
 				if(this.options.pick=='#upCardBtn'){
 					k = 'card_img';
@@ -271,19 +299,19 @@ var newParkSpace = {
 		this.SfPicker = new mui.PopPicker();
 		this.SfPicker.setData([
 			{
-				value:'03',
+				value:'13',
 				text:'地下三层'
 			},
 			{
-				value:'02',
+				value:'12',
 				text:'地下二层'
 			},
 			{
-				value:'01',
+				value:'11',
 				text:'地下一层'
 			},
 			{
-				value:'11',
+				value:'01',
 				text:'地面车位'
 			}
 		])

@@ -1,3 +1,6 @@
+.g-content {
+	overflow-y: auto;
+}
 .addvehicle {
 	height: 44px;
 	width:91%;
