@@ -93,7 +93,6 @@ var orderPay = {
 //					plus.runtime.openURL(res.data['mweb_url']);
 					_this.paylink = mui.openWindow(res.data['mweb_url'],'paylink',{
 						styles:{
-							popGesture: "close",
 							titleNView:{
 								buttons:[
 									{

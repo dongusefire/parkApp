@@ -10,9 +10,9 @@ var newParkSpace = {
 	SfPicker:null,
 	spaceData:{
 		p_s_sn:'',
-		p_img:'\/upload\/AppImg\/2018-07-26\/20180726122925712.jpeg',
-		file_img:'\/upload\/AppImg\/2018-07-26\/20180726122925712.jpeg',
-		card_img:'\/upload\/AppImg\/2018-07-26\/20180726122925712.jpeg',
+		p_img:'',
+		file_img:'',
+		card_img:'',
 		p_s_num:'',
 		p_s_f:'',
 		p_s_area:'',
