@@ -57,7 +57,7 @@
 			   	//获取当前时间，并声明过期标识
 			   	var nowTime = Date.parse(new Date());
 			   	//声明下面需要的变量
-				var html_ = '', r_html = '', s_html = '', manage = '',status = '',type = '',end = '';
+				var html_ = '', r_html = '', s_html = '', manage = '',status = '',type = '',end = '',hashshow = '';
 				function auto_ajax(){
 					$('#trans-box').html('');
 					token = plus.storage.getItem('token');
@@ -69,6 +69,7 @@
 							if(res.code == 200){
 								var all = res.data.All_order_data;
 								$.each(all,function(key,value){
+									console.log(value.issue_hash);
 									//时间戳处理：把时间戳转换为时间格式，然后再进行比对
 									var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
 									if(startTime.substr(0,10) == endTime.substr(0,10)){
@@ -132,6 +133,13 @@
 										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 									}
 									var bookFee = value.order_amount;
+									if(value.issue_hash==''||value.issue_hash=='null'){
+										hashshow = ''
+									}else{
+										hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
+														'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+													'</p>';
+									}
 									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 											'<div class="order-text">'+
 												'<a href="#" class="item-box">'+
@@ -152,10 +160,7 @@
 												'<p class="time time-part">'+
 													'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 												'</p>'+
-											'</div>'+
-											'<p class="time hash" data-hash="'+value.issue_hash+'">'+
-												'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
-											'</p>'+
+											'</div>'+hashshow+
 											'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
 											'</div>'+
 										'</div>';
@@ -249,6 +254,13 @@
 											}
 											var bookFee = value.order_amount;
 											//拼接dom
+											if(value.issue_hash==''||value.issue_hash=='null'){
+												hashshow = ''
+											}else{
+												hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
+																'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+															'</p>';
+											}
 											r_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 													'<div class="order-text">'+
 														'<a href="#" class="item-box">'+
@@ -269,10 +281,7 @@
 														'<p class="time time-part">'+
 															'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 														'</p>'+
-													'</div>'+
-													'<p class="time hash">'+
-														'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
-													'</p>'+
+													'</div>'+hashshow+
 													'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
 													'</div>'+
 												'</div>';
@@ -361,6 +370,13 @@
 												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 											}
 											var bookFee = value.order_amount;
+											if(value.issue_hash==''||value.issue_hash=='null'){
+												hashshow = ''
+											}else{
+												hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
+																'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+															'</p>';
+											}
 											//拼接dom
 											s_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
 													'<div class="order-text">'+
@@ -382,10 +398,7 @@
 														'<p class="time time-part">'+
 															'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
 														'</p>'+
-													'</div>'+
-													'<p class="time hash">'+
-														'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
-													'</p>'+
+													'</div>'+hashshow+
 													'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
 													'</div>'+
 												'</div>';

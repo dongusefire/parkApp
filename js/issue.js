@@ -18,7 +18,6 @@ var issue = {
 			success:function(res){
 				var spaceData = res.data;
 				if(res.code==200){
-					this.isOpen = true;
 					if(res.data==''){
 						mui.alert('您还未添加车位，请先添加车位',app.name+'提示','去添加',function(){
 							mui.trigger(mui('.addSpace')[0],'tap');
@@ -31,17 +30,68 @@ var issue = {
 						jQuery(".mySpace").css('display','block');
 						jQuery(".addSpace").css('display','none');
 						//处理车位数据填充到页面
+						var space_arr = [],space_arr_checking = [],space_arr_failed = [];
 						jQuery.each(spaceData,function(key,value){
-							//循环遍历数组，取status为1的车位信息才可以发布
-							if(value.status==1){
-								console.log(value,33332);
-								jQuery(".spaceName").html(spaceData[0].parking_lot_address);
-								jQuery(".spaceName").attr('data-id',spaceData[0].id);
+							//循环遍历数组，取status为2的车位信息才可以发布
+							if(this.status==2){
+								space_arr.push(this);
+							}else if(this.status==1){
+								space_arr_checking.push(this);
+							}else if(this.status==3){
+								space_arr_failed.push(this);
 							}
 						});
+						//筛选出来的可发布车位继续进行循环
+						if(space_arr.length!=0){
+							jQuery.each(space_arr,function(key2,value2){
+								jQuery(".spaceName").html(space_arr[0].parking_lot_address);
+								jQuery(".spaceName").attr('data-id',space_arr[0].id);
+							})
+						}else{
+							if(space_arr_checking.length!=0&&space_arr_failed.length==0){
+								mui.alert('您的车位正在审核中，请联系车场管理员',app.name+'提示','去查看',function(){
+									mui.openWindow({
+										url:'my_parking.html',
+										id:'my_parking.html',
+										styles:{
+											popGesture: "close",
+											statusbar:{
+												background:"#fff" 
+											}
+										}
+									})
+								})
+							}else if(space_arr_checking.length==0&&space_arr_failed.length!=0){
+								mui.alert('您的车位审核未通过，请联系车场管理员',app.name+'提示','去查看',function(){
+									mui.openWindow({ 
+										url:'my_parking.html',
+										id:'my_parking.html',
+										styles:{
+											popGesture: "close",
+											statusbar:{
+												background:"#fff" 
+											}
+										}
+									})
+								})
+							}else if(space_arr_checking.length!=0&&space_arr_failed.length!=0)(
+								mui.alert('您的车位审核未完成或者未通过，请到我的车位页面查看',app.name+'提示','去查看',function(){
+									mui.openWindow({
+										url:'my_parking.html',
+										id:'my_parking.html',
+										styles:{
+											popGesture: "close",
+											statusbar:{
+												background:"#fff" 
+											}
+										}
+									})
+								})
+							)
+						}
 						var picker_data = [];
-						for(let i=0;i<spaceData.length;i++){
-							picker_data.push({value:spaceData[i].id,text:spaceData[i].parking_lot_address});
+						for(let i=0;i<space_arr.length;i++){
+							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_address});
 						}
 						this_.spacePicker.setData(picker_data);
 					}
