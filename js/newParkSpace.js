@@ -254,7 +254,9 @@ var newParkSpace = {
 			    fileVal:'file'
 			});
 			_this[id].on( 'uploadStart',function(file) {
-				_this.loading = newParkSpace.waiting('正在上传,请稍后...0%')
+				if(_this.loading==null){
+					_this.loading = newParkSpace.waiting('正在上传,请稍后...0%');
+				};
 			});
 			_this[id].on( 'uploadProgress',function(file,percentage) {
 				_this.loading.setTitile('正在上传,请稍后...'+(percentage*100).toFixed(2)+'%');
@@ -266,6 +268,7 @@ var newParkSpace = {
 			});
 			_this[id].on( 'uploadSuccess',function(file,res) {
 				_this.loading.close();
+				_this.loading= null;
 				var k = 'p_img';
 				if(this.options.pick=='#upCardBtn'){
 					k = 'card_img';
