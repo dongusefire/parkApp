@@ -14,7 +14,6 @@ body {
 	height: 100%;
 }
 .box {
-	margin-top: 45px;
 	background-color: #ffffff;
 	border-bottom: 1px solid #ededed;
 	padding: 0 15px;
@@ -60,6 +59,9 @@ body {
 	margin-top: 10px;
 	font-size: 16px;
 	color: #333333;
+}
+.cancel button:enabled:active {
+	background:#d0d0d0;
 }
 .rules {
 	padding:12px 14px;

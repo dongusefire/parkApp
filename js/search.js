@@ -77,7 +77,7 @@ var vm = new Vue({
 		}
 	}
 })
-mui('.header-bar').on('change','#search-input',function(){
+mui('.header-bar').on('input','#search-input',function(){
 	vm.keywords = this.value.replace(/^\s+|\s+$/g, '');
 	vm.setSearch();
 })

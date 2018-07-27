@@ -23,15 +23,17 @@
 			</ul>
 		</div>
 		<div class="mui-content trans-box" id="trans-box">
-			
 		</div>
-		
 	    <script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script>
 			var token;
 			mui.plusReady(function(){
+				token = plus.storage.getItem('token');
+				readData(jQuery);
+			});
+			window.addEventListener('upData',function(){
 				token = plus.storage.getItem('token');
 				readData(jQuery);
 			});
@@ -113,12 +115,12 @@
 											manage='';	
 										}else if(value.order_status==1){
 											manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
-													'<p class="cancel cancle-order" style="display:none;"><button>取消订单</button></p>';	
+													'<p class="cancel cancle-order"><button>取消订单</button></p>';	
 										}else if(value.order_status==4){
 											manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
 										}else if(value.order_status==2 && timeFlag){
 											manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-													'<p class="cancel cancle-order" style="display:none;"><button>取消订单</button></p>';	
+													'<p class="cancel cancle-order"><button>取消订单</button></p>';	
 										}else if(value.order_status==3){
 											manage='';
 										}
@@ -234,12 +236,12 @@
 													manage='';	
 												}else if(value.order_status==1){
 													manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
-															'<p class="cancel" style="display:none;"><button>取消订单</button></p>';	
+															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
 												}else if(value.order_status==4){
 													manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
 												}else if(value.order_status==2 && timeFlag){
 													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-															'<p class="cancel" style="display:none;"><button>取消订单</button></p>';	
+															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
 												}else if(value.order_status==3){
 													manage='';
 												}
@@ -351,12 +353,12 @@
 													manage='';	
 												}else if(value.order_status==1){
 													manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
-															'<p class="cancel cancle-order" style="display:none;"><button>取消订单</button></p>';	
+															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
 												}else if(value.order_status==4){
 													manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
 												}else if(value.order_status==2 && timeFlag){
 													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-															'<p class="cancel cancle-order" style="display:none;"><button>取消订单</button></p>';	
+															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
 												}else if(value.order_status==3){
 													manage='';
 												}
@@ -477,6 +479,23 @@
 						}
 					};
 					mui.openWindow("orderPay.html","orderPay.html",options);
+				});
+				//打开取消订单页面
+				mui('#trans-box').on('tap','.order-nav .cancle-order',function(e){
+					var order_num = $(this).parents('.order-nav').attr('data-onum');
+					var options = {
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							order_num:order_num
+							
+						}
+					};
+					mui.openWindow("cancelOrder.html","cancelOrder.html",options);
 				});
 				//调用导航
 				mui('#trans-box').on('tap','.order-nav .goRoute',function(e){
