@@ -11,7 +11,7 @@ var home = {
 	},
 	list:[],
 	parking_list:[], //用来储存home_parking窗口
-	activeParking:'', //当前显示的Parking
+	activeParking:-1, //当前显示的Parking
 	getUserLocation:function(){ 
 		var _this=this;
 		this.map.getUserLocation(function(state, point){ //获取用户的当前位置信息
@@ -62,44 +62,71 @@ var home = {
 				scrollIndicator:'none',
 				background:'transparent'
 			},list[i]);
-			if(i!=0){
-				sub.hide();
-			};
+			sub.hide();
 			this.parking_list.push(sub);
 			this.createMarker(list[i].longitude,list[i].latitude,list[i].free_number,i);
 			this.ws.append(sub);
 		};
 	},
-	createMarker:function(lng,lat,status,k){//创建地图标点Marker对象
-		var Icon = '/img/ls';
+	checkedMarker:function(lng,lat,k){ //设置地图标点选中的样式
+		var Icon = '/img/checked';
 		var Size = '';
-		if(status<=5){
-			Icon = '/img/jh';
-		}else if(status==0){
-			Icon = '/img/sh';
-		};
 		if(plus.os.name=='Android'){
-			Size = '72';
+			Size = '80';
 		}else{
-			Size = '28';
+			Size = '55';
+		};
+		var _this = this;
+		var marker=new plus.maps.Marker(new plus.maps.Point(lng,lat));
+		marker.setIcon(Icon+Size+'.png');
+		marker.uuid = k; //给当前的Marker对象自定义一个属性
+		this.map.addOverlay(marker);
+	},
+	resetMarker:function(k){ //清除所有标点，并重新绘制标点
+		this.map.clearOverlays(); //清除所有的覆盖物(此处为了清除所有的标点)
+		var list = this.list;
+		for(var i=0;i<list.length;i++){
+			if(i==k){
+				this.checkedMarker(list[i].longitude,list[i].latitude,i);
+			}else{
+				this.createMarker(list[i].longitude,list[i].latitude,list[i].free_number,i);
+			};
+		};
+	},
+	createMarker:function(lng,lat,status,k){//创建地图标点Marker对象
+		var Icon = '/img/unchecked';
+		var Size = '';
+		var _this = this;
+//		if(status<=5){
+//			Icon = '/img/jh';
+//		}else if(status==0){
+//			Icon = '/img/sh';
+//		};
+		if(plus.os.name=='Android'){
+			Size = '';
+		}else{
+			Size = '48';
 		};
 		var _this = this;
 		var marker=new plus.maps.Marker(new plus.maps.Point(lng,lat));
 		marker.setIcon(Icon+Size+'.png');
 		marker.uuid = k; //给当前的Marker对象自定义一个属性
 		marker.onclick = function(marker){
-			if(_this.activeParking==_this.list[marker.uuid].parking_lot_number){
+			if(_this.activeParking==marker.uuid){
 				return false;
 			};
+			_this.resetMarker(marker.uuid);
 			if(mui.os.ios){
-				plus.webview.show('home_parking'+_this.list[marker.uuid].parking_lot_number);
+				var item = _this.list[marker.uuid];
+				plus.webview.show('home_parking'+item.parking_lot_number);
 			}else{
-				plus.webview.show('home_parking'+_this.list[marker.uuid].parking_lot_number,"fade-in",300);
+				plus.webview.show('home_parking'+item.parking_lot_number,"fade-in",300);
 			};
-			if(_this.activeParking!=''){
-				plus.webview.hide('home_parking'+_this.activeParking);
+			if(_this.activeParking!=-1){
+				var old = _this.list[_this.activeParking];
+				plus.webview.hide('home_parking'+old.parking_lot_number);
 			};
-			_this.activeParking = _this.list[marker.uuid].parking_lot_number;
+			_this.activeParking = marker.uuid;
 		};
 		this.map.addOverlay(marker);
 	},
@@ -238,6 +265,10 @@ var home = {
 		});
 	},
 	showUserLocation:function(){ //打开用户位置
+		if(this.point.lng!=''){
+			var ptObj = new plus.maps.Point(this.point.lng,this.point.lat);
+			this.setCenter(ptObj);
+		};
 		this.map.showUserLocation( true );
 	},
 	hideUserLocation:function(){//关闭用户位置

@@ -19,19 +19,15 @@
 	      	   <div class="Headportrait">
 	      	   	 <img src="../img/h_logo.png">
 	      	   </div>
-	      	   <div class="wallet-mes">
+	      	   <div class="wallet-mes" v-show="islogin" :data-id="id">
 	      	   	 <p><img src="../img/address.png"><span>钱包地址</span></p>
-	      	   	 <p>sujdxksks135628skeeessujdxksks135628skeees</p>
-	      	   	 <p class="xia"><img src="../img/xin.png"><span>信用资产：<span>200</span></span></p>
-	      	   	 <p class="xia"><img src="../img/height.png"><span>区块高度：<span>1734526</span></span></p>
+	      	   	 <p>{{wallet}}</p>
+	      	   	 <p class="xia"><img src="../img/xin.png"><span>信用资产：<span>{{num}}</span></span></p>
+	      	   	 <p class="xia"><img src="../img/height.png"><span>区块高度：<span>{{block_height}}</span></span></p>
 	      	   </div>
-	      	   <div class="information" v-show="islogin" :data-id="id">
-	      	   	 <span class="person_W">{{userName}}</span>
-	      	     <span class="ewallet">信用值:{{num}}</span>
-	      	   </div>
-	      	   <!--<div class="no-login" v-show="!islogin">
+	      	   <div class="no-login" v-show="!islogin">
 	      	   	 <a id="openLogin">未登录</a>
-	      	   </div>-->
+	      	   </div>
 		    </div>
 		</div>
 		<div class="park-nav" id="park-nav">
@@ -81,7 +77,8 @@
 				id:'',
 				wallet:'',
 				token:'',
-				t_num:'0'
+				t_num:'0',
+				block_height:''
 			},
 			methods:{
 				getUserInfo:function(){
@@ -92,8 +89,10 @@
 						dataType:'json',
 						success:function(res){
 							if(res.code == 200){
+								console.log(JSON.stringify(res))
 								_this.num = res.data.dcc_score;
 								_this.id = res.data.id;
+								_this.block_height = res.data.block_height;
 								_this.wallet = res.data.wallet;
 								plus.storage.setItem('dccScore',res.data.dcc_score);
 							}else if(res.code==509){
