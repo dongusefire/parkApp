@@ -32,13 +32,28 @@ var home = {
 			_this.getParking(point,'');
 		});
 	},
+	createAccount:function(){//创建覆盖在地图上的账本
+		var _url ='home_account.html';
+		var top = window.immersed+10;
+		var bottom = window.innerHeight-70-top;
+		this.ws.append(plus.webview.create(_url,_url,{
+			height:'70px',
+			bottom:bottom,
+			top:top+'px',
+			left:'3%',
+			width:'94%',
+			position:'absolute',
+			scrollIndicator:'none',
+			background:'transparent'
+		}));
+	},
 	createToolbar:function(){//创建覆盖在地图上的工具栏
 		var _url ='home_toolbar.html';
 		var top = window.innerHeight- window.immersed-350;
 		var bottom = window.innerHeight-244-top;
 		this.ws.append(plus.webview.create(_url,_url,{
 			height:'244px',
-//			bottom:bottom,
+			bottom:bottom,
 			top:top+'px',
 			right:'3%',
 			width:'61px',
@@ -353,6 +368,7 @@ var home = {
 		//创建map对象http://www.html5plus.org/doc/zh_cn/maps.html#plus.maps.Map.Map(id,options)
 		this.map = new plus.maps.Map('map');
 		this.createToolbar();
+		this.createAccount();
 		this.getUserLocation();
 		this.bindEvent();
 	}
