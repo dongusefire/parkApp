@@ -32,16 +32,16 @@ var home = {
 			_this.getParking(point,'');
 		});
 	},
-	createSearchView:function(){//创建覆盖在地图上的搜索窗口
-		var _url ='home_search.html';
-		var top = 56+Number(window.immersed);
-		var bottom = window.innerHeight-40-top;
+	createToolbar:function(){//创建覆盖在地图上的工具栏
+		var _url ='home_toolbar.html';
+		var top = window.innerHeight- window.immersed-350;
+		var bottom = window.innerHeight-244-top;
 		this.ws.append(plus.webview.create(_url,_url,{
-			height:'40px',
-			bottom:bottom,
+			height:'244px',
+//			bottom:bottom,
 			top:top+'px',
-			left:'7%',
-			width:'86%',
+			right:'3%',
+			width:'61px',
 			position:'absolute',
 			scrollIndicator:'none',
 			background:'transparent'
@@ -50,19 +50,21 @@ var home = {
 	createParking:function(){
 		var _url = 'home_parking.html';
 		var list = this.list;
-		var top = window.innerHeight- 75 -46;
+		var top = window.innerHeight- window.immersed-106;
 		this.parking_list = [];
 		for(var i=0;i<list.length;i++){
 			var sub = plus.webview.create(_url,'home_parking'+list[i].parking_lot_number,{
 				top:top,
 				left:'3%',
-				height:'96px',
+				height:'106px',
 				width:'94%',
 				position:'absolute',
 				scrollIndicator:'none',
 				background:'transparent'
 			},list[i]);
-			sub.hide();
+			if(i!=0){
+				sub.hide();
+			};
 			this.parking_list.push(sub);
 			this.createMarker(list[i].longitude,list[i].latitude,list[i].free_number,i);
 			this.ws.append(sub);
@@ -221,6 +223,20 @@ var home = {
 			mui.alert('未获取到您的位置，无法进行导航');
 		}
 	},
+	openNews:function(){
+		mui.openWindow({
+			url:'message.html',
+			id:'message.html',
+			styles:{
+			    statusbar:{
+				    background:"#fff" 
+			    },
+			    top:0,
+			    left:0,
+			    position:"absolute"
+		 	}
+		});
+	},
 	showUserLocation:function(){ //打开用户位置
 		this.map.showUserLocation( true );
 	},
@@ -238,7 +254,6 @@ var home = {
 	},
 	setCenter:function(point){ //设置地图中心点
 		this.map.setCenter(point);
-		this.showUserLocation();
 	},
 	getUpData:function(){ //获取最新数据
 		var items = this.parking_list; //创建的home_parking窗口
@@ -249,32 +264,33 @@ var home = {
 		this.map.clearOverlays(); //清除所有的覆盖物(此处为了清除所有的标记)
 		this.getParking(); //获取最新的列表数据
 	},
+	openMenu:function(){
+		var _this = this;
+		mui.openWindow({
+			url:'parking.html',
+			id:'parking.html',
+			styles:{
+			    statusbar:{
+				    background:"#fff" 
+			    },
+			    top:0,
+			    left:0,
+			    position:"absolute"
+		  	},
+		  extras:{
+		  	point:{
+				longitude:_this.point.lng,
+				latitude:_this.point.lat
+			},
+		  	data:_this.list
+		  }
+		});
+	},
 	bindEvent:function(){
 		var _this = this;
 //		this.map.onclick = function(point){  //获取当前用户点击的地里位置
 ////			console.log(JSON.stringify(point),'点击地图')
 //		};
-		mui('.header-bar').on('tap','#openMenu',function(){
-			mui.openWindow({
-				url:'parking.html',
-				id:'parking.html',
-				styles:{
-				    statusbar:{
-					    background:"#fff" 
-				    },
-				    top:0,
-				    left:0,
-				    position:"absolute"
-			  	},
-			  extras:{
-			  	point:{
-					longitude:_this.point.lng,
-					latitude:_this.point.lat
-				},
-			  	data:_this.list
-			  }
-			});
-		});
 		window.addEventListener('updata',function(){
 			_this.getUpData();
 		});
@@ -305,8 +321,8 @@ var home = {
 		this.wo=this.ws.opener(); //opener获取当前Webview窗口的创建者
 		//创建map对象http://www.html5plus.org/doc/zh_cn/maps.html#plus.maps.Map.Map(id,options)
 		this.map = new plus.maps.Map('map');
+		this.createToolbar();
 		this.getUserLocation();
-		this.createSearchView();
 		this.bindEvent();
 	}
 }

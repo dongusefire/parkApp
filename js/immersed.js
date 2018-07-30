@@ -15,7 +15,7 @@
 	};
 	var Map = document.getElementById('map');
 	if(Map){
-		Map.style.top = (Number(immersed)+46)+'px';
+		Map.style.top = Number(immersed)+'px';
 	};
 	var c = document.getElementById('immersed-content');
 	if(c){
@@ -28,5 +28,9 @@
 	var pn = document.getElementById('park-nav');
 	if(pn && immersed>20){
 		pn.style.top = ((immersed-20)+145)+'px';
+	};
+	var hc = document.getElementById('immersed-homeContent');
+	if(hc){
+		hc.style.top = immersed+'px';
 	};
 })(window);
