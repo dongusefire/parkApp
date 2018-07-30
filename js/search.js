@@ -7,7 +7,7 @@ mui.plusReady(function(){
 var vm = new Vue({
 	el:'.mui-content',
 	data:{
-		searchList:[],
+		searchList:['2'],
 		items:[],
 		point:null,
 		keywords:'',

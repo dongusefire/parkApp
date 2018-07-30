@@ -135,7 +135,7 @@
 										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
 									}
 									var bookFee = value.order_amount;
-									if(value.issue_hash==''||value.issue_hash=='null'){
+									if(value.issue_hash==''||value.issue_hash==null){
 										hashshow = ''
 									}else{
 										hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+

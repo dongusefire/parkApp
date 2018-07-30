@@ -32,6 +32,9 @@ input::-webkit-input-placeholder {
 	color: #9B9B9B;
 	letter-spacing: 0;
 }
+input[type=search] {
+	text-align: left !important;
+}
 
 .hidden {
 	display: none;
