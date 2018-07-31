@@ -245,12 +245,14 @@
 					"js/index.js",
 					"css/mui.min.css",
 					"template/home_parking.html",
-					"js/immersed.js"
+					"js/immersed.js",
+					"template/home_toolbar.html"
 				],
 				"refer": [
 					"template/parking.html",
 					"template/search.html",
-					"template/order.html"
+					"template/order.html",
+					"template/home_account.html"
 				],
 				"priority": 0
 			},

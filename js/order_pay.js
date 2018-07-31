@@ -63,7 +63,20 @@ var orderPay = {
 				_this.resultOff = false;
 				if(res.code==200){
 					//支付成功之后的回调
-					mui.alert(res.msg,'系统提示','确定',null);
+					mui.openWindow({
+						url:'paySuccess.html',
+						id:'paySuccess.html',
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							order_sn:_this.order_sn,
+							park_id:_this.park_id
+						}
+					});
 				}else if(res.code==509){
 					_this.payResult();
 				}else if(res.code!=502 && res.code!=503){

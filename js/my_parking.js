@@ -14,6 +14,8 @@ var myParking = {
 	},
 	spaceList:function(){
 		var token = plus.storage.getItem('token'),_this=this;
+		var userName = plus.storage.getItem('phone_number');
+		console.log(userName)
 		mui.ajax(AJAX_PATH+'/user/park/space/list?token='+token,{
 			dataType:'json',
 			type:'get',

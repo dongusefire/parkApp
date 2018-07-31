@@ -1,7 +1,7 @@
 mui.init();
 var date1,date2,time_start,time_end;
 var x = '';
-var p_week = [],mapResult;
+var p_week = [],mapResult=[];
 var token;
 var ajax_submit = false;
 var mask=mui.createMask();
@@ -35,6 +35,7 @@ var issue = {
 							//循环遍历数组，取status为2的车位信息才可以发布
 							if(this.status==2){
 								space_arr.push(this);
+								console.log(JSON.str);
 							}else if(this.status==1){
 								space_arr_checking.push(this);
 							}else if(this.status==3){
@@ -44,7 +45,7 @@ var issue = {
 						//筛选出来的可发布车位继续进行循环
 						if(space_arr.length!=0){
 							jQuery.each(space_arr,function(key2,value2){
-								jQuery(".spaceName").html(space_arr[0].parking_lot_address);
+								jQuery(".spaceName").html(space_arr[0].parking_lot_name);
 								jQuery(".spaceName").attr('data-id',space_arr[0].id);
 							})
 						}else{
@@ -91,7 +92,7 @@ var issue = {
 						}
 						var picker_data = [];
 						for(let i=0;i<space_arr.length;i++){
-							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_address});
+							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_name});
 						}
 						this_.spacePicker.setData(picker_data);
 					}
@@ -292,7 +293,7 @@ var issue = {
 				mui.alert('请选择预定起始与结束时间','系统提示','确定',null);
 				return false;
 			};
-			if(mapResult.length<0){
+			if(mapResult.length==0){
 				mui.alert('请选择每周共享的星期数','系统提示','确定',null);
 				return false;
 			}
@@ -308,14 +309,12 @@ var issue = {
 			if(!ajax_submit){
 				ajax_submit = true;
 				token = plus.storage.getItem('token');
+				plus.nativeUI.showWaiting();
+				mask.show();//显示遮罩
 				mui.ajax(AJAX_PATH+'/user/park/space/release?token='+token,{
 					type:'post',
 					dataType:'json',
 					data:JSON.stringify(jsonData),
-					beforeSend:function(){
-						plus.nativeUI.showWaiting();
-						mask.show();//显示遮罩
-					},
 					success:function(res){
 						ajax_submit = false;
 						plus.nativeUI.closeWaiting();
@@ -345,6 +344,19 @@ var issue = {
 			mui.openWindow({
 				url:'newParkSpace.html',
 				id:'newParkSpace.html',
+				styles:{
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				}
+			})
+		});
+		//点击放租列表
+		$('.tolist').click(function(){
+			mui.openWindow({
+				url:'rentList.html',
+				id:'rentList.html',
 				styles:{
 					popGesture: "close",
 					statusbar:{

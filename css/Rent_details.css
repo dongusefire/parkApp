@@ -4,6 +4,9 @@
 html,body{
 	background: #f5f5f5;
 }
+.g-content {
+	overflow-y: auto;
+}
 .mui-content{
 	background: #f5f5f5;
 	font-size:0;

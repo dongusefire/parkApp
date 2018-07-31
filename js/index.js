@@ -10,8 +10,10 @@ var home = {
 		lat:''
 	},
 	list:[],
+	latest:null,
 	parking_list:[], //用来储存home_parking窗口
 	activeParking:-1, //当前显示的Parking
+	homeAccount:null,
 	getUserLocation:function(){ 
 		var _this=this;
 		this.map.getUserLocation(function(state, point){ //获取用户的当前位置信息
@@ -36,7 +38,7 @@ var home = {
 		var _url ='home_account.html';
 		var top = window.immersed+10;
 		var bottom = window.innerHeight-70-top;
-		this.ws.append(plus.webview.create(_url,_url,{
+		this.homeAccount = plus.webview.create(_url,_url,{
 			height:'70px',
 			bottom:bottom,
 			top:top+'px',
@@ -45,7 +47,9 @@ var home = {
 			position:'absolute',
 			scrollIndicator:'none',
 			background:'transparent'
-		}));
+		});
+		this.homeAccount.hide();
+		this.ws.append(this.homeAccount);
 	},
 	createToolbar:function(){//创建覆盖在地图上的工具栏
 		var _url ='home_toolbar.html';
@@ -112,11 +116,6 @@ var home = {
 		var Icon = '/img/unchecked';
 		var Size = '';
 		var _this = this;
-//		if(status<=5){
-//			Icon = '/img/jh';
-//		}else if(status==0){
-//			Icon = '/img/sh';
-//		};
 		if(plus.os.name=='Android'){
 			Size = '';
 		}else{
@@ -131,8 +130,8 @@ var home = {
 				return false;
 			};
 			_this.resetMarker(marker.uuid);
+			var item = _this.list[marker.uuid];
 			if(mui.os.ios){
-				var item = _this.list[marker.uuid];
 				plus.webview.show('home_parking'+item.parking_lot_number);
 			}else{
 				plus.webview.show('home_parking'+item.parking_lot_number,"fade-in",300);
@@ -332,6 +331,9 @@ var home = {
 		  }
 		});
 	},
+	showAccount:function(){
+		this.homeAccount.show();
+	},
 	bindEvent:function(){
 		var _this = this;
 //		this.map.onclick = function(point){  //获取当前用户点击的地里位置
@@ -339,6 +341,28 @@ var home = {
 //		};
 		window.addEventListener('updata',function(){
 			_this.getUpData();
+		});
+		window.addEventListener('showAccount',function(){
+			_this.showAccount();
+		});
+	},
+	blockLatest:function(){
+		var _this= this;
+		mui.ajax(AJAX_PATH+'/block/latest',{
+			dataType:'json',
+			type:'get',
+			success:function(res,textStatus,xhr){
+				if(res.code==200){
+					console.log(JSON.stringify(res));
+					_this.latest = res.data;
+					console.log(_this.homeAccount.id)
+					mui.fire(_this.homeAccount,'updata',{
+						latest:_this.latest
+					});
+				}else{
+					mui.alert(res.msg,'系统提示','确定',null);
+				};
+			}
 		});
 	},
 	getParking:function(point,sort){
@@ -367,9 +391,10 @@ var home = {
 		this.wo=this.ws.opener(); //opener获取当前Webview窗口的创建者
 		//创建map对象http://www.html5plus.org/doc/zh_cn/maps.html#plus.maps.Map.Map(id,options)
 		this.map = new plus.maps.Map('map');
-		this.createToolbar();
 		this.createAccount();
+		this.createToolbar();
 		this.getUserLocation();
+		this.blockLatest();
 		this.bindEvent();
 	}
 }
