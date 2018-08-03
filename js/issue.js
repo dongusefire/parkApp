@@ -91,7 +91,7 @@ var issue = {
 							)
 						}
 						var picker_data = [];
-						for(let i=0;i<space_arr.length;i++){
+						for(var i=0;i<space_arr.length;i++){
 							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_name});
 						}
 						this_.spacePicker.setData(picker_data);
