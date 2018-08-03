@@ -90,7 +90,7 @@
 			<button type="button" class="mui-btn mui-btn-primary" id="notice">发送通知</button>
 		</div>-->
 		<!--<div class="paytest">
-			<button type="button" class="mui-btn mui-btn-primary" id="openPayView">打开支付页面</button>
+			<button type="button" class="mui-btn mui-btn-primary" id="openPayView">打开网络页面</button>
 		</div>-->
 	</div>
     <script src="../js/mui.min.js"></script>
@@ -121,16 +121,36 @@
     	mui('.g-content').on('tap','#openPayView',function(){
     		var options = {
 				styles:{
-					popGesture: "close",
-					statusbar:{
-						background:"#fff" 
+					titleNView:{
+						buttons:[
+							{
+								color:'#292929',
+								colorPressed:'#292929',
+								float:'left',
+								text:'关闭',
+								fontSize:'16px'
+							}
+						],
+						backgroundColor:'#f7f7f7',
+						titleText:'测试网络页面',
+						splitLine: {
+							color: '#cccccc'
+						}
+					},
+					popGesture:'none',
+					backButtonAutoControl:'none',
+					additionalHttpHeaders:{
+						"Referer":"http://www.ecosysnet.com/"
 					}
 				},
-				extras:{
-					order_sn:"20180710151304801"
+				show:{
+					event:'loaded'
+				},
+				waiting:{
+					autoShow:false
 				}
 			};
-			mui.openWindow("orderPay.html","orderPay.html",options);
+			mui.openWindow("https://www.baidu.com/","https://www.baidu.com/",options);
     	});
     	mui('.g-content').on('tap','.logout',function(){
     		var _this = this;

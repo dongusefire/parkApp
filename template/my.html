@@ -115,6 +115,12 @@
 							if(res.code==200){
 								//获取未读条数
 								that.t_num = res.data;
+								if(that.t_num!=0&&that.t_num){
+									var tb = plus.webview.getWebviewById('home_toolbar.html');
+									mui.fire(tb,'upDataState',{
+										state:'newmsg'
+									});
+								};
 							}else if(res.code==509){
 								plus.storage.setItem('token',res.data.newToken);
 								that.getUnreadMessage();

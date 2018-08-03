@@ -28,7 +28,8 @@
 			"img/cd.png",
 			"js/index.js",
 			"js/immersed.js",
-			"template/home_toolbar.html"
+			"template/home_toolbar.html",
+			"template/home_account.html"
 		],
 		"refer": [
 			"template/home_search.html",
@@ -145,7 +146,8 @@
 		],
 		"refer": [
 			"template/login.html",
-			"template/newParkSpace.html"
+			"template/newParkSpace.html",
+			"template/rentList.html"
 		]
 	},
 	"template/home_parking.html": {

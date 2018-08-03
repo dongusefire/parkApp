@@ -79,6 +79,8 @@
 			window.addEventListener('readData',function(event){
 				var data = event.detail;
 				park_space_id = data.park_space_id;
+				Park_lot_num = ws.parking_lot_num;
+				alert('readData')
 				l_park_lot_num = data.parking_lot_num, l_park_space_id = data.park_space_id, l_p_b_num = data.p_b_num,l_p_b_floor = data.p_b_f,l_p_b_area = data.p_b_area,l_p_s_num=data.p_s_num;
 				token = plus.storage.getItem('token');
 				plus.nativeUI.showWaiting('信息加载中，请稍候...');
@@ -90,14 +92,6 @@
 			window.addEventListener('alr',function(){
 				mui.back();
 			})
-//			window.addEventListener('reload',function(){
-//				token = plus.storage.getItem('token');
-//				plus.nativeUI.showWaiting('信息加载中，请稍候...');
-//				mask.show();//显示遮罩
-//				setTimeout(function(){
-//					load(mui,document,jQuery);
-//				},800);
-//			})
 			mui.plusReady(function(){
 				//获取创建当前窗口的webview对象
 				ws = plus.webview.currentWebview();
@@ -119,6 +113,47 @@
 					},800);
 				};
 			});
+			//获取时间差
+			function GetDateDiff(startTime, endTime, diffType) {
+				  startTime = startTime.replace(/\-/g, "/");
+				  endTime = endTime.replace(/\-/g, "/");
+				  //将计算间隔类型字符串转换为小写
+				  diffType = diffType.toLowerCase();
+				  var sTime = new Date(startTime); //开始时间
+				  var eTime = new Date(endTime); //结束时间
+				  //作为除数的数字
+				  var divNum = 1;
+				  switch (diffType) {
+				    case "second":
+				      divNum = 1000;
+				      break;
+				    case "minute":
+				      divNum = 1000 * 60;
+				      break;
+				    case "hour":
+				      divNum = 1000 * 3600;
+				    case "day":
+				      divNum = 1000 * 3600 * 24;
+				      break;
+				    default:
+				      break;
+				  }
+				  return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+			}
+			//小数乘法浮点数处理
+			function accMul(arg1,arg2){ 
+				var m=0,s1=arg1.toString(),
+				s2=arg2.toString(); 
+				try{
+					m+=s1.split(".")[1].length
+				}catch(e)
+				{}
+				try{
+					m+=s2.split(".")[1].length
+				}catch(e)
+				{}
+				return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
+			}
 			function load($,doc,$$){
 				$.init();
 				//获取当前时间
@@ -138,47 +173,7 @@
 				var s=myDate.getSeconds();  
 				var now=year+'-'+p(month)+"-"+p(date)+" "+p(h)+':'+p(m)+":"+p(s);
 				var parkPrice = 0;
-				//获取时间差
-				function GetDateDiff(startTime, endTime, diffType) {
-					  startTime = startTime.replace(/\-/g, "/");
-					  endTime = endTime.replace(/\-/g, "/");
-					  //将计算间隔类型字符串转换为小写
-					  diffType = diffType.toLowerCase();
-					  var sTime = new Date(startTime); //开始时间
-					  var eTime = new Date(endTime); //结束时间
-					  //作为除数的数字
-					  var divNum = 1;
-					  switch (diffType) {
-					    case "second":
-					      divNum = 1000;
-					      break;
-					    case "minute":
-					      divNum = 1000 * 60;
-					      break;
-					    case "hour":
-					      divNum = 1000 * 3600;
-					    case "day":
-					      divNum = 1000 * 3600 * 24;
-					      break;
-					    default:
-					      break;
-					  }
-					  return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
-				}
-				//小数乘法浮点数处理
-				function accMul(arg1,arg2){ 
-					var m=0,s1=arg1.toString(),
-					s2=arg2.toString(); 
-					try{
-						m+=s1.split(".")[1].length
-					}catch(e)
-					{}
-					try{
-						m+=s2.split(".")[1].length
-					}catch(e)
-					{}
-					return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
-				}
+				
 				//picker显示时间段的算法
 				
 				//车位信息请求ajax函数
@@ -221,7 +216,17 @@
 									}
 									//固定和无差别车位信息分类显示判断
 									if(type=="choose"){
-										info_ = '<p class="num">车位： <span>'+l_p_b_num+'栋'+l_p_b_floor+'层'+l_p_b_area+'区'+l_p_s_num+'号车位'+'</span></p>';
+										var _floor = '';
+										if(l_p_b_floor[0]=='1'){
+											_floor +='负';	
+										};
+										_floor+=l_p_b_floor[1];
+										if(l_p_b_floor[2]=='1'){
+											_floor +='夹层';	
+										}else{
+											_floor+='层';
+										};
+										info_ = '<p class="num">车位： <span>'+l_p_b_num+'栋'+_floor+l_p_b_area+'区'+l_p_s_num+'号车位'+'</span></p>';
 									}else if(type=="noChoose"){
 										info_ = '<p class="num">车位： <span class="occupied">'+_data.free_number +'</span>/'+_data.number+'</p>';
 									}

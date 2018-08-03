@@ -18,7 +18,7 @@
 </head>
 <body>
 	<div id="toolbar">
-		<span id="news"><img src="../img/user-msg.png"/></span>
+		<span id="news"><img id="newsImg" src="../img/user-msg.png"/></span>
 		<span id="search"><img src="../img/search-icon.png"/></span>
 		<span id="list"><img src="../img/parking-list.png"/></span>
 		<span id="location"><img src="../img/user-location.png"/></span>
@@ -29,6 +29,12 @@
     	mui.plusReady(function(){
     		ws = plus.webview.currentWebview();
     		wo = ws.opener();
+    	});
+    	window.addEventListener('upDataState',function(event){
+    		var data = event.detail;
+    		if(data.state=='newmsg'){ //有未读消息
+    			document.getElementById('newsImg').src = '../img/user-msgActive.png';
+    		};
     	});
     	mui('#toolbar').on('tap','span',function(){
     		var id = this.id;

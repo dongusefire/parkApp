@@ -359,6 +359,9 @@ var home = {
 					mui.fire(_this.homeAccount,'updata',{
 						latest:_this.latest
 					});
+					setTimeout(function(){
+						_this.blockLatest();
+					},10000);
 				}else{
 					mui.alert(res.msg,'系统提示','确定',null);
 				};

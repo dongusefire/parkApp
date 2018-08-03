@@ -1,3 +1,6 @@
+.g-content {
+	overflow-y:auto;
+}
 .mui-bar {
 	background-color: #fff;
 }

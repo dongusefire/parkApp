@@ -164,6 +164,7 @@ var issue = {
 			} else {
 				var optionsJson = this.getAttribute('data-options') || '{}';
 				var options = JSON.parse(optionsJson);
+				options.beginDate = new Date();
 				_self.picker = new mui.DtPicker(options);
 				_self.picker.show(function(rs) {
 					_self.innerText = rs.text;
@@ -197,6 +198,7 @@ var issue = {
 			} else {
 				var optionsJson = this.getAttribute('data-options') || '{}';
 				var options = JSON.parse(optionsJson);
+				options.beginDate = new Date();
 				_self.picker = new mui.DtPicker(options);
 				_self.picker.show(function(rs) {
 					_self.innerText = rs.text;
@@ -285,6 +287,9 @@ var issue = {
 			var data_start_time = jQuery(".start_time").html();
 			var data_end_time = jQuery(".end_time").html();
 			var id = jQuery(".spaceName").attr('data-id');
+			var dataStartDate = data_start_date+' '+data_start_time;
+			dataStartDate = new Date(dataStartDate.replace(/-/g,"/"));
+			console.log(dataStartDate,'dataStartDate');
 			if(data_start_date=='请选择开始日期'||data_end_date=='请选择结束日期'){
 				mui.alert('请选择预定起始与结束日期','系统提示','确定',null);
 				return false;
@@ -293,10 +298,23 @@ var issue = {
 				mui.alert('请选择预定起始与结束时间','系统提示','确定',null);
 				return false;
 			};
+			console.log(new Date().getTime(),'当前时间')
+			if( (new Date()).getTime() > dataStartDate.getTime()){
+				mui.alert('开始时间不能小于当前时间','系统提示','确定',null);
+				return false;
+			};
+			if(data_start_time > data_end_time){
+				mui.alert('开始时间不能大于结束时间','系统提示','确定',null);
+				return false;
+			};
+			if( (data_end_time.substring(0,2) - data_start_time.substring(0,2))<4 ){
+				mui.alert('开始时间与结束时间必须相隔4小时以上','系统提示','确定',null);
+				return false;
+			};
 			if(mapResult.length==0){
 				mui.alert('请选择每周共享的星期数','系统提示','确定',null);
 				return false;
-			}
+			};
 			var week = mapResult.toString().replace(/,/g, "");
 			var jsonData = {
 				"id":id,

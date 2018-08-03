@@ -68,6 +68,8 @@ input[type=search] {
 	line-height: 46px;
 	font-size: 19px;
 	color: #292929;
+	left:70px !important;
+	right:70px !important;
 }
 .mui-action-back {
 	color:#292929;

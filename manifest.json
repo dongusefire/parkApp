@@ -246,13 +246,13 @@
 					"css/mui.min.css",
 					"template/home_parking.html",
 					"js/immersed.js",
-					"template/home_toolbar.html"
+					"template/home_toolbar.html",
+					"template/home_account.html"
 				],
 				"refer": [
 					"template/parking.html",
 					"template/search.html",
-					"template/order.html",
-					"template/home_account.html"
+					"template/order.html"
 				],
 				"priority": 0
 			},
@@ -392,7 +392,8 @@
 				],
 				"refer": [
 					"template/login.html",
-					"template/newParkSpace.html"
+					"template/newParkSpace.html",
+					"template/rentList.html"
 				],
 				"priority": 0
 			},
