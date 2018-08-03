@@ -24,13 +24,6 @@ var vm = new Vue({
 			};
 		},
 		setSearch:function(str){
-			var inp = document.getElementById('search-input');
-			if(str && str!=''){
-				this.keywords = str;
-				inp.value = str;
-			}else{
-				var str = this.keywords;
-			};
 			if(str!=''){
 				var list  = plus.storage.getItem('search');
 				if(!list || list==''){ //如果是第一次获取的数据，那么就创建search的storage
@@ -48,7 +41,6 @@ var vm = new Vue({
 					};
 				};
 			};
-			this.getParking();
 		},
 		getParking:function(){
 			var _this= this;
@@ -76,10 +68,14 @@ var vm = new Vue({
 			});
 		}
 	}
+});
+mui('.header-bar').on('change','#search-input',function(){
+	var str = this.value.replace(/^\s+|\s+$/g, '');
+	vm.setSearch(str);
 })
 mui('.header-bar').on('input','#search-input',function(){
 	vm.keywords = this.value.replace(/^\s+|\s+$/g, '');
-	vm.setSearch();
+	vm.getParking();
 })
 mui('.search-list').on('tap','.parking',function(){
 	var id = this.getAttribute('id');

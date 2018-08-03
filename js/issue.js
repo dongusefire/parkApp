@@ -289,16 +289,14 @@ var issue = {
 			var id = jQuery(".spaceName").attr('data-id');
 			var dataStartDate = data_start_date+' '+data_start_time;
 			dataStartDate = new Date(dataStartDate.replace(/-/g,"/"));
-			console.log(dataStartDate,'dataStartDate');
-			if(data_start_date=='请选择开始日期'||data_end_date=='请选择结束日期'){
+			if(data_start_date=='选择开始日期'||data_end_date=='选择结束日期'){
 				mui.alert('请选择预定起始与结束日期','系统提示','确定',null);
 				return false;
 			};
-			if(data_start_time=='请选择开始时间'||data_end_time=='请选择结束时间'){
+			if(data_start_time=='选择开始时间'||data_end_time=='选择结束时间'){
 				mui.alert('请选择预定起始与结束时间','系统提示','确定',null);
 				return false;
 			};
-			console.log(new Date().getTime(),'当前时间')
 			if( (new Date()).getTime() > dataStartDate.getTime()){
 				mui.alert('开始时间不能小于当前时间','系统提示','确定',null);
 				return false;
