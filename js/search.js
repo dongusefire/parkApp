@@ -42,6 +42,12 @@ var vm = new Vue({
 				};
 			};
 		},
+		tapSearch:function(str){
+			var inp = document.getElementById('search-input');
+			inp.value = str;
+			this.keywords = str;
+			this.getParking();
+		},
 		getParking:function(){
 			var _this= this;
 			mui.ajax(AJAX_PATH+'/parkinglot/search',{
