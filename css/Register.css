@@ -1,0 +1,119 @@
+.header-bar{
+	background: #6d93ff;
+}
+#mui-icon-left{
+	color:#b8cbff;
+}
+.header-bar .title{
+    color:#e6edff;
+    font-size:18px;
+}
+#sliderSegmentedControl{
+	background: #6d93ff;
+	padding:0 13px 40px 13px;
+}
+.mui-bar-nav{
+	-webkit-box-shadow:0 1px 6px #6d93ff
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color:#e1e8ff;
+	border-bottom:2px solid #ffffff;
+	background:0 0;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item{
+	color:#e1e8ff;
+}
+#entrust-box{
+	position:relative;
+}
+.reg-list{
+	width:100%;
+	position: absolute;
+	top:100px;
+	left:0;
+}
+.reg-list .list_l{
+	width:90%;
+	margin:0 auto;
+	background:#fff;
+	border-radius:10px;
+	padding:0 12px;
+	margin-bottom: 10px;
+}
+.reg-list .list_l p{
+	margin-bottom: 0;
+}
+.reg-list .list_l p img{
+	width:15px;
+	height:15px;
+	vertical-align: middle;
+	margin-right:7px;
+}
+.reg-list .list_l p:nth-child(1){
+	position: relative;
+	height:36px;
+	line-height: 36px;
+	font-size:13px;
+	color:#dddddd;
+}
+.reg-list .list_l p:nth-child(1) .state{
+	float:right;
+	font-size:15px;
+	color:#92aeff;
+	padding-right: 13px;
+}
+.reg-list .list_l p:nth-child(1) .nstate{
+	float:right;
+	font-size:15px;
+	color:#dddddd;
+	padding-right: 13px;
+}
+.reg-list .list_l p:nth-child(1):after {
+	content: '';
+	position: absolute;
+	left:-12px;
+	right:-12px;
+	bottom:0;
+	height:1px;
+	background: #eeeeee;
+}
+.reg-list .list_l .equal{
+	padding:10px 0;
+	line-height:20px;
+}
+.reg-list .list_l .line{
+	position: relative;
+}
+.reg-list .list_l .line:after {
+	content: '';
+	position: absolute;
+	left:-12px;
+	right:-12px;
+	bottom:0;
+	height:1px;
+	background: #eeeeee;
+}
+.reg-list .list_l .col{
+	height:36px;
+	line-height: 36px;
+	font-size:13px;
+	color:#86a5ff;
+}
+.reg-list .list_l .Ncol{
+	height:36px;
+	line-height: 36px;
+	font-size:13px;
+	color:#dddddd;
+}
+.reg-list .list_l .col span{
+	line-height: 10px;
+	display: inline-block;
+	padding:7px 16px;
+	border:1px solid #c2d2ff;
+	border-radius: 20px;
+	float:right;
+	font-size:13px;
+	color:#92aeff;
+	margin-top:5px;
+	
+}

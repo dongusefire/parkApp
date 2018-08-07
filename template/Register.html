@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>我的挂单</title>
+		<link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/Register.css"/>
+	    <script src="../js/vue.min.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav header-bar">
+		    <a id="mui-icon-left"class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title title">我的挂单</h1>
+		</header>
+		<div class="mui-content" id="entrust-box">
+			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" >
+					全部
+				</a>
+				<a class="mui-control-item" >
+					进行中
+				</a>
+				<a class="mui-control-item">
+					已完成
+				</a>
+				<a class="mui-control-item">
+					已撤销
+				</a>
+				<a class="mui-control-item">
+					已关闭
+				</a>
+			</div>
+			<div class="reg-list">
+				 <div class="list_l">
+				 	<p>挂单时间  2018-07-05 18:20:45<span class="state">进行中</span></p>
+				 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+				 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
+				 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+				 </div>
+				 <div class="list_l">
+				 	<p>挂单时间  2018-07-05 18:20:45<span class="state nstate">已完成</span></p>
+				 	<p class="equal"><img src="../img/Hourglass_C.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+				 	<p class="equal line"><img src="../img/Nfinished.png">1杯星巴克咖啡券</p>
+				 	<p class="Ncol">剩余2小时总部经济区停车券</p>
+				 </div>
+				  <div class="list_l">
+				 	<p>挂单时间  2018-07-05 18:20:45<span class="state nstate">已撤销</span></p>
+				 	<p class="equal"><img src="../img/Hourglass_C.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+				 	<p class="equal line"><img src="../img/Nfinished.png">1杯星巴克咖啡券</p>
+				 	<p class="Ncol">剩余2小时总部经济区停车券</p>
+				 </div>
+			</div>
+		</div>
+		 <script src="../js/mui.min.js"></script>
+		<script src="../js/app.js"></script>
+		<script src="../js/jquery-1.11.2.min.js"></script>
+
+	</body>
+</html>
