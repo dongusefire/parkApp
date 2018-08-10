@@ -448,10 +448,14 @@
 								    	$$('#num').html(bookFee);
 								    }
 								    if(TimeDifference < 15){
+								    	$$('#showStartime').html('请按要求选择开始时间');
+								    	$$('#num').html('0.00');
 										mui.alert('起始时间必须小于结束时间15分钟以上','系统提示','确定',null);
 										return false;
 									}
 									if(diff2 < 15){
+										$$('#showStartime').html('请按要求选择开始时间');
+										$$('#num').html('0.00');
 										mui.alert('起始时间必须大于当前时间15分钟以上','系统提示','确定',null);
 										return false;
 									}
@@ -489,7 +493,8 @@
 								
 								//计算停车时长
 								time1 = $$('#showStartime').html(),time2 = $$('#showEndtime').html();
-								var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time1, "minute");
+								var TimeDifference = GetDateDiff(time1, time2, "minute"),diff2 = GetDateDiff(now, time2, "minute");
+								console.log(diff2);
 								if(time1!='' && time2!=''){
 									var timeDifference = GetDateDiff(time1, time2, "minute");
 									var bookPrice = parkPrice;
@@ -501,10 +506,14 @@
 								    	$$('#num').html(bookFee);
 								    }
 								    if(TimeDifference < 15){
+								    	$$('#showEndtime').html('请按要求选择结束时间');
+								    	$$('#num').html('0.00');
 										mui.alert('结束时间必须大于起始时间15分钟以上','系统提示','确定',null);
 										return false;
 									}
 									if(diff2 < 15){
+										$$('#showEndtime').html('请按要求选择结束时间');
+										$$('#num').html('0.00');
 										mui.alert('起始时间必须大于当前时间15分钟以上','系统提示','确定',null);
 										return false;
 									}
