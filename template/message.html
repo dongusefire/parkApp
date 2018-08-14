@@ -73,7 +73,7 @@
 								if(xhr.response&&xhr.response!=''){
 									var res = mui.parseJSON(xhr.response);
 									console.log(JSON.stringify(res),333332)
-									if(res.code=502){
+									if(res.code==502 || res.code==503){
 										login();
 									}
 								}
@@ -99,7 +99,7 @@
 								if(xhr.response&&xhr.response!=''){
 									var res = mui.parseJSON(xhr.response);
 									console.log(JSON.stringify(res),333332)
-									if(res.code=502){
+									if(res.code==502){
 										//避免重复提示登录，此处不做处理
 									}
 								}
