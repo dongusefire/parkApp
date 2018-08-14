@@ -48,9 +48,9 @@
 				},1000);
 			};
 			function validate_tel(num){
-				var pre = /^[1][3,4,5,7,8][0-9]{9}$/;
+				var pre = /^[1][3,4,5,7,8,6,9][0-9]{9}$/;
 				if(!pre.test(num)){
-					mui.alert('请输入正确的手机号','系统提示','确定',null);
+					mui.alert('请输入正确的手机号',app.name+'提示','确定',null);
 					return false;
 				};
 				return true;
@@ -92,7 +92,7 @@
 					return false;
 				};
 				if(!/^\d{6}$/.test(code)){
-					mui.alert('请输入正确的验证码','系统提示','确定',null);
+					mui.alert('请输入正确的验证码',app.name+'提示','确定',null);
 					return false;
 				};
 				if(!ajaxSubmit_off){
@@ -135,7 +135,7 @@
 									mui.back();
 								},'1500');
 							}else{
-								mui.alert(res.msg,'系统提示','确定',null);
+								mui.alert(res.msg,app.name+'提示','确定',null);
 							};
 						}
 					});

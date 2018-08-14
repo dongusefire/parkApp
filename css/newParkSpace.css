@@ -153,22 +153,23 @@ textarea {
 	width: 27%;
 	margin-left:3%;
 	margin-right: 3%;
-	height: 0;
-	border:1px dashed #9b9b9b;
-	text-align: center;
-	padding-bottom:27%;
-	position: relative;
 	font-size: 12px;
 	display: inline-block;
+	vertical-align: top;
+}
+.add .add-box {
+	height: 0;
+	border:1px dashed #9b9b9b;
+	width:100%;
+	padding-bottom: 100%;
+	position: relative;
 }
 .add .tip {
-	position: absolute;
-	top:100%;
-	left:0;
-	right: 0;
 	padding-top: 10px;
 	text-align: center;
 	color: #666666;
+	width:100%;
+	display: block;
 }
 .ask {
 	padding: 8px 12px;

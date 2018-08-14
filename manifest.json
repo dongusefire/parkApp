@@ -393,7 +393,9 @@
 				"refer": [
 					"template/login.html",
 					"template/newParkSpace.html",
-					"template/rentList.html"
+					"template/rentList.html",
+					"template/successfulIssue.html",
+					"template/my_parking.html"
 				],
 				"priority": 0
 			},
@@ -427,6 +429,13 @@
 				"resources": [],
 				"refer": [
 					"template/order.html"
+				],
+				"priority": 0
+			},
+			"template/my_parking.html": {
+				"resources": [],
+				"refer": [
+					"template/newParkSpace.html"
 				],
 				"priority": 0
 			}

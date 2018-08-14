@@ -40,8 +40,6 @@ var cancelOrder = {
 					},500);
 				}else if(res.code==509){
 					_this.orderCancel();
-				}else if(res.code==500){
-					mui.toast('订单取消失败');
 				}else if(res.code!=502 && res.code!=503){
 					mui.alert(res.msg,app.name+'提示','确定',null);
 				};

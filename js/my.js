@@ -20,7 +20,7 @@ mui('.park-nav').on('tap','a',function(){
 		return;
 	}
 	if(href=='#'){
-		mui.alert('敬请期待','系统提示','确定',null)
+		mui.alert('敬请期待',app.name+'提示','确定',null)
 		return false;
 	};
 	//判断要跳转的页面是否需要登录才能跳转
@@ -41,6 +41,9 @@ mui('.park-nav').on('tap','a',function(){
 			}
 		},
 		extras:{}
+	};
+	if(href=='Asset_deal.html'){
+		options.styles.statusbar.background = '#6D93FF';
 	};
 	mui.openWindow(href,href,options);
 });

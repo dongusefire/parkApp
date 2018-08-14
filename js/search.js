@@ -7,7 +7,7 @@ mui.plusReady(function(){
 var vm = new Vue({
 	el:'.mui-content',
 	data:{
-		searchList:['2'],
+		searchList:[],
 		items:[],
 		point:null,
 		keywords:'',
@@ -68,7 +68,7 @@ var vm = new Vue({
 						};
 						_this.items = _list;
 					}else{
-						mui.alert(res.msg,'系统提示','确定',null);
+						mui.alert(res.msg,app.name+'提示','确定',null);
 					};
 				}
 			});

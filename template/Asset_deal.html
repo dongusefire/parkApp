@@ -16,7 +16,7 @@
 	<body>
 		<div class="park-header" id="park-header">
 			<div class="header-icon">
-				<a class="icon"><span class="mui-icon mui-icon-arrowleft"></span></a>
+				<a class="icon mui-action-back"><span class="mui-icon mui-icon-arrowleft"></span></a>
 				<span class="zi">数字资产交易</span>
 				<a class="icon"></a>
 			</div>
@@ -28,21 +28,84 @@
 		<div class="box-main" id="box-main">
 			<p id="assets"><img src="../img/Assets.png" class="assets">我的资产</p>
 			<div class="Voucher">
-				<a href="" class="item-box">
-					<p class="item-icon"><span class="logo"></span></p>
-					<p class="item-title">我的钱包</p>
-					<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-				</a>
-				<a href="" class="item-box">
-					<p class="item-icon"><span class="logo"></span></p>
-					<p class="item-title">高德置地冬广场</p>
-					<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-				</a>
-				<a href="" class="item-box">
-					<p class="item-icon"><span class="logo"></span></p>
-					<p class="item-title">我的钱包</p>
-					<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-				</a>
+				<div class="Voucher-list">
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">高德置地冬广场</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+					<a class="item-box">
+						<p class="item-icon"><span class="logo"></span></p>
+						<p class="item-title">我的钱包</p>
+						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+					</a>
+				</div>
 			</div>
 		</div>
 		<div class="wallet">
@@ -56,28 +119,16 @@
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script type="text/javascript">
 			$(function() {
-//				var Zheight = document.body.clientHeight; //body高  
-				var navH = $('.box-main').offset().top; //获取定位元素距离浏览器顶部的距离
-				var Voucher=$('.Voucher').height();     // 内容高度
-				console.log(Voucher);
 				//滚动条事件
-				$(window).scroll(function() {
+				$('.Voucher').scroll(function() {
 					//获取滚动条的滑动距离
 					var scroH = $(this).scrollTop();
-					//滚动条的滑动距离小于定位元素距离浏览器顶部的距离，就固定，反之就不固定
-					if(scroH <navH) {
-						$(".box-main").css({
-							"position": "fixed",
-							"top": "45px"
-						});
-					} else if(scroH >=navH) {
-						$(".box-main").css({
-							"position": "static"
-						});
-
-					}
-
-				})
+					if(scroH>0){
+						$('#box-main').css('top','46px');
+					}else if(scroH==0){
+						$('#box-main').css('top','165px');
+					};
+				});
 			})
 		</script>
 

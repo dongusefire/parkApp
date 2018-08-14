@@ -116,7 +116,7 @@ function smsSend(phone,type,resCallback,completeCallback){
 		type:'POST',
 		success:function(res,textStatus,xhr){
 			if(res.code!=200){
-				mui.alert(res.msg,'系统提示','确定',null);
+				mui.alert(res.msg,app.name+'提示','确定',null);
 			}else{
 				resCallback(res,textStatus,xhr)
 			};
@@ -130,7 +130,7 @@ function login(str){
 	if(!str || str==''){
 		str='尚未登录或登录已过期';
 	};
-	mui.alert(str,'系统提示','去登录',function(){
+	mui.alert(str,app.name+'提示','去登录',function(){
 		mui.openWindow('login.html','login.html',{
 			styles:{
 				popGesture: "close", //popGesture窗口的侧滑返回功能。可取值"none"：无侧滑返回功能；"close"：侧滑返回关闭Webview窗口；"hide"：侧滑返回隐藏webview窗口

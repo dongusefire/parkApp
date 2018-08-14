@@ -1,205 +1,220 @@
 {
-	"index.html": {
-		"resources": [
-			"template/home.html",
-			"img/my.png",
-			"js/app.js",
-			"img/push.png",
-			"js/mui.min.js",
-			"css/app.css",
-			"css/mui.min.css",
-			"js/update.js",
-			"img/home1@2x-active.png",
-			"img/my-active.png",
-			"img/home1@2x.png"
-		],
-		"refer": [
-			"template/guide.html",
-			"template/my.html",
-			"template/home.html",
-			"template/issue.html"
-		]
-	},
-	"template/home.html": {
-		"resources": [
-			"template/home_search.html",
-			"template/home_parking.html",
-			"css/index.css",
-			"img/cd.png",
-			"js/index.js",
-			"js/immersed.js",
-			"template/home_toolbar.html",
-			"template/home_account.html"
-		],
-		"refer": [
-			"template/home_search.html",
-			"template/home_parking.html",
-			"template/parking.html",
-			"template/order.html",
-			"template/search.html",
-			"template/home_account.html",
-			"template/home_toolbar.html"
-		]
-	},
-	"template/my.html": {
-		"refer": [
-			"template/login.html",
-			"template/my_vehicle.html",
-			"template/orderList.html",
-			"template/wallet.html",
-			"template/setting.html",
-			"template/userGuide.html",
-			"template/message.html",
-			"template/my_parking.html"
-		],
-		"resources": [
-			"img/cw.png",
-			"img/gwbj.png",
-			"img/Head-p.png",
-			"js/vue.min.js",
-			"css/icons-extra.css",
-			"img/xx.png",
-			"css/my.css",
-			"img/zn.png",
-			"js/my.js",
-			"img/xz.png",
-			"img/dd.png",
-			"img/wdqb.png",
-			"img/cl.png"
-		]
-	},
-	"template/my_vehicle.html": {
-		"refer": [
-			"template/login.html",
-			"template/add_vehicle.html"
-		],
-		"resources": []
-	},
-	"template/order.html": {
-		"refer": [
-			"template/parkingArea.html",
-			"template/successfulBooking.html",
-			"template/add_vehicle.html"
-		],
-		"resources": []
-	},
-	"template/parkingArea.html": {
-		"refer": [
-			"template/parking-spaces.html"
-		],
-		"resources": []
-	},
-	"template/orderList.html": {
-		"refer": [
-			"template/OrderDetails.html",
-			"template/orderPay.html",
-			"template/number_deal.html.html",
-			"template/number_deal.html"
-		],
-		"resources": [
-			"css/mui.min.css",
-			"css/orderList.css"
-		]
-	},
-	"template/OrderDetails.html": {
-		"refer": [
-			"template/siteDetails.html"
-		],
-		"resources": []
-	},
-	"template/siteDetails.html": {
-		"refer": [
-			"template/login.html"
-		],
-		"resources": []
-	},
-	"template/successfulBooking.html": {
-		"refer": [
-			"template/OrderDetails.html"
-		],
-		"resources": []
-	},
-	"template/setting.html": {
-		"refer": [
-			"template/orderPay.html"
-		],
-		"resources": [
-			"img/edi.png",
-			"css/mui.min.css"
-		]
-	},
-	"template/home_search.html": {
-		"resources": [
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		]
-	},
-	"template/issue.html": {
-		"resources": [
-			"js/plug/ion.rangeSlider.min.js",
-			"js/jquery-1.11.2.min.js",
-			"css/plug/ion.rangeSlider.skinHTML5.css",
-			"css/plug/ion.rangeSlider.css",
-			"img/add_ld.png",
-			"css/issue.css",
-			"js/immersed.js"
-		],
-		"refer": [
-			"template/login.html",
-			"template/newParkSpace.html",
-			"template/rentList.html"
-		]
-	},
-	"template/home_parking.html": {
-		"resources": [
-			"css/index.css",
-			"img/dwt.png",
-			"img/dhicon.png"
-		]
-	},
-	"template/login.html": {
-		"resources": [
-			"css/login.css",
-			"css/mui.min.css"
-		]
-	},
-	"template/wallet.html": {
-		"resources": [
-			"css/mui.min.css",
-			"js/wallet.js",
-			"css/wallet.css",
-			"img/withdrawl.png",
-			"js/app.js",
-			"js/jquery-1.11.2.min.js",
-			"js/mui.min.js"
-		],
-		"refer": [
-			"template/balance.html"
-		]
-	},
-	"template/userGuide.html": {
-		"resources": [
-			"img/appUserGuide.jpg",
-			"css/mui.min.css"
-		]
-	},
-	"template/message.html": {
-		"resources": [
-			"css/message.css",
-			"css/mui.min.css",
-			"js/vue.min.js"
-		]
-	},
-	"template/balance.html": {
-		"resources": [
-			"css/balance.css",
-			"css/mui.min.css",
-			"js/balance.js"
-		]
-	},
-	"template/parking-spaces.html": {
-		"refer": [
-			"template/order.html"
-		]
-	}
+  "index.html": {
+    "resources": [
+      "template/home.html",
+      "img/my.png",
+      "js/app.js",
+      "img/push.png",
+      "js/mui.min.js",
+      "css/app.css",
+      "css/mui.min.css",
+      "js/update.js",
+      "img/home1@2x-active.png",
+      "img/my-active.png",
+      "img/home1@2x.png"
+    ],
+    "refer": [
+      "template/guide.html",
+      "template/my.html",
+      "template/home.html",
+      "template/issue.html"
+    ]
+  },
+  "template/home.html": {
+    "resources": [
+      "template/home_search.html",
+      "template/home_parking.html",
+      "css/index.css",
+      "img/cd.png",
+      "js/index.js",
+      "js/immersed.js",
+      "template/home_toolbar.html",
+      "template/home_account.html"
+    ],
+    "refer": [
+      "template/home_search.html",
+      "template/home_parking.html",
+      "template/parking.html",
+      "template/order.html",
+      "template/search.html",
+      "template/home_account.html",
+      "template/home_toolbar.html"
+    ]
+  },
+  "template/my.html": {
+    "refer": [
+      "template/login.html",
+      "template/my_vehicle.html",
+      "template/orderList.html",
+      "template/wallet.html",
+      "template/setting.html",
+      "template/userGuide.html",
+      "template/message.html",
+      "template/my_parking.html"
+    ],
+    "resources": [
+      "img/cw.png",
+      "img/gwbj.png",
+      "img/Head-p.png",
+      "js/vue.min.js",
+      "css/icons-extra.css",
+      "img/xx.png",
+      "css/my.css",
+      "img/zn.png",
+      "js/my.js",
+      "img/xz.png",
+      "img/dd.png",
+      "img/wdqb.png",
+      "img/cl.png"
+    ]
+  },
+  "template/my_vehicle.html": {
+    "refer": [
+      "template/login.html",
+      "template/add_vehicle.html"
+    ],
+    "resources": []
+  },
+  "template/order.html": {
+    "refer": [
+      "template/parkingArea.html",
+      "template/successfulBooking.html",
+      "template/add_vehicle.html"
+    ],
+    "resources": []
+  },
+  "template/parkingArea.html": {
+    "refer": [
+      "template/parking-spaces.html"
+    ],
+    "resources": []
+  },
+  "template/orderList.html": {
+    "refer": [
+      "template/OrderDetails.html",
+      "template/orderPay.html",
+      "template/number_deal.html.html",
+      "template/number_deal.html"
+    ],
+    "resources": [
+      "css/mui.min.css",
+      "css/orderList.css"
+    ]
+  },
+  "template/OrderDetails.html": {
+    "refer": [
+      "template/siteDetails.html"
+    ],
+    "resources": []
+  },
+  "template/siteDetails.html": {
+    "refer": [
+      "template/login.html"
+    ],
+    "resources": []
+  },
+  "template/successfulBooking.html": {
+    "refer": [
+      "template/OrderDetails.html"
+    ],
+    "resources": []
+  },
+  "template/setting.html": {
+    "refer": [
+      "template/orderPay.html"
+    ],
+    "resources": [
+      "img/edi.png",
+      "css/mui.min.css"
+    ]
+  },
+  "template/home_search.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "template/issue.html": {
+    "resources": [
+      "js/plug/ion.rangeSlider.min.js",
+      "js/jquery-1.11.2.min.js",
+      "css/plug/ion.rangeSlider.skinHTML5.css",
+      "css/plug/ion.rangeSlider.css",
+      "img/add_ld.png",
+      "css/issue.css",
+      "js/immersed.js"
+    ],
+    "refer": [
+      "template/login.html",
+      "template/newParkSpace.html",
+      "template/rentList.html",
+      "template/successfulIssue.html",
+      "template/my_parking.html"
+    ]
+  },
+  "template/home_parking.html": {
+    "resources": [
+      "css/index.css",
+      "img/dwt.png",
+      "img/dhicon.png"
+    ],
+    "refer": []
+  },
+  "template/login.html": {
+    "resources": [
+      "css/login.css",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "template/wallet.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/wallet.js",
+      "css/wallet.css",
+      "img/withdrawl.png",
+      "js/app.js",
+      "js/jquery-1.11.2.min.js",
+      "js/mui.min.js"
+    ],
+    "refer": [
+      "template/balance.html"
+    ]
+  },
+  "template/userGuide.html": {
+    "resources": [
+      "img/appUserGuide.jpg",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "template/message.html": {
+    "resources": [
+      "css/message.css",
+      "css/mui.min.css",
+      "js/vue.min.js"
+    ],
+    "refer": []
+  },
+  "template/balance.html": {
+    "resources": [
+      "css/balance.css",
+      "css/mui.min.css",
+      "js/balance.js"
+    ],
+    "refer": []
+  },
+  "template/parking-spaces.html": {
+    "refer": [
+      "template/order.html"
+    ],
+    "resources": []
+  },
+  "template/my_parking.html": {
+    "refer": [
+      "template/newParkSpace.html"
+    ],
+    "resources": []
+  }
 }

@@ -1,8 +1,4 @@
-mui.init({
-	keyEventBind: {
-		backbutton: false  //关闭back按键监听
-	}
-});
+mui.init();
 var newParkSpace = {
 	ws:null,
 	wo:null,
@@ -12,7 +8,8 @@ var newParkSpace = {
 		p_s_sn:'',
 		p_img:'',
 		file_img:'',
-		card_img:'',
+		card_po_img:'',
+		card_re_img:'',
 		p_s_num:'',
 		p_s_f:'',
 		p_s_area:'',
@@ -26,7 +23,8 @@ var newParkSpace = {
 	floorZF:0,
 	floorJC:0,
 	upPBtn:null,
-	upCardBtn:null,
+	upCardPoBtn:null,
+	upCardReBtn:null,
 	upFileBtn:null,
 	loading:null,
 	webviewOptions:{
@@ -76,8 +74,10 @@ var newParkSpace = {
 				str='请添加车位图片';
 			}else if(spaceData.file_img==''){
 				str='请添加车位产权证明';
-			}else if(spaceData.card_img==''){
-				str='请添加身份证照片';
+			}else if(spaceData.card_po_img==''){
+				str='请添加身份证正面照片';
+			}else if(spaceData.card_re_img==''){
+				str='请添加身份证反面照片';
 			};
 //			else if(spaceData.p_s_length==''){
 //				str='请填写车位长度';
@@ -159,6 +159,7 @@ var newParkSpace = {
 				_this.spaceData[name]=val.toUpperCase();
 			}else{
 				this.value='';
+				_this.spaceData[name]= '';
 			};
 		});
 		//权属切换
@@ -174,7 +175,7 @@ var newParkSpace = {
 		//发布接口
 		mc.on('tap','#spaceAdd',function(){
 			var _seif = this;
-			if(_this.validateData()){
+			if(_this.validateData('all')){
 				if(!_this.addOff){
 					_this.addOff=true;
 					_this.spaceAdd();
@@ -212,7 +213,7 @@ var newParkSpace = {
 		  if($('#waiting').length==0){
 		  	old_back();
 		  };
-		}
+		};
 	},
 	waiting:function(str){
 		var waitingHtml = '<div id="waiting-mask"></div><div id="waiting"><span>'+str+'</span></div>';
@@ -270,8 +271,10 @@ var newParkSpace = {
 				_this.loading.close();
 				_this.loading= null;
 				var k = 'p_img';
-				if(this.options.pick=='#upCardBtn'){
-					k = 'card_img';
+				if(this.options.pick=='#upCardPoBtn'){
+					k = 'card_po_img';
+				}else if(this.options.pick=='#upCardReBtn'){
+					k= 'card_re_img';
 				}else if(this.options.pick=='#upFileBtn'){
 					k = 'file_img';
 				};
