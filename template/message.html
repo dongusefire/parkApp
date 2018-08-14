@@ -57,7 +57,6 @@
 							dataType:'json',
 							success:function(res){
 								if(res.code==200){
-									console.log(JSON.stringify(res.data));
 									that.items = res.data;
 									if(res.data.length==0){
 										that.flag=true;
@@ -69,6 +68,15 @@
 								}else if(res.code!=502 && res.code!=503){
 									mui.alert(res.msg,'系统提示','确定',null); 
 								};
+							},
+							complete:function(xhr, status){
+								if(xhr.response&&xhr.response!=''){
+									var res = mui.parseJSON(xhr.response);
+									console.log(JSON.stringify(res),333332)
+									if(res.code=502){
+										login();
+									}
+								}
 							}
 						})
 					},
@@ -80,12 +88,20 @@
 							data:{
 							},
 							success:function(res){
-								console.log(JSON.stringify(res),33332222)
 								if(res.code==200){
 									var myo = plus.webview.currentWebview().opener();
 									mui.fire(myo,'getMessage');
 								}else if(res.code!=502 && res.code!=503){
 									mui.alert(res.msg,'系统提示','确定',null); 
+								}
+							},
+							complete:function(xhr, status){
+								if(xhr.response&&xhr.response!=''){
+									var res = mui.parseJSON(xhr.response);
+									console.log(JSON.stringify(res),333332)
+									if(res.code=502){
+										//避免重复提示登录，此处不做处理
+									}
 								}
 							}
 						});
