@@ -47,6 +47,7 @@
 		});
 		window.addEventListener('updata',function(event){
 			var data = event.detail.latest;
+			console.log('账本数据',JSON.stringify(data));
 			vm.closeTime = data.closeTime.substring(0,16);
 			vm.ledgerHash = data.ledgerHash;
 			vm.parentLedgerHash = data.parentLedgerHash;
