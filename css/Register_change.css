@@ -1,0 +1,135 @@
+.g-content .change{
+	width:90%;
+	height:30px;
+	margin:0 auto;
+}
+.g-content .change a{
+	float: right;
+	font-size:14px;
+	color:#91b5f9;
+	line-height:30px;
+}
+.g-content .Nocard{
+	height:220px;
+}
+.g-content .Nocard .list{
+	width:92%;
+	height:220px;
+	float: right;
+	background: url(../img/nocard.png) no-repeat center;
+    background-size:100% 100%;
+}
+.g-content .Nocard .outcard{
+	width:92%;
+	height:220px;
+	float: right;
+	background: url(../img/outcard.png) no-repeat center;
+    background-size:100% 100%;
+}
+.g-content .Nocard .incard{
+	width:92%;
+	height:220px;
+	float: right;
+	background: url(../img/incard.png) no-repeat center;
+    background-size:100% 100%;
+}
+.g-content .Nocard .list .short{
+	height:104px;
+	display: block;
+	padding:20px 0 0 60px;
+	position:relative;
+}
+.g-content .Nocard .list .short .item-icon .logo{
+    display:inline-block;
+	width:38px;
+	height:38px;
+	border:1px solid #c7c7c7;
+	background: #fff;
+	border-radius: 100%;
+	position: absolute;
+	top:20px;
+	left:18px;
+}
+.g-content .Nocard .list .short p{
+	margin-bottom:0;
+}
+.g-content .Nocard .list .short .out{
+	font-size:16px;
+	color:#f4f3f1;
+}
+.g-content .Nocard .list .short .yu{
+	font-size:13px;
+	color:#f4f3f1;
+}
+.g-content .Nocard .list .short p img{
+	width:12px;
+	height:14px;
+	margin-right:5px;
+}
+.g-content .Nocard .list .short .addr{
+	font-size:14px;
+	color:#f4f3f1;
+}
+.g-content .Nocard .list .input{
+	margin:10px 0 15px 25px;
+	width:40%;
+}
+.g-content .Nocard .list .input input[type=text]{
+	margin-bottom:0;
+	height:20px;
+	border-radius:0;
+	background: transparent;
+	border:none;
+	border-bottom:1px solid #f4f3f1;
+	font-size:12px;
+	color:#f3f2f1;
+	text-align: center;
+}
+.g-content .Nocard .list .input input::-webkit-input-placeholder{
+	color:#f4f3f1;
+}
+.g-content .Nocard .list .c_assets{
+	display: inline-block;
+	margin-left:25px;
+	padding:4px 12px;
+	border: 1px solid #f0efed;
+	border-radius:20px;
+	font-size:12px;
+	color:#f3f2f1;
+	/*line-height:24px;*/
+}
+.g-content .tips{
+	width:84%;
+	padding-bottom:65px;
+	margin:0 auto;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+.g-content .tips p{
+	margin-bottom:0;
+	font-size:12px;
+	color:#c3c0ba;
+}
+.g-content .tips span{
+	line-height:20px;
+	font-size:10px;
+	color:#c3c0ba;
+	display: block;
+}
+.register{
+	width:92%;
+	height:42px;
+	background: #5f93fe;
+	border-radius: 20px;
+	margin:0 auto;
+	text-align: center;
+	line-height: 42px;
+	position: fixed;
+	left:4%;
+	bottom:20px;
+}
+.register span{
+  font-size:14px;
+  color:#fff;
+	
+}

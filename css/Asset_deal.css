@@ -99,6 +99,7 @@
 }
 .Voucher .Voucher-list {
 	background: #fff;
+	border-bottom-right-radius:15px;
 }
 .Voucher a{
 	width:100%;
