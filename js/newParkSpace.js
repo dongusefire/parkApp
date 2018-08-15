@@ -97,11 +97,14 @@ var newParkSpace = {
 		if(_this.spaceData['p_s_f'].length==2){
 			_this.spaceData['p_s_f']=_this.spaceData['p_s_f']+_this.floorJC;
 		};
+		
+		plus.nativeUI.showWaiting('正在提交...');
 		mui.ajax(AJAX_PATH+'/user/park/space/add?token='+token,{
 			data:JSON.stringify(_this.spaceData),
 			dataType:'json',
 			type:'post',
 			success:function(res,textStatus,xhr){
+				plus.nativeUI.closeWaiting();
 				_this.addOff = false;
 				if(res.code==200){
 					mui.toast('添加成功');

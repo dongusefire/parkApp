@@ -17,7 +17,6 @@ var issue = {
 			dataType:'json',
 			success:function(res){
 				var spaceData = res.data;
-				alert(JSON.stringify(res));
 				if(res.code==200){
 					if(res.data==''){
 						mui.alert('您还未添加车位，请先添加车位',app.name+'提示','去添加',function(){
