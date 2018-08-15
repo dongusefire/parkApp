@@ -29,19 +29,22 @@
 	    </div>
 		<script src="../js/mui.min.js"></script>
 		<script type="text/javascript">
-			var ws,pid,order_num;
+			var ws,pid,order_num,wid,indexWs;
 			mui.init();
 			mui.plusReady(function(){
 				ws = plus.webview.currentWebview();
+				wid = plus.runtime.appid;
 				park_id = ws.park_id;
-				order_num = ws.order_num
+				order_num = ws.order_num;
+				indexWs = plus.webview.getWebviewById(wid);
 			})
 			document.getElementById('returnhome').addEventListener('tap',function(){
 				var wss = plus.webview.all();
 				var str = '';
+				mui.fire(indexWs,'returnhome');
 				for(var i=0;i<wss.length;i++){
 					str+=wss[i].id+'&';
-					if((wss[i].id.indexOf('HBuilder')==-1 && wss[i].id.indexOf('home')==-1) && wss[i].id.indexOf('H54803F30')==-1 &&(wss[i].id.indexOf('template')==-1)){
+					if((wss[i].id.indexOf('HBuilder')==-1 && wss[i].id.indexOf('home')==-1) && wss[i].id.indexOf(wid)==-1 &&(wss[i].id.indexOf('template')==-1)){
 						wss[i].close();
 					};
 				};

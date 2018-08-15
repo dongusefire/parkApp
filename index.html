@@ -27,6 +27,7 @@
     <script src="js/mui.min.js"></script>
     <script src="js/update.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
     	mui.init();
     	var subpages = ['template/home.html','template/issue.html','template/my.html'];
@@ -76,6 +77,11 @@
 					}
 				});
 			};
+		});
+		//监听返回首页
+		window.addEventListener('returnhome',function(event){
+			mui.trigger(mui('[href="template/home.html"]')[0],'tap');
+			$('[href="template/home.html"]').addClass('mui-active').siblings().removeClass('mui-active');
 		});
 		//当前激活选项
 		var activeTab = subpages[0];
