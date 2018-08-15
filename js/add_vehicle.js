@@ -102,7 +102,7 @@ var vm = new Vue({
 			if(!_this.validate_tel(this.phone_number)){
 				return false;
 			};
-			smsSend(this.phone_number,2,function(res,textStatus,xhr){
+			smsSend(this.phone_number,3,function(res,textStatus,xhr){
 				_this.isSend = true;
 				_this.sendCode();
 			},function(){});

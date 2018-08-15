@@ -59,8 +59,6 @@
 			var ajaxsend_off = false,ajaxSubmit_off = false;
 			mui('#login-box').on('tap','.get_code',function(){
 				var phone_number = mui('#phone_number')[0].value;
-				console.log(phone_number)
-				return false;
 				if(!validate_tel(phone_number)){
 					return false;
 				};

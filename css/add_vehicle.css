@@ -180,7 +180,7 @@
     flex-grow: 1;
     padding-left: 10px;
 }
-.inline-input span {
+.inline-input span{
 	font-size: 14px;
 	color: #3883FD;
 }
@@ -283,7 +283,7 @@
   border: none;
   border-radius:0;
 }
-.seconds {
+.inline-input span.seconds,.inline-input span.seconds span{
 	font-size: 14px;
 	color: #9B9B9B;
 }

@@ -178,18 +178,6 @@ var orderPay = {
 			_this.payId = id;
 			_this.pay_channel = val;
 		});
-//		document.addEventListener("pause",function(){
-//			console.log(" 应用从前台切换到后台" );
-//		}, false );
-//		document.addEventListener("resume",function(){
-//			console.log(" 应用从后台切换到前台" );
-//			if(!_this.resultOff){
-//				_this.resultOff = true;
-//				setTimeout(function(){
-//					_this.payResult();
-//				},1000);
-//			};
-//		}, false );
 	},
 	orderDetail:function(){
 		var _this = this;

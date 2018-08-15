@@ -19,12 +19,35 @@
 	background: url(../img/nocard.png) no-repeat center;
     background-size:100% 100%;
 }
+.g-content .Nocard .list .address {
+	height: 22px;
+	line-height: 22px;
+	background: url(../img/addr.png) no-repeat left center;
+	background-size:14px;
+	text-indent: 20px;
+	overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+.g-content .Nocard .list .time {
+	height: 22px;
+	line-height: 22px;
+	background: url(../img/time.png) no-repeat left center;
+	background-size:14px;
+	text-indent: 20px;
+}
+.g-content .Nocard .list .addr {
+	display: none;
+}
 .g-content .Nocard .outcard{
 	width:92%;
 	height:220px;
 	float: right;
 	background: url(../img/outcard.png) no-repeat center;
     background-size:100% 100%;
+}
+.g-content .Nocard .outcard .addr,.g-content .Nocard .incard .addr{
+	display: block;
 }
 .g-content .Nocard .incard{
 	width:92%;
@@ -132,4 +155,12 @@
   font-size:14px;
   color:#fff;
 	
+}
+.Nocard-wrap {
+	position: absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom: 62px;
+	overflow-y: auto;
 }

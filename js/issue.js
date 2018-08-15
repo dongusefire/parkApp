@@ -402,18 +402,6 @@ var issue = {
 		});
 	},
 	init:function(){
-		setTimeout(function(){
-			mui.openWindow({
-				url:'successfulIssue.html',
-				id:'successfulIssue.html',
-				styles:{
-					popGesture: "close",
-					statusbar:{
-						background:"#fff" 
-					}
-				}
-			})
-		},5000);
 		this.bindEvent();
 		this.spacePicker = new mui.PopPicker();
 	}
