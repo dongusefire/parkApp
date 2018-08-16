@@ -10,6 +10,11 @@
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/Register.css"/>
 	    <script src="../js/vue.min.js"></script>
+	    <style>
+	    	.mui-control-content{
+	    		top:-25px;
+	    	}
+	    </style>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav header-bar">
@@ -18,46 +23,112 @@
 		</header>
 		<div class="mui-content" id="entrust-box">
 			<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-				<a class="mui-control-item mui-active" >
+				<a class="mui-control-item mui-active" id="all" href="#item1">
 					全部
 				</a>
-				<a class="mui-control-item" >
+				<a class="mui-control-item" id="running" href="#item2">
 					进行中
 				</a>
-				<a class="mui-control-item">
+				<a class="mui-control-item" id="finished" href="#item3">
 					已完成
 				</a>
-				<a class="mui-control-item">
+				<a class="mui-control-item" id="cancel" href="#item4">
 					已撤销
 				</a>
-				<a class="mui-control-item">
+				<a class="mui-control-item" id="shutDown" href="#item5">
 					已关闭
 				</a>
 			</div>
-			<div class="reg-list">
-				 <div class="list_l">
-				 	<p>挂单时间  2018-07-05 18:20:45<span class="state">进行中</span></p>
-				 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-				 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
-				 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
-				 </div>
-				 <div class="list_l">
-				 	<p>挂单时间  2018-07-05 18:20:45<span class="state nstate">已完成</span></p>
-				 	<p class="equal"><img src="../img/Hourglass_C.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-				 	<p class="equal line"><img src="../img/Nfinished.png">1杯星巴克咖啡券</p>
-				 	<p class="Ncol">剩余2小时总部经济区停车券</p>
-				 </div>
-				  <div class="list_l">
-				 	<p>挂单时间  2018-07-05 18:20:45<span class="state nstate">已撤销</span></p>
-				 	<p class="equal"><img src="../img/Hourglass_C.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-				 	<p class="equal line"><img src="../img/Nfinished.png">1杯星巴克咖啡券</p>
-				 	<p class="Ncol">剩余2小时总部经济区停车券</p>
-				 </div>
+			<div class="mui-control-content mui-active" id="item1">
+				<div  class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="reg-list">
+							 <div class="list_l" v-for="(item,index) in items">
+							 	<p>挂单时间  {{item.pending_time}}
+							 		<span class="state" v-if="item.status==2">进行中</span>
+							 		<span class="state" v-else-if="item.status==4">已完成</span>
+							 		<span class="state" v-else-if="item.status==6">已撤销</span>
+							 		<span class="state" v-else-if="item.status==5">已关闭</span>
+							 	</p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
+							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 </div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="mui-control-content" id="item2">
+				<div  class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="reg-list">
+							 <div class="list_l"  v-for="(item,index) in items2">
+							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">进行中</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
+							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-control-content" id="item3">
+				<div  class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="reg-list">
+							 <div class="list_l"  v-for="(item,index) in items3">
+							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">已完成</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
+							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-control-content" id="item4">
+				<div  class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="reg-list">
+							 <div class="list_l"  v-for="(item,index) in items4">
+							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">已撤销</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
+							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-control-content" id="item5">
+				<div  class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="reg-list">
+							 <div class="list_l"  v-for="(item,index) in items5">
+							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">已关闭</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
+							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
+							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 </div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		 <script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
-
+		<script src="../js/Register.js"></script>
+		<script>
+			(function($$) {
+				$$('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var height = $(document.body).height();
+				var h2 = height - 151;
+				$('.mui-control-content').css('height',h2);
+			})(mui);
+		</script>
 	</body>
 </html>

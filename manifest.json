@@ -233,7 +233,8 @@
 					"template/my_vehicle.html",
 					"template/userGuide.html",
 					"template/message.html",
-					"template/my_parking.html"
+					"template/my_parking.html",
+					"template/Register.html"
 				],
 				"priority": 0
 			},

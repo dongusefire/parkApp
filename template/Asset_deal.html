@@ -21,89 +21,28 @@
 				<a class="icon"></a>
 			</div>
 			<div class="Total">
-				<h3>57</h3>
+				<h3></h3>
 				<p>我的数字资产总数</p>
 			</div>
 		</div>
 		<div class="box-main" id="box-main">
 			<p id="assets"><img src="../img/Assets.png" class="assets">我的资产</p>
 			<div class="Voucher">
+				<div class="Voucher-list" v-for="(item,index) in items">
+					<a class="item-box">
+						<p class="item-icon">
+							<span class="logo" v-if="item.cardtype==1"><img src="../img/posi.png" alt="" /></span>
+							<span class="logo logo2" v-else><img src="../img/card.png" alt="" /></span>
+						</p>
+						<p class="item-title">{{item.cardname}}</p>
+						<p class="num"><span class="one">{{item.cardnumber}}</span><span class="su">数量</span></p>
+					</a>
+				</div>
 				<div class="Voucher-list">
 					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">高德置地冬广场</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
-					</a>
-					<a class="item-box">
-						<p class="item-icon"><span class="logo"></span></p>
-						<p class="item-title">我的钱包</p>
-						<p class="num"><span class="one">1</span><span class="su">数量</span></p>
+						<p class="item-icon"><span class=" logo"><img src="../img/posi.png" alt="" /></span></p>
+						<p class="item-title">resdge</p>
+						<p class="num"><span class="one">4</span><span class="su">数量</span></p>
 					</a>
 				</div>
 			</div>
@@ -117,6 +56,7 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
+		<script src="../js/Asset_deal.js"></script>
 		<script type="text/javascript">
 			$(function() {
 				//滚动条事件

@@ -112,7 +112,7 @@
     height: 66px;
     position: relative;
 }
-.Voucher a:before{
+/*.Voucher a:before{
 	content: '';
 	position: absolute;
 	left:10px;
@@ -120,15 +120,25 @@
 	bottom:0;
 	height: 1px;
 	background: #efefef;
-}
+}*/
 .Voucher a:before{
 	content: "";
 	width: 17px;
 	height: 17px;
 	position: absolute;
-	box-shadow:0px 5px 20px #f5f5f5 inset;
+	background-color:#F5F5F5;
 	left:-8px;
-	top:57px;
+	bottom:-7px;
+	border-radius:100px;
+}
+.Voucher a:after{
+	content: "";
+	width: 17px;
+	height: 17px;
+	position: absolute;
+	background-color:#f5f5f5;
+	left:-8px;
+	top:-8px;
 	border-radius:100px;
 }
 .Voucher a:last-child{
@@ -155,11 +165,26 @@
 	display:inline-block;
 	width:41px;
 	height:41px;
-	border:1px solid #c7c7c7;
-	background: #d8d8d8;
+	/*border:1px solid #c7c7c7;*/
+	/*background: #d8d8d8;*/
 	border-radius: 100%;
 	margin-top:12px;
 	margin-left:20px;
+	position: relative;
+}
+.Voucher a .item-icon .logo img {
+	width: 60%;
+	height: auto;
+	position: absolute;
+	top:4px;
+	left:7px;
+}
+.Voucher a .item-icon .logo2 img {
+	width: 60%;
+	height: auto;
+	position: absolute;
+	top:12px;
+	left:7px;
 }
 .Voucher a .num{
 	padding-top:10px;
