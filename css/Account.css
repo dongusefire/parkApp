@@ -1,3 +1,6 @@
+.g-content {
+	overflow-y: auto;
+}
 .accountList a{
 	width:92%;
 	height:70px;
@@ -57,6 +60,9 @@
 	font-size:14px;
 	color:#c1bfb8;
 	padding-left:10px;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .accountList a .num{
 	width:20%;

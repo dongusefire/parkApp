@@ -33,7 +33,7 @@
 		},
 		
 		"Maps": {},
-		"Zip":{},"Push":{},"File":{},"Audio":{},"Camera":{},"Device":{},"Runtime":{},"Gallery":{},"Storage":{},"Webview":{},"Barcode":{},"Uploader":{},"NativeUI":{},"Proximity":{},"Navigator":{},"NativeObj":{},"Downloader":{},"Invocation":{},"Orientation":{},"Geolocation":{},"Accelerometer":{},"XMLHttpRequest":{}
+		"Zip":{},"Push":{},"File":{},"Audio":{},"Camera":{},"Device":{},"Runtime":{},"Gallery":{},"Storage":{},"Webview":{},"Barcode":{},"Uploader":{},"NativeUI":{},"Proximity":{},"Navigator":{},"NativeObj":{},"Downloader":{},"Invocation":{},"Orientation":{},"Geolocation":{},"Accelerometer":{},"XMLHttpRequest":{},"Payment":{}
 	},
 	"plus": {
 		"statusbar": {
@@ -48,7 +48,7 @@
 		"runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
-			"plugins": {"payment":{},"push":{"igexin":{"appid":"QxxqPD9j7t9H0OlJ2gc9A8","appkey":"v842aPqimv8P5qkQRAnxY9","appsecret":"0LCj6yZVw261moFeRT46X1"}},
+			"plugins": {"payment":{"weixin":{"description":"微信支付","appid":"wx9cb5cf1e933f25e0"}},"push":{"igexin":{"appid":"QxxqPD9j7t9H0OlJ2gc9A8","appkey":"v842aPqimv8P5qkQRAnxY9","appsecret":"0LCj6yZVw261moFeRT46X1"}},
 				"maps": {"baidu":{"appkey_ios":"OrfNGpZVBhgnPEnKYR2xvxKDt2NbqcPm","appkey_android":"RR2vQMGFQyb7aQXGxqFBtqmhyuyujupI","appkey":"","description":""}
 					
 				}
@@ -77,7 +77,7 @@
 				"schemes":[
 					"parking"
 				],  //Android平台通过UrlSchemes与第三方应用相互调用
-				"permissions": ["<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
+				"permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -146,7 +146,7 @@
 					"xxhdpi": "C:/Users/guojie/Desktop/停车场app/启动页/1080.png"
 				}
 			}
-		}
+		},"adid":"124714130806"
 	},
 	"fullscreen": false,
 	"dependencies": {

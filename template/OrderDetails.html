@@ -19,13 +19,9 @@
 	    <h1 class="mui-title">订单详情</h1>
 	</header>
 	<div class="mui-content">
-		<div class="mui-main">
-			
-	    </div>
-	    <div class="Parking-Rate">
-	    </div>
-	    <div class="state-btn">
-	    </div>
+		<div class="mui-main"></div>
+	    <div class="Parking-Rate"></div>
+	    <div class="state-btn"></div>
 	</div>
 	<div class="Remarks">
 		<!--<p class="mark-o">备注：</p>
@@ -49,12 +45,16 @@
 					$('.state-btn p').click(function(){
 						$(this).addClass('active').siblings().removeClass('active');
 					});
-					var html_ = '';
-					var fixed = '';
-					var fee = '';
-					var manage = '';
+					
 					getOrderDetail();
+					window.addEventListener('upData',function(){
+						getOrderDetail();
+					});
 					function getOrderDetail(){
+						var html_ = '';
+						var fixed = '';
+						var fee = '';
+						var manage = '';
 						mui.ajax(AJAX_PATH+'/user/order/detail?token='+token,{
 							type:'get',
 							dataType:'json',
@@ -137,11 +137,10 @@
 										}else{
 											manage+='';
 										}
-										
 									//添加dom
-									$('.mui-main').append(html_);
-									$('.Parking-Rate').append(fee);
-									$('.state-btn').append(manage);
+									$('.mui-main').html(html_);
+									$('.Parking-Rate').html(fee);
+									$('.state-btn').html(manage);
 							}else if(res.code==509){
 								getOrderDetail();
 							}else if(res.code!=502 && res.code!=503){
@@ -151,7 +150,7 @@
 					})
 				};
 				//车场详情
-				$('.mui-main').on('tap','.price',function(){
+				mui('.mui-main').on('tap','.price',function(){
 					var park_lot_num = $(this).attr('data-plnum');
 					var lat = $(this).parent().attr('data-lat');
 					var lon = $(this).parent().attr('data-lon');
@@ -197,7 +196,21 @@
 					};
 					mui.openWindow("orderPay.html","orderPay.html",options);
 				});
-				
+				//取消订单
+				mui('.state-btn').on('tap','.cancel',function(){
+					var options = {
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						},
+						extras:{
+							order_num:order_num
+						}
+					};
+					mui.openWindow("cancelOrder.html","cancelOrder.html",options);
+				});
 			};
 			//时间戳转换为时间格式
 			function timestampToTime(timestamp) {

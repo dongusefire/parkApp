@@ -35,6 +35,11 @@ var cancelOrder = {
 				if(res.code==200){
 					mui.toast('订单取消成功');
 					mui.fire(_this.wo,'upData');
+					if(_this.wo.id=='OrderDetails.html'){
+						var ol = plus.webview.getWebviewById('orderList.html');
+						mui.fire(ol,'upData');
+					};
+					mui.fire(_this.wo,'upData');
 					setTimeout(function(){
 						_this.ws.close();
 					},500);

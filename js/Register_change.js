@@ -44,7 +44,9 @@ var Register_change = {
 		});
 		mui('.g-content').on('tap','.c_assets',function(){
 			var type = this.dataset.type;
-			_this.webviewOption.extras.type = type;
+			_this.webviewOption.extras = {
+				type:type
+			};
 			mui.openWindow('Account.html','Account.html',_this.webviewOption);
 		});
 		window.addEventListener('update',function(event){
