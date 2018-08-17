@@ -234,7 +234,8 @@
 					"template/userGuide.html",
 					"template/message.html",
 					"template/my_parking.html",
-					"template/Register.html"
+					"template/Register.html",
+					"template/Asset_deal.html"
 				],
 				"priority": 0
 			},
@@ -437,6 +438,20 @@
 				"resources": [],
 				"refer": [
 					"template/newParkSpace.html"
+				],
+				"priority": 0
+			},
+			"template/Asset_deal.html": {
+				"resources": [],
+				"refer": [
+					"template/Register_change.html"
+				],
+				"priority": 0
+			},
+			"template/Register_change.html": {
+				"resources": [],
+				"refer": [
+					"template/Account.html"
 				],
 				"priority": 0
 			}

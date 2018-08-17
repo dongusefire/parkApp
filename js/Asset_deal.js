@@ -50,11 +50,32 @@ function getTotal(){
 		}
 	})
 }
+function toTrade(){
+	mui.openWindow({
+		url:'Register_change.html',
+		id:'Register_change.html',
+		styles:{
+			bottom:0,
+			top:0,
+			width:'100%',
+			popGesture: "close",
+			statusbar:{
+				background:"#fff" 
+			}
+		}
+	})
+}
 mui.plusReady(function(){
 	vm.getData();
 	getTotal();
+	//跳转
+	document.getElementById("footer").addEventListener('tap',function(){
+		toTrade()
+	})
 });
+
 //设置更新事件
 window.addEventListener('readData',function(){
 	vm.readData();
 });
+

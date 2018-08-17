@@ -51,7 +51,8 @@
 			"template/userGuide.html",
 			"template/message.html",
 			"template/my_parking.html",
-			"template/Register.html"
+			"template/Register.html",
+			"template/Asset_deal.html"
 		],
 		"resources": [
 			"img/cw.png",
@@ -217,5 +218,15 @@
 			"template/newParkSpace.html"
 		],
 		"resources": []
+	},
+	"template/Asset_deal.html": {
+		"refer": [
+			"template/Register_change.html"
+		]
+	},
+	"template/Register_change.html": {
+		"refer": [
+			"template/Account.html"
+		]
 	}
 }

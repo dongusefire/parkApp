@@ -50,9 +50,9 @@
 							 		<span class="state" v-else-if="item.status==6">已撤销</span>
 							 		<span class="state" v-else-if="item.status==5">已关闭</span>
 							 	</p>
-							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
-							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
@@ -64,10 +64,10 @@
 					<div class="mui-scroll">
 						<div class="reg-list">
 							 <div class="list_l"  v-for="(item,index) in items2">
-							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">进行中</span></p>
-							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
-							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 	<p>挂单时间  {{item.pending_time}}<span class="state">进行中</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
@@ -78,10 +78,10 @@
 					<div class="mui-scroll">
 						<div class="reg-list">
 							 <div class="list_l"  v-for="(item,index) in items3">
-							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">已完成</span></p>
-							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
-							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 	<p>挂单时间   {{item.pending_time}}<span class="state">已完成</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
@@ -92,10 +92,10 @@
 					<div class="mui-scroll">
 						<div class="reg-list">
 							 <div class="list_l"  v-for="(item,index) in items4">
-							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">已撤销</span></p>
-							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
-							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 	<p>挂单时间   {{item.pending_time}}<span class="state">已撤销</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
@@ -106,10 +106,10 @@
 					<div class="mui-scroll">
 						<div class="reg-list">
 							 <div class="list_l"  v-for="(item,index) in items5">
-							 	<p>挂单时间  2018-07-05 18:20:45<span class="state">已关闭</span></p>
-							 	<p class="equal"><img src="../img/Hourglass_O.png">4小时总部经济区停车券=2杯星巴克咖啡券</p>
-							 	<p class="equal line"><img src="../img/finished.png">1杯星巴克咖啡券</p>
-							 	<p class="col">剩余2小时总部经济区停车券<span>撤销</span></p>
+							 	<p>挂单时间   {{item.pending_time}}<span class="state">已关闭</span></p>
+							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
