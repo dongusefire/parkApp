@@ -63,7 +63,7 @@ var vm = new Vue({
 				},
 				success:function(res){
 					if(res.code==200){
-						mui.alert('成功',app.name+'提示','确定',function(){
+						mui.alert('撤销成功',app.name+'提示','确定',function(){
 							This.readData();
 						});
 					}else if(res.code==509){

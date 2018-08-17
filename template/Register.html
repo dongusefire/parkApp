@@ -52,7 +52,7 @@
 							 	</p>
 							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
 							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
-							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
+							 	<p class="col">剩余{{item.left_amount}}{{item.in_name}}<span v-show="item.status==2" :data-id="item.id" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
@@ -67,7 +67,7 @@
 							 	<p>挂单时间  {{item.pending_time}}<span class="state">进行中</span></p>
 							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
 							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
-							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
+							 	<p class="col">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" v-show="item.status==2" class="retreat">撤销</span></p>
 							 </div>
 						</div>
 					</div>
@@ -81,7 +81,7 @@
 							 	<p>挂单时间   {{item.pending_time}}<span class="state">已完成</span></p>
 							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
 							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
-							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}</p>
 							 </div>
 						</div>
 					</div>
@@ -95,7 +95,7 @@
 							 	<p>挂单时间   {{item.pending_time}}<span class="state">已撤销</span></p>
 							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
 							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
-							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}</p>
 							 </div>
 						</div>
 					</div>
@@ -109,7 +109,7 @@
 							 	<p>挂单时间   {{item.pending_time}}<span class="state">已关闭</span></p>
 							 	<p class="equal"><img src="../img/Hourglass_O.png">{{item.in_amount}}{{item.in_name}}={{item.out_amount}}{{item.out_name}}</p>
 							 	<p class="equal line"><img src="../img/finished.png">{{item.out_amount}}{{item.out_name}}</p>
-							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}<span :data-id="item.id" class="retreat">撤销</span></p>
+							 	<p class="col" v-show="item.left_amount!=0&&item.left_amount">剩余{{item.left_amount}}{{item.in_name}}</p>
 							 </div>
 						</div>
 					</div>
