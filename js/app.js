@@ -1,5 +1,3 @@
-//var AJAX_PATH = 'http://bj.ecosysnet.com:7106/api';
-//var AJAX_HOST = 'http://bj.ecosysnet.com:7106';
 var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
 var AJAX_HOST = 'http://bj.ecosysnet.com:7098';
 var app = {

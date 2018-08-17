@@ -18,22 +18,22 @@
 	<div class="mui-content g-content">
 		<div class="Nocard-wrap">
 			<div class="change">
-				<a>我的挂单&nbsp;>></a>
+				<a id="openList">我的挂单&nbsp;>></a>
 			</div>
 			<div class="Nocard">
 				<!--<div class="list outcard">-->
 				<div class="list">
 					<a class="short">
 						<div class="item-icon"><span class="logo"></span></div>
-						<p class="out">请选择换出账户</p>
-						<p class="yu">剩余:0</p>
-						<p class="addr address">黄浦区科学城大道235号</p>
-						<p class="addr time">1小时</p>
+						<p class="out">请选择换出资产</p>
+						<p class="yu">剩余：0</p>
+						<!--<p class="addr address">黄浦区科学城大道235号</p>-->
+						<!--<p class="addr time">1小时</p>-->
 					</a>
-					<div class="input">
+					<!--<div class="input">
 						<input type="text" placeholder="请输入换出数量" class="num" onfocus="this.placeholder=''" onblur="this.placeholder='请输入换出数量'">
-					</div>
-					<span class="c_assets" data-type="person">选择资产</span>
+					</div>-->
+					<span class="c_assets" data-type="in">选择资产</span>
 				</div>
 			</div>
 			<!--<div class="exchange">
@@ -46,15 +46,15 @@
 				<div class="list">
 					<a class="short">
 						<div class="item-icon"><span class="logo"></span></div>
-						<p class="out"><span>请选择换入账户</span></p>
-						<p class="yu">剩余:0</p>
-						<p class="addr address">黄浦区科学城大道235号</p>
-						<p class="addr time">1小时</p>
+						<p class="out">请选择换入资产</p>
+						<p class="yu">剩余：0</p>
+						<!--<p class="addr address">黄浦区科学城大道235号</p>-->
+						<!--<p class="addr time">1小时</p>-->
 					</a>
-					<div class="input">
+					<!--<div class="input">
 						<input type="text" placeholder="请输入换出数量" class="num" onfocus="this.placeholder=''" onblur="this.placeholder=''">
-					</div>
-					<span class="c_assets" data-type="">选择资产</span>
+					</div>-->
+					<span class="c_assets" data-type="out">选择资产</span>
 				</div>
 			</div>
 			<div class="tips">
@@ -70,6 +70,7 @@
 	</div>
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/jquery-1.11.2.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="../js/Register_change.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

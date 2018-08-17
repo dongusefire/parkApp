@@ -1,7 +1,7 @@
 .g-content {
 	overflow-y: auto;
 }
-.accountList a{
+.accountList label{
 	width:92%;
 	height:70px;
 	display: block;
@@ -22,9 +22,10 @@
 	-moz-box-align:center;
 	-webkit-box-align:center;
 	padding:0 10px;
+	overflow: hidden;
 	position: relative;
 }
-.accountList a:before{
+.accountList label:before{
 	content: "";
 	width: 17px;
 	height: 17px;
@@ -34,7 +35,7 @@
 	top:57px;
 	border-radius:100px;
 }
-.accountList a:after{
+.accountList label:after{
 	content: "";
 	width: 17px;
 	height: 17px;
@@ -44,10 +45,10 @@
 	top:-5px;
 	border-radius:100px;
 }
-.accountList a p{
+.accountList label p{
 	margin-bottom:0;
 }
-.accountList a .item-icon{
+.accountList label .item-icon{
 	display:inline-block;
 	width:41px;
 	height:41px;
@@ -55,7 +56,7 @@
 	background: #d8d8d8;
 	border-radius: 100%;
 }
-.accountList a .item-title{
+.accountList label .item-title{
 	flex:1;
 	font-size:14px;
 	color:#c1bfb8;
@@ -64,7 +65,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.accountList a .num{
+.accountList label .num{
 	width:20%;
 	display: -webkit-box;
     display: -moz-box;
@@ -80,19 +81,19 @@
     color:#a6a6a6;
     padding-right:35px;
 }
-.accountList a .num .one{
+.accountList label .num .one{
 	font-size:18px;
 }
-.accountList a .num .su{
+.accountList label .num .su{
 	font-size:12px;
 }
-.accountList a input[type=radio]{
+.accountList label input[type=radio]{
 	display: inline-block;
     position: absolute;
 	top:20px;
 	left:90%;
 }
-.accountList a  input[type='radio']:checked:before{
+.accountList label input[type='radio']:checked:before{
 	content:'\e442';
 	color:#5b91fe;
 }
