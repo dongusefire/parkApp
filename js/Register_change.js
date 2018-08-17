@@ -7,6 +7,8 @@ var Register_change = {
 	assets_codenameOut:'',
 	assets_codenumIn:'',
 	assets_codenumOut:'',
+	assets_addressIn:'',
+	assets_addressOut:'',
 	webviewOption:{
 		styles:{
 			bottom:0,
@@ -64,35 +66,41 @@ var Register_change = {
 			Nocard.eq(0).find('.yu').html('剩余：0');
 		}else{
 			this.assets_in.splice(0,1);//删除数组中第一个
-			this.assets_codenumIn--;
-			Nocard.eq(0).find('.yu').html('剩余：'+this.assets_codenumIn);
+			this.insertData('in',this.assets_in,this.assets_codenumIn-1,this.assets_codenameIn,this.assets_addressIn);
 		};
-		if(this.assets_Out.length==1){
-			this.assets_Out=null;
+		if(this.assets_out.length==1){
+			this.assets_out=null;
 			Nocard.eq(1).removeClass('incard');
 			Nocard.eq(1).find('.out').html('请选择换入资产');
 			Nocard.eq(1).find('.yu').html('剩余：0');
 		}else{
-			this.assets_in.assets_Out(0,1);//删除数组中第一个
-			this.assets_codenumOut--;
-			Nocard.eq(1).find('.yu').html('剩余：'+this.assets_codenumOut);
+			this.assets_out.splice(0,1);//删除数组中第一个
+			this.insertData('out',this.assets_out,this.assets_codenumOut-1,this.assets_codenameOut,this.assets_addressOut);
 		};
 	},
-	insertData:function(type,data,num,name){
+	insertData:function(type,data,num,name,address){
 		var Nocard = $('.Nocard-wrap .list'),i=0;
 		if(type=='in'){
 			this.assets_in = data;
 			this.assets_codenameIn = name;
 			this.assets_codenumIn = num;
+			this.assets_addressIn = address;
 			Nocard.eq(i).addClass('outcard');
+			Nocard.eq(i).find('.address').html(address);
 		}else{
 			i=1;
+			this.assets_out = data;
 			this.assets_codenameOut = name;
 			this.assets_codenumOut = num;
+			this.assets_addressOut = address;
 			Nocard.eq(i).addClass('incard');
-			this.assets_out = data;
+			if(address && address!=''){
+				Nocard.eq(i).find('.address').html(address);
+			};
 		};
 		Nocard.eq(i).find('.out').html(name);
+		Nocard.eq(i).find('.time').children('span').eq(0).html(data[0].start_time);
+		Nocard.eq(i).find('.time').children('span').eq(1).html(data[0].end_time);
 		Nocard.eq(i).find('.yu').html('剩余：'+num);
 	},
 	bindEvent:function(){
@@ -130,7 +138,7 @@ var Register_change = {
 		});
 		window.addEventListener('update',function(event){
 			var data = event.detail;
-			_this.insertData(data.type,data.item,data.codenum,data.codename)
+			_this.insertData(data.type,data.item,data.codenum,data.codename,data.address);
 		});
 	},
 	init:function(){

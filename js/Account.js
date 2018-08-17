@@ -53,7 +53,8 @@ var Account = {
 				type:_this.type,
 				item:_this.item[i].codelist,
 				codenum:_this.item[i].codenum,
-				codename:_this.item[i].codename
+				codename:_this.item[i].codename,
+				address:_this.item[i].address
 			});
 			_this.ws.close();
 		});
