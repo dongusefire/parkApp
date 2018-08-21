@@ -1,0 +1,82 @@
+.content-box{
+	width:100%;
+	height:140px;
+	background: #fff;
+	margin-top:10px;
+}
+.content-box .forword{
+	width:92%;
+	height:140px;
+	margin:0 auto;
+	padding:15px 0 24px 0;
+}
+.content-box .forword .expect{
+	font-size:14px;
+	color:#676767;
+}
+.content-box .forword .money{
+	width:100%;
+	height:66px;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+	padding:15px 0 20px 0;
+}
+.content-box .forword .money  span{
+	font-size:23px;
+	color:#707070;
+	padding-top:12px;
+}
+.content-box .forword .money  input{
+	display:inline-block; 
+	padding:0 0;
+	border:none;
+	margin-bottom:0;
+	font-size: 32px;
+	color:#707070;
+}
+.content-box .forword .wei{
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -moz-justify-content: space-between;
+    -ms-justify-content: space-between;
+    -o-justify-content: space-between;
+    justify-content: space-between;
+}
+.content-box .forword .wei p{
+	margin-bottom:0;
+}
+.content-box .forword .wei .binding{
+	font-size: 12px;
+	color:#cacaca;
+}
+.content-box .forword .wei .binded span{
+	font-size: 12px;
+	color:#a3bbff;
+}
+.content-box .forword .wei .click span{
+	font-size: 12px;
+	color:#a3bbff;
+	padding:3px 10px;
+	border:1px solid #a3bbff;
+	border-radius: 10px;
+}
+.button p{
+	margin-bottom: 0;
+	width:92%;
+	height:42px;
+	margin:35px auto;
+	background: #7095FF;
+	font-size:14px;
+	color:#fff;
+	line-height: 42px;
+	text-align: center;
+	border-radius: 20px;
+	
+}

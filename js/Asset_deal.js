@@ -1,5 +1,4 @@
 mui.init();
-
 var vm = new Vue({
 	el:'.box-main',
 	data:{
