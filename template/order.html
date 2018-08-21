@@ -70,7 +70,7 @@
 		<script src="../js/app.js"></script>
 		<script type="text/javascript">
 			mui.init();
-			var ws,token,Park_lot_num,park_space_id,park_lot_name;
+			var ws,token,Park_lot_num,park_space_id,park_lot_name,parking_lot_number;
 			var mask=mui.createMask();
 			//获取从固定车位列表页带来的六条信息
 			var l_park_lot_num,l_park_space_id,l_p_b_num,l_p_b_floor,l_p_b_area,l_p_s_num;
@@ -236,6 +236,7 @@
 									$$('.siteInfo').html(_html);
 									parkPrice = _data.price/100;
 									park_lot_name = _data.parking_lot_name;
+									parking_lot_number = _data.parking_lot_number;
 									//这里设置默认车牌号szx
 									var data = res.data.userCarInfo;
 									$$.each(data,function(name,value){
@@ -590,7 +591,7 @@
 								"type":"0",
 								"start":time1, //开始时间
 								"end":time2, //结束时间
-								"parking_lot_num":l_park_lot_num,
+								"parking_lot_num":Park_lot_num,
 								"car_id":carId, //上面接口获取到的car_id
 							}
 							var pData = JSON.stringify(jsonData);
@@ -617,7 +618,7 @@
 								"type":"0",
 								"start":time1, //开始时间
 								"end":time2, //结束时间
-								"parking_lot_num":l_park_lot_num,
+								"parking_lot_num":parking_lot_number,
 								"car_id":carId, //上面接口获取到的car_id
 							}
 							var pData = JSON.stringify(jsonData);
