@@ -107,12 +107,23 @@
 }
 .Remarks{
 	width:92%;
-	margin:0 auto;
+	margin:10px auto;
 }
 .Remarks p{
 	font-size: 12px;
 	color: #9b9b9b;
+	margin-bottom: 0;
+	padding:5px 0;
 }
 .Remarks .mark-o{
 	padding-top:23px;
+}
+.Remarks .photo{
+	 width:80px;
+     height:80px;
+     margin:0 auto;
+}
+.Remarks .photo img{
+	 width:80px;
+     height:80px;
 }
