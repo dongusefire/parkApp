@@ -85,7 +85,6 @@ mui.plusReady(function(){
 	document.getElementById("running").addEventListener('tap',function(){
 		params=2;
 		vm.readData()
-		
 	})
 	document.getElementById("finished").addEventListener('tap',function(){
 		params=4;
