@@ -119,7 +119,7 @@ var Register_change = {
 				codename:codename
 			};
 			webviewOption.styles.statusbar.background = "#fff";
-			mui.openWindow('Account.html','Account.html',webviewOption);
+			mui.openWindow('Account-'+type+'.html','Account-'+type+'.html',webviewOption);
 		});
 		mui('.g-content').on('tap','#openList',function(){
 			var webviewOption = _this.webviewOption;

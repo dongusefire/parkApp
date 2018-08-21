@@ -69,7 +69,11 @@ mui.plusReady(function(){
 	getTotal();
 	//跳转
 	document.getElementById("footer").addEventListener('tap',function(){
-		toTrade()
+		if(vm.items && vm.items.length!=0){
+			toTrade()
+		}else{
+			mui.alert('您没有资产，无法进行交换！',app.name+'提示');
+		};
 	})
 });
 

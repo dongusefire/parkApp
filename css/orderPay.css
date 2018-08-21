@@ -1,6 +1,16 @@
+.g-content {
+	overflow-y: auto;
+}
+.pay-wrap {
+	position: absolute;
+	top:0;
+	right:0;
+	left:0;
+	bottom:62px;
+}
 .mui-content .mui-main{
 	width:93%;
-	margin:10px auto;
+	margin:3% auto;
 	background-color:#fff;
 	border-radius: 5px;
 	box-shadow:0 2px 4px 0 rgba(0,0,0,0.08);
@@ -75,7 +85,7 @@
 .mui-input-row {
 	width:93%;
 	margin:10px auto;
-	background-color:#fff;
+	background-color:#fff !important;
 }
 .mui-input-row .radio_inline{
 	height: 53px;
@@ -125,4 +135,62 @@
 .change .mui-radio input[type='radio']:checked:before{
 	content:'\e442';
 	color:#309dfe;
+}
+#payView {
+	position: absolute;
+	width:100%;
+	height: 100%;
+	z-index: 3;
+	top:0;
+	right:0;
+	left:0;
+	bottom:0;
+}
+#prompt-box {
+	position: fixed;
+	width:100%;
+	height:100%;
+	z-index:3;
+	top:46px;
+	right:0;
+	left:0;
+	bottom:0;
+	display: none;
+}
+#prompt-box .mask {
+	position: absolute;
+	top:0;
+	right:0;
+	left:0;
+	bottom:0;
+	z-index: 1;
+	background: rgba(0,0,0,0.3);
+	-webkit-background: rgba(0,0,0,0.3);
+	-moz-background: rgba(0,0,0,0.3);
+}
+#prompt-box .prompt {
+	position: absolute;
+	top:25%;
+	left:4%;
+	right:4%;
+	background: #fff;
+	z-index: 2;
+	border-radius: 5px;
+}
+#prompt-box .prompt .msg {
+	min-height:60px;
+	line-height:60px;
+	text-align: center;
+	color:#333;
+}
+#prompt-box .prompt .btns a{
+	display: block;
+	line-height: 30px;
+	border-top: 1px #d2d3d5 solid;
+}
+#prompt-box .prompt .btns a.btn-success {
+	color: #f00;
+}
+#prompt-box .prompt .btns a.btn-fail {
+	color: #828385;
 }

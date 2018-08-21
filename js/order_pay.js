@@ -10,40 +10,41 @@ var orderPay = {
 	payId:'',
 	paylink:null,
 	resultOff:false,
+	mweb_url:'',
 	getChannels:function(){//获取支付通道
-		var _this = this;
-		// 获取支付通道
-	    plus.payment.getChannels(function(channels){
-	    	for(var i in channels){
-	    		var channel=channels[i];
-				if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
-					continue;
-				}
-				_this.pays[channel.id] = channel;
-				console.log(channel.id+':'+JSON.stringify(channel))
-	    	};
-	    },function(e){
-	    	console.log("获取支付通道失败："+e.message);
-	    });
+//		var _this = this;
+//		// 获取支付通道
+//	    plus.payment.getChannels(function(channels){
+//	    	for(var i in channels){
+//	    		var channel=channels[i];
+//				if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
+//					continue;
+//				}
+//				_this.pays[channel.id] = channel;
+//				console.log(channel.id+':'+JSON.stringify(channel))
+//	    	};
+//	    },function(e){
+//	    	console.log("获取支付通道失败："+e.message);
+//	    });
 	},
 	promptInstall:function(channel){//提示安装客户端支付工具
-		var txt=null;
-		switch(channel.id){
-			case 'alipay':
-			txt='检测到系统未安装“支付宝”，无法完成支付操作，是否立即安装？';
-			break;
-			default:
-			txt='系统未安装“'+channel.description+'”服务，无法完成支付，是否立即安装？';
-			break;
-		}
-		plus.nativeUI.confirm(txt, function(status){
-			if(status.index==0){
-				channel.installService();
-			}
-		}, {
-			title:app.name+'提示',
-			buttons:['是','否']
-		});
+//		var txt=null;
+//		switch(channel.id){
+//			case 'alipay':
+//			txt='检测到系统未安装“支付宝”，无法完成支付操作，是否立即安装？';
+//			break;
+//			default:
+//			txt='系统未安装“'+channel.description+'”服务，无法完成支付，是否立即安装？';
+//			break;
+//		}
+//		plus.nativeUI.confirm(txt, function(status){
+//			if(status.index==0){
+//				channel.installService();
+//			}
+//		}, {
+//			title:app.name+'提示',
+//			buttons:['是','否']
+//		});
 	},
 	payResult:function(){//查询支付状态
 		var loding = plus.nativeUI.showWaiting('正在查询支付状态',{
@@ -92,125 +93,89 @@ var orderPay = {
 			data:{
 				"order_sn":_this.order_sn,
 				"pay_channel":_this.pay_channel,
+				"pay_type":1
 			},
 			dataType:'json',
 			type:'POST',
 			success:function(res,textStatus,xhr){
 				_this.payBtn = false;
 				if(res.code==200){
-					var order = JSON.stringify(res.data);
+					_this.mweb_url = 
+					//var order = JSON.stringify(res.data);
 //					var _text = '微信支付'
 //					if(_this.pay_channel==1){
 //						_text = '支付宝支付'
 //					};
-//					_this.paylink = mui.openWindow(res.data['mweb_url'],'paylink',{
-//						styles:{
-//							titleNView:{
-//								buttons:[
-//									{
-//										color:'#292929',
-//										colorPressed:'#292929',
-//										float:'left',
-//										text:'关闭',
-//										fontSize:'16px',
-//										onclick:function(){
-//											_this.paylink.close();
-//										}
-//									}
-//								],
-//								backgroundColor:'#f7f7f7',
-//								titleText:_text,
-//								splitLine: {
-//									color: '#cccccc'
+					_this.mweb_url = res.data['mweb_url'];
+					_this.openPaylink();
+//					plus.payment.request(_this.pays[_this.payId],order,function(result){
+//						mui.openWindow({
+//							url:'paySuccess.html',
+//							id:'paySuccess.html',
+//							styles:{
+//								popGesture: "close",
+//								statusbar:{
+//									background:"#fff" 
 //								}
 //							},
-//							popGesture:'none',
-//							backButtonAutoControl:'none',
-//							additionalHttpHeaders:{
-//								"Referer":"http://www.ecosysnet.com/"
+//							extras:{
+//								order_sn:_this.order_sn,
+//								park_id:_this.park_id
 //							}
-//						},
-//						show:{
-//							event:'loaded'
-//						},
-//						waiting:{
-//							autoShow:false
-//						},
-//						extras:{}
+//						});
+//					},function(e){
+//						//alert(JSON.stringify(e));
+//						var str = '';
+//						if(_this.payId=='wxpay'){
+//							if(e.message.indexOf('-1')!=-1){
+//								str='一般错误';
+//							};
+//							if(e.message.indexOf('-2')!=-1){
+//								str='您已取消支付';
+//							};
+//							if(e.message.indexOf('-3')!=-1){
+//								str='发送失败';
+//							};
+//							if(e.message.indexOf('-4')!=-1){
+//								str='认证被否决';
+//							};
+//							if(e.message.indexOf('-5')!=-1){
+//								str='不支持错误';
+//							};
+//						}else{
+//							if(e.message.indexOf('62000')!=-1){
+//								str='尚未安装支付通道依赖的服务';
+//							};
+//							if(e.message.indexOf('62001')!=-1){
+//								str='您已取消支付';
+//							};
+//							if(e.message.indexOf('62002')!=-1){
+//								str='此设备不支持支付';
+//							};
+//							if(e.message.indexOf('62003')!=-1){
+//								str='数据格式错误';
+//							};
+//							if(e.message.indexOf('6204')!=-1){
+//								str='支付账号状态错误';
+//							};
+//							if(e.message.indexOf('62005')!=-1){
+//								str='订单信息错误';
+//							};
+//							if(e.message.indexOf('62006')!=-1){
+//								str='支付操作内部错误';
+//							};
+//							if(e.message.indexOf('62007')!=-1){
+//								str='支付服务器错误';
+//							};
+//							if(e.message.indexOf('62008')!=-1){
+//								str='网络问题引起的错误';
+//							};
+//							if(e.message.indexOf('62009')!=-1){
+//								str='网络问题引起的错误';
+//							};
+//						};
+//						mui.alert(str,app.name+'提示');
 //					});
-//					_this.paylink.onclose = function(){
-//						_this.payResult();
-//					}
-					console.log(JSON.stringify(_this.pays[_this.payId]),JSON.stringify(res),'即将支付')
-					plus.payment.request(_this.pays[_this.payId],order,function(result){
-						//alert(JSON.stringify(result))
-						mui.openWindow({
-							url:'paySuccess.html',
-							id:'paySuccess.html',
-							styles:{
-								popGesture: "close",
-								statusbar:{
-									background:"#fff" 
-								}
-							},
-							extras:{
-								order_sn:_this.order_sn,
-								park_id:_this.park_id
-							}
-						});
-					},function(e){
-						//alert(JSON.stringify(e));
-						var str = '';
-						if(_this.payId=='wxpay'){
-							if(e.message.indexOf('-1')!=-1){
-								str='一般错误';
-							};
-							if(e.message.indexOf('-2')!=-1){
-								str='您已取消支付';
-							};
-							if(e.message.indexOf('-3')!=-1){
-								str='发送失败';
-							};
-							if(e.message.indexOf('-4')!=-1){
-								str='认证被否决';
-							};
-							if(e.message.indexOf('-5')!=-1){
-								str='不支持错误';
-							};
-						}else{
-							if(e.message.indexOf('62000')!=-1){
-								str='尚未安装支付通道依赖的服务';
-							};
-							if(e.message.indexOf('62001')!=-1){
-								str='您已取消支付';
-							};
-							if(e.message.indexOf('62002')!=-1){
-								str='此设备不支持支付';
-							};
-							if(e.message.indexOf('62003')!=-1){
-								str='数据格式错误';
-							};
-							if(e.message.indexOf('6204')!=-1){
-								str='支付账号状态错误';
-							};
-							if(e.message.indexOf('62005')!=-1){
-								str='订单信息错误';
-							};
-							if(e.message.indexOf('62006')!=-1){
-								str='支付操作内部错误';
-							};
-							if(e.message.indexOf('62007')!=-1){
-								str='支付服务器错误';
-							};
-							if(e.message.indexOf('62008')!=-1){
-								str='网络问题引起的错误';
-							};
-							if(e.message.indexOf('62009')!=-1){
-								str='网络问题引起的错误';
-							};
-						};
-						mui.alert(str,app.name+'提示');
-					});
 				}else if(res.code==509){
 					_this.getPayInfo();
 				}else if(res.code!=502 && res.code!=503){
@@ -218,6 +183,27 @@ var orderPay = {
 				};
 			}
 		});
+	},
+	openPaylink:function(){
+		this.paylink = plus.webview.create(this.mweb_url,'paylink',{
+			popGesture:'none',
+			backButtonAutoControl:'none',
+			additionalHttpHeaders:{
+				"Referer":"http://www.ecosysnet.com/"
+			},
+			bottom:0,
+			top:'46px',
+			left:0,
+			right:0
+		});
+		mui('#prompt-box')[0].style.display='block';
+	},
+	closePaylink:function(off){
+		if(off){
+			mui('#prompt-box')[0].style.display='none';
+		};
+		this.paylink.close();
+		this.paylink = null;
 	},
 	bindEvent:function(){
 		var _this = this;
@@ -230,6 +216,18 @@ var orderPay = {
 			}else{
 				mui.alert('请选择支付类型',app.name+'提示');
 			};
+		});
+		mui('.mui-content').on('tap','.btn-success',function(){
+			_this.closePaylink(true);
+			setTimeout(function(){
+				_this.payResult();
+			},500);
+		});
+		mui('.mui-content').on('tap','.btn-fail',function(){
+			_this.closePaylink(false);
+			setTimeout(function(){
+				_this.openPaylink();
+			},500);
 		});
 		mui('.mui-content').on('tap','.radio_inline',function(){
 			//如果支付通道不需要依赖系统安装服务，则永远返回true。例如支付宝，如果设备上未安装支付宝客户端则调用Wap页面进行支付，因此值固定返回true；
