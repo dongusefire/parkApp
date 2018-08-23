@@ -102,8 +102,8 @@ mui.plusReady(function(){
 		var retreat = $(this).attr("data-id");
 		vm.backup(retreat)
 	})
-})
-window.addEventListener('readData',function(){
-	vm.readData();
-});
+	})
+	window.addEventListener('readData',function(){
+		vm.readData();
+	});
 
