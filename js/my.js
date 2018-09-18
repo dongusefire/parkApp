@@ -45,5 +45,10 @@ mui('.park-nav').on('tap','a',function(){
 	if(href=='Asset_deal.html'){
 		options.styles.statusbar.background = '#6D93FF';
 	};
-	mui.openWindow(href,href,options);
+	var nw = mui.openWindow(href,href,options);
+	if(href=='wallet.html'){
+		nw.addEventListener("close",function(){
+			plus.nativeUI.closeWaiting();
+		},false);
+	};
 });

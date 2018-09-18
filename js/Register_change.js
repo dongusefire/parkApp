@@ -1,8 +1,11 @@
 mui.init();
 var Register_change = {
 	ws:null,
+	type:'',
 	assets_in:null,
 	assets_out:null,
+	in_id:'',
+	out_id:'',
 	assets_codenameIn:'',
 	assets_codenameOut:'',
 	assets_codenumIn:'',
@@ -35,15 +38,23 @@ var Register_change = {
 		};
 	},
 	pendingCreate:function(){
-		var token = plus.storage.getItem('token'),_this=this;
+		var token = plus.storage.getItem('token'),_this=this,data='';
 		plus.nativeUI.showWaiting('正在提交...');
+		if(_this.type=='0'){
+			data = JSON.stringify({
+				in_sn:_this.assets_in[0].order_sn,
+				out_sn:_this.assets_out[0].order_sn
+			})
+		}else{
+			data = JSON.stringify({
+				in_id:_this.assets_in[0].id,
+				out_id:_this.assets_out[0].id
+			})
+		};
 		mui.ajax(AJAX_PATH+'/user/pending/create?token='+token,{
 			type:'post',
 			dataType:'json',
-			data:JSON.stringify({
-				in_sn:_this.assets_in[0].order_sn,
-				out_sn:_this.assets_out[0].order_sn
-			}),
+			data:data,
 			success:function(res){
 				plus.nativeUI.closeWaiting();
 				if(res.code==200){
@@ -78,9 +89,9 @@ var Register_change = {
 			this.insertData('out',this.assets_out,this.assets_codenumOut-1,this.assets_codenameOut,this.assets_addressOut);
 		};
 	},
-	insertData:function(type,data,num,name,address){
+	insertData:function(Atype,data,num,name,address){
 		var Nocard = $('.Nocard-wrap .list'),i=0;
-		if(type=='in'){
+		if(Atype=='in'){
 			this.assets_in = data;
 			this.assets_codenameIn = name;
 			this.assets_codenumIn = num;
@@ -102,6 +113,9 @@ var Register_change = {
 		Nocard.eq(i).find('.time').children('span').eq(0).html(data[0].start_time);
 		Nocard.eq(i).find('.time').children('span').eq(1).html(data[0].end_time);
 		Nocard.eq(i).find('.yu').html('剩余：'+num);
+		if(this.type==1){
+			$('.addr').show();
+		};
 	},
 	bindEvent:function(){
 		var _this = this;
@@ -116,7 +130,8 @@ var Register_change = {
 			};
 			webviewOption.extras = {
 				assetsType:type,
-				codename:codename
+				codename:codename,
+				cardtype:_this.type
 			};
 			webviewOption.styles.statusbar.background = "#fff";
 			mui.openWindow('Account-'+type+'.html','Account-'+type+'.html',webviewOption);
@@ -138,6 +153,7 @@ var Register_change = {
 		});
 		window.addEventListener('update',function(event){
 			var data = event.detail;
+			_this.type = data.cardtype;
 			_this.insertData(data.type,data.item,data.codenum,data.codename,data.address);
 		});
 	},

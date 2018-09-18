@@ -21,6 +21,21 @@ mui.plusReady(function(){
 					}
 			}
 	      })
+   });
+   document.getElementById("withdraw").addEventListener('tap',function(){
+		var nw = mui.openWindow({
+			url:'Apply_forword.html',
+			id:'Apply_forword.html',
+			styles:{
+				popGesture: "none",
+				statusbar:{
+					background:"#fff" 
+				}
+			}
+	    });
+	    nw.addEventListener("close",function(){
+			plus.nativeUI.closeWaiting();
+		},false);
     })
 });
 var html_="";

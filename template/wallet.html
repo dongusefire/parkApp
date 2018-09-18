@@ -14,21 +14,20 @@
 			<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 0;color:#292929;"></span></a>
 			<h1 class="mui-title">我的钱包</h1>
 		</header>
-		<div class="box">
-			<div class="balance">
-				<span class="cuteWords">余额:</span>
-				<div class="money">
-					<!--<span class="num">{{balance}}</span>元-->
+		<div class="mui-content g-content">
+			<div class="box">
+				<div class="balance">
+					<span class="cuteWords">余额:</span>
+					<div class="money">
+						<!--<span class="num">{{balance}}</span>元-->
+					</div>
+					<span class="mui-pull-right cuteWords details" id="details">明细 > </span> 
 				</div>
-				<span class="mui-pull-right cuteWords details" id="details" @click="getdetails">明细 > 
-					
-				</span> 
-			</div>
-			
-			<div class="withdraw mui-clearfix" @click="withdraw">
-				<img src="../img/withdrawl.png" alt="" />
-				<span style="visibility: hidden;">￥</span>提现申请
-				<span class="mui-icon mui-icon-arrowright mui-pull-right arrow"></span>
+				<div class="withdraw mui-clearfix" id="withdraw">
+					<img src="../img/withdrawl.png" alt="" />
+					<span style="visibility: hidden;">￥</span>提现申请
+					<span class="mui-icon mui-icon-arrowright mui-pull-right arrow"></span>
+				</div>
 			</div>
 		</div>
 	    <script src="../js/mui.min.js"></script>

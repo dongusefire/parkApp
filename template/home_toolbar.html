@@ -9,7 +9,6 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
-    <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
     <style>
 		html,body{
 			background: initial;
@@ -31,9 +30,11 @@
     		wo = ws.opener();
     	});
     	window.addEventListener('upDataState',function(event){
-    		var data = event.detail;
+    		var data = event.detail,newsImg = document.getElementById('newsImg');
     		if(data.state=='newmsg'){ //有未读消息
-    			document.getElementById('newsImg').src = '../img/user-msgActive.png';
+    			newsImg.src = '../img/user-msgActive.png';
+    		}else{
+    			newsImg.src = '../img/user-msg.png';
     		};
     	});
     	mui('#toolbar').on('tap','span',function(){
@@ -47,6 +48,11 @@
     			wo.evalJS('home.showUserLocation()');
     		}else{
     			wo.evalJS('home.openNews()');
+    			setTimeout(function(){
+    				mui.fire(ws,'upDataState',{
+    					state:'oldmsg'
+    				})
+    			},800);
     		};
     	});
     </script>

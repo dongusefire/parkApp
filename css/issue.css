@@ -109,6 +109,20 @@ body {
 	padding:2px 3px;
 	border-radius: 3px;
 }
+.chooseTime .park-price {
+	width:50px;
+	padding: 0;
+	height: 21px;
+	border:none;
+	border-radius: 0;
+	border-bottom: 1px #dcdcdc solid;
+	margin:0 5px;
+	text-align: center;
+}
+.chooseTime .price_box {
+	color:#9b9b9b;
+	font-size: 14px;
+}
 .repeat  {
 	padding:12px;
 	border-bottom: 1px solid #dcdcdc;

@@ -23,15 +23,15 @@ var issue = {
 							mui.trigger(mui('.addSpace')[0],'tap');
 						});
 						//数据为空，跳转到添加车位页面
-						jQuery(".mySpace").css('display','none');
-						jQuery(".addSpace").css('display','block');
+						$(".mySpace").css('display','none');
+						$(".addSpace").css('display','block');
 						//此处加判断出问题，需要在点击发布的时候做判断
 					}else{
-						jQuery(".mySpace").css('display','block');
-						jQuery(".addSpace").css('display','none');
+						$(".mySpace").css('display','block');
+						$(".addSpace").css('display','none');
 						//处理车位数据填充到页面
 						var space_arr = [],space_arr_checking = [],space_arr_failed = [];
-						jQuery.each(spaceData,function(key,value){
+						$.each(spaceData,function(key,value){
 							//循环遍历数组，取status为2的车位信息才可以发布
 							if(this.status==2){
 								space_arr.push(this);
@@ -44,10 +44,9 @@ var issue = {
 						});
 						//筛选出来的可发布车位继续进行循环
 						if(space_arr.length!=0){
-							jQuery.each(space_arr,function(key2,value2){
-								jQuery(".spaceName").html(space_arr[0].parking_lot_name);
-								jQuery(".spaceName").attr('data-id',space_arr[0].id);
-							})
+							$(".spaceName").html(space_arr[0].parking_lot_name);
+							$(".spaceName").attr('data-id',space_arr[0].id);
+							$(".spaceName").attr('data-maxprice',space_arr[0].max_price/100);
 						}else{
 							if(space_arr_checking.length!=0&&space_arr_failed.length==0){
 								mui.alert('您的车位正在审核中，请联系车场管理员',app.name+'提示','去查看',function(){
@@ -92,7 +91,7 @@ var issue = {
 						}
 						var picker_data = [];
 						for(var i=0;i<space_arr.length;i++){
-							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_name});
+							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_name,max_price:space_arr[i].max_price/100});
 						}
 						this_.spacePicker.setData(picker_data);
 					}
@@ -151,7 +150,7 @@ var issue = {
 	bindEvent:function(){
 		var _this = this;
 		$('.week_day').on('tap','li',function(){
-			jQuery(this).toggleClass('active');
+			$(this).toggleClass('active');
 		});
 		mui('.chooseDate').on('tap','.startDate',function() {
 			var _self = this;
@@ -164,7 +163,7 @@ var issue = {
 			} else {
 				var optionsJson = this.getAttribute('data-options') || '{}';
 				var options = JSON.parse(optionsJson);
-				options.beginDate = new Date();
+				options.beginDate = new Date(new Date().getTime()+86400000);
 				_self.picker = new mui.DtPicker(options);
 				_self.picker.show(function(rs) {
 					_self.innerText = rs.text;
@@ -198,7 +197,7 @@ var issue = {
 			} else {
 				var optionsJson = this.getAttribute('data-options') || '{}';
 				var options = JSON.parse(optionsJson);
-				options.beginDate = new Date();
+				options.beginDate = new Date(new Date().getTime()+86400000);
 				_self.picker = new mui.DtPicker(options);
 				_self.picker.show(function(rs) {
 					_self.innerText = rs.text;
@@ -273,7 +272,7 @@ var issue = {
 				console.log(mapResult.toString());
 			}else{
 				var day = $(this).attr('data-day');
-				var index = jQuery.inArray(day,p_week);
+				var index = $.inArray(day,p_week);
 				p_week.splice(index,1);
 				mapResult = p_week.map(function(item,index,array){
 					return item-0;
@@ -282,12 +281,14 @@ var issue = {
 			}
 		});
 		mui('.mui-content').on('tap','.issue',function(){
-			var data_start_date = jQuery(".startDate").html();
-			var data_end_date = jQuery(".endDate").html();
-			var data_start_time = jQuery(".start_time").html();
-			var data_end_time = jQuery(".end_time").html();
-			var id = jQuery(".spaceName").attr('data-id');
+			var data_start_date = $(".startDate").html();
+			var data_end_date = $(".endDate").html();
+			var data_start_time = $(".start_time").html();
+			var data_end_time = $(".end_time").html();
+			var id = $(".spaceName").attr('data-id');
+			var maxprice = $(".spaceName").attr('data-maxprice');
 			var dataStartDate = data_start_date+' '+data_start_time;
+			var price = $.trim($('.park-price').val());
 			dataStartDate = new Date(dataStartDate.replace(/-/g,"/"));
 			if(data_start_date=='选择开始日期'||data_end_date=='选择结束日期'){
 				mui.alert('请选择预定起始与结束日期',app.name+'提示','确定',null);
@@ -297,16 +298,28 @@ var issue = {
 				mui.alert('请选择预定起始与结束时间',app.name+'提示','确定',null);
 				return false;
 			};
-			if( (new Date()).getTime() > dataStartDate.getTime()){
-				mui.alert('开始时间不能小于当前时间',app.name+'提示','确定',null);
-				return false;
-			};
+//			if( (new Date()).getTime() > dataStartDate.getTime()){
+//				mui.alert('开始时间不能小于当前时间',app.name+'提示','确定',null);
+//				return false;
+//			};
 			if(data_start_time > data_end_time){
 				mui.alert('开始时间不能大于结束时间',app.name+'提示','确定',null);
 				return false;
 			};
 			if( (data_end_time.substring(0,2) - data_start_time.substring(0,2))<4 ){
 				mui.alert('开始时间与结束时间必须相隔4小时以上',app.name+'提示','确定',null);
+				return false;
+			};
+			if(price==''){
+				mui.alert('车位价格不能为空',app.name+'提示','确定',null);
+				return false;
+			};
+			if(isNaN(Number(price))){
+				mui.alert('车位价格只能为数字',app.name+'提示','确定',null);
+				return false;
+			};
+			if(maxprice<price){
+				mui.alert('车场允许最大价格为'+maxprice+'元',app.name+'提示','确定',null);
 				return false;
 			};
 			if(mapResult.length==0){
@@ -320,7 +333,8 @@ var issue = {
 				"start_date":data_start_date,
 				"start_time":data_start_time,
 				"end_date":data_end_date,
-				"end_time":data_end_time
+				"end_time":data_end_time,
+				"price":price
 			};
 			if(!ajax_submit){
 				ajax_submit = true;
@@ -382,11 +396,13 @@ var issue = {
 			})
 		});
 		//车位拾取器的处理
-		var spaceName = jQuery(".spaceName");
+		var spaceName = $(".spaceName");
 		mui(".mySpace").on('tap','.chooseSpace',function(event){
 			_this.spacePicker.show(function(items){
+				console.log(JSON.stringify(items),'车位选择');
 				spaceName.html(items[0].text);
 				spaceName.attr('data-id',items[0].value);
+				spaceName.attr('data-maxprice',items[0].max_price);
 			})
 		});
 		window.addEventListener('isShow',function(){

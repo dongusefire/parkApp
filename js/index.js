@@ -99,6 +99,24 @@ var home = {
 		var marker=new plus.maps.Marker(new plus.maps.Point(lng,lat));
 		marker.setIcon(Icon+Size+'.png');
 		marker.uuid = k; //给当前的Marker对象自定义一个属性
+		marker.onclick = function(marker){
+			if(_this.activeParking==marker.uuid){
+				return false;
+			};
+			_this.resetMarker(marker.uuid);
+			var item = _this.list[marker.uuid];
+			plus.webview.show('home_parking'+item.parking_lot_number);
+//			if(mui.os.ios){
+//				plus.webview.show('home_parking'+item.parking_lot_number);
+//			}else{
+//				plus.webview.show('home_parking'+item.parking_lot_number,"fade-in",300);
+//			};
+			if(_this.activeParking!=-1){
+				var old = _this.list[_this.activeParking];
+				plus.webview.hide('home_parking'+old.parking_lot_number);
+			};
+			_this.activeParking = marker.uuid;
+		};
 		this.map.addOverlay(marker);
 	},
 	resetMarker:function(k){ //清除所有标点，并重新绘制标点
@@ -131,11 +149,12 @@ var home = {
 			};
 			_this.resetMarker(marker.uuid);
 			var item = _this.list[marker.uuid];
-			if(mui.os.ios){
-				plus.webview.show('home_parking'+item.parking_lot_number);
-			}else{
-				plus.webview.show('home_parking'+item.parking_lot_number,"fade-in",300);
-			};
+			plus.webview.show('home_parking'+item.parking_lot_number);
+//			if(mui.os.ios){
+//				plus.webview.show('home_parking'+item.parking_lot_number);
+//			}else{
+//				plus.webview.show('home_parking'+item.parking_lot_number,"fade-in",300);
+//			};
 			if(_this.activeParking!=-1){
 				var old = _this.list[_this.activeParking];
 				plus.webview.hide('home_parking'+old.parking_lot_number);
@@ -394,11 +413,12 @@ var home = {
 		this.wo=this.ws.opener(); //opener获取当前Webview窗口的创建者
 		//创建map对象http://www.html5plus.org/doc/zh_cn/maps.html#plus.maps.Map.Map(id,options)
 		this.map = new plus.maps.Map('map');
+		this.bindEvent();
 		this.createAccount();
 		this.createToolbar();
 		this.getUserLocation();
 		this.blockLatest();
-		this.bindEvent();
+		
 	}
 }
 mui.plusReady(function(){

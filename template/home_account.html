@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../css/mui.min.css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
-    <script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
     <style>
 		html,body{
 			background: initial;
@@ -20,40 +19,42 @@
 	<div id="account">
 		<div class="current account-info">
 			<span class="account-name">当前账本HASH</span>
-			<span class="account-address">{{ledgerHash}}</span>
-			<span class="account-time">{{closeTime}}</span>
+			<span class="account-address" id="ledgerHash"></span>
+			<span class="account-time" id="closeTime"></span>
 		</div>
 		<div class="parent account-info">
 			<span class="account-name">父账本HASH</span>
-			<span class="account-address">{{parentLedgerHash}}</span>
-			<span class="account-time">{{parentCloseTime}}</span>
+			<span class="account-address" id="parentLedgerHash"></span>
+			<span class="account-time" id="parentCloseTime"></span>
 		</div>
 	</div>
 	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		var ws,wo;
-		var vm = new Vue({
-			el:'#account',
-			data:{
-				closeTime:'',
-				ledgerHash:'',
-				parentLedgerHash:'',
-				parentCloseTime:'',
-			},
-		});
+		var ws,wo,ledgerHash=document.getElementById('ledgerHash'),
+		closeTime=document.getElementById('closeTime'),
+		parentLedgerHash=document.getElementById('parentLedgerHash'),
+		parentCloseTime=document.getElementById('parentCloseTime');
 		mui.plusReady(function(){
 			ws = plus.webview.currentWebview();
 			wo = ws.opener();
 		});
+		function timeOutShow(){
+			setTimeout(function(){
+				if(wo){
+					mui.fire(wo,'showAccount');
+				}else{
+					timeOutShow();
+				};
+			},500)
+		};
 		window.addEventListener('updata',function(event){
 			var data = event.detail.latest;
-			console.log('账本数据',JSON.stringify(data));
-			vm.closeTime = data.closeTime.substring(0,16);
-			vm.ledgerHash = data.ledgerHash;
-			vm.parentLedgerHash = data.parentLedgerHash;
-			vm.parentCloseTime = data.parentCloseTime.substring(0,16);
-			console.log('更新账本')
-			mui.fire(wo,'showAccount');
+			console.log('账本数据:'+JSON.stringify(data));
+			closeTime.innerHTML = data.closeTime.substring(0,16);
+			ledgerHash.innerHTML = data.ledgerHash;
+			parentLedgerHash.innerHTML = data.parentLedgerHash;
+			parentCloseTime.innerHTML = data.parentCloseTime.substring(0,16);
+			timeOutShow();
 		});
 	</script>
 </body>

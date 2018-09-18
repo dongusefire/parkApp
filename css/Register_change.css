@@ -48,9 +48,6 @@
 	background: url(../img/outcard.png) no-repeat center;
     background-size:100% 100%;
 }
-.g-content .Nocard .outcard .addr,.g-content .Nocard .incard .addr{
-	display: block;
-}
 .g-content .Nocard .incard{
 	width:92%;
 	height:220px;

@@ -5,13 +5,18 @@
 	margin-top:10px;
 	border-bottom:1px solid #f3f3f3;
 }
-.mui-content .content-box{
-	padding-top:30px;
-    text-align: center;
+.mui-content .content-box p{
+	margin-bottom:0;
+}
+.mui-content .content-box .photo{
+	width:59px;
+    height: 59px;
+    margin: 0 auto;
 }
 .mui-content .content-box img{
 	width:59px;
     height: 59px;
+	margin:20px auto;
 }
 .mui-content .content-box .ver{
    padding-top:20px;

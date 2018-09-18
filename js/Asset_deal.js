@@ -14,13 +14,17 @@ var vm = new Vue({
 			};
 		},
 		readData:function(){
-			var this_ = this;
+			var this_ = this,total='';
 			token = plus.storage.getItem('token');
+			plus.nativeUI.showWaiting('正在获取...',{back:'none'});
 			mui.ajax(AJAX_PATH+'/user/code/list/person?token='+token,{
 				type:'get',
 				dataType:'json',
 				success:function(res){
+					plus.nativeUI.closeWaiting();
 					if(res.code==200){
+						total = res.data.codetotle;
+						$(".Total h3").html(total);
 						this_.items = res.data.codelist;
 					}else if(res.code==509){
 						this_.readData();
@@ -32,23 +36,6 @@ var vm = new Vue({
 		}
 	}
 });
-function getTotal(){
-	var _this = this;
-	mui.ajax(AJAX_PATH+'/user/code/list/person?token='+token,{
-		type:'get',
-		dataType:'json',
-		success:function(res){
-			if(res.code==200){
-				total = res.data.codetotle;
-				$(".Total h3").html(total);
-			}else if(res.code==509){
-				_this.getTotal();
-			}else if(res.code!=502 && res.code!=503){
-				mui.alert(res.msg,app.name+'提示','确定',null);
-			}
-		}
-	})
-}
 function toTrade(){
 	mui.openWindow({
 		url:'Register_change.html',
@@ -66,7 +53,6 @@ function toTrade(){
 }
 mui.plusReady(function(){
 	vm.getData();
-	getTotal();
 	//跳转
 	document.getElementById("footer").addEventListener('tap',function(){
 		if(vm.items && vm.items.length!=0){

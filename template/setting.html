@@ -76,9 +76,12 @@
 				<button type="button" class="mui-btn mui-btn-danger mui-btn-block">退出登录</button>
 			</div>
 		</div>
-		<!--<div class="ceshi">
-			<button type="button" class="mui-btn mui-btn-primary" id="notice">发送通知</button>
-		</div>-->
+		<div id="oauth">
+			
+		</div>
+		<div id="info">
+			
+		</div>
 		<!--<div class="paytest">
 			<button type="button" class="mui-btn mui-btn-primary" id="openPayView">打开交换页面</button>
 		</div>-->
@@ -86,6 +89,7 @@
     <script src="../js/mui.min.js"></script>
     <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+    	var auths={};
     	function upwo(){ //更新父页面的数据
     		//获取我的页面的窗口对象
     		var wo = plus.webview.currentWebview().opener();

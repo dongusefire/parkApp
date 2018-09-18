@@ -3,6 +3,7 @@ var Account = {
 	wo:null,
 	type:'',
 	item:[],
+	codetype:'',
 	codeList:function(){
 		var token = plus.storage.getItem('token'),_this=this;
 		var _url = '';
@@ -19,15 +20,18 @@ var Account = {
 					var _html = '',data=res.data;
 					_this.item = data;
 					for(var i=0;i<data.length;i++){
-						var checked = '';
+						var checked = '',disabled='';
 						if(data[i].codename==_this.ws.codename){
 							checked = 'checked="checked"'
 						};
-						_html +='<label class="item-box mui-radio" data-ind="'+i+'">'+
+						if(_this.codetype!='' && _this.codetype!=data[i].codetype){
+							disabled = ' mui-disabled';
+						};
+						_html +='<label class="item-box mui-radio'+disabled+'">'+
 							'<p class="item-icon"><span class="logo"></span></p>'+
 							'<p class="item-title">'+data[i].codename+'</p>'+
 							'<p class="num"><span class="one">'+data[i].codenum+'</span><span class="su">数量</span></p>'+
-							'<input name="payType" class="pay-type" type="radio"'+checked+'>'+
+							'<input name="payType" class="pay-type" data-codetype="'+data[i].codetype+'" data-ind="'+i+'" type="radio"'+checked+'>'+
 						'</label>';
 					};
 					mui('.accountList')[0].innerHTML = _html;
@@ -45,18 +49,24 @@ var Account = {
 			_this.ws = plus.webview.currentWebview();
 			_this.wo = _this.ws.opener();
 			_this.type = _this.ws.assetsType;
+			_this.codetype = _this.ws.cardtype;
 			_this.codeList();
 		});
-		mui('.accountList').on('tap','.item-box',function(){
-			var i = this.dataset.ind;
-			mui.fire(_this.wo,'update',{
-				type:_this.type,
-				item:_this.item[i].codelist,
-				codenum:_this.item[i].codenum,
-				codename:_this.item[i].codename,
-				address:_this.item[i].address
-			});
-			_this.ws.close();
+		mui('.accountList').on('tap','.pay-type',function(){
+			var i = this.dataset.ind,codetype=this.dataset.codetype;
+			if(_this.codetype=='' || codetype==_this.codetype){
+				mui.fire(_this.wo,'update',{
+					type:_this.type,
+					item:_this.item[i].codelist,
+					codenum:_this.item[i].codenum,
+					codename:_this.item[i].codename,
+					address:_this.item[i].address,
+					cardtype:codetype
+				});
+				_this.ws.close();
+			}else{
+				mui.alert('只能选择同一种资产进行交换',app.name+'提示');
+			};
 		});
 	},
 	init:function(){

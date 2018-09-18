@@ -1,5 +1,8 @@
-.mui-content{
-	background-color: #fff;
+.g-content {
+	overflow-y: auto;
+}
+.orderDetail-wrap {
+	background: #fff;
 }
 .mui-main{
 	width:90%;
@@ -119,11 +122,10 @@
 	padding-top:23px;
 }
 .Remarks .photo{
-	 width:80px;
-     height:80px;
-     margin:0 auto;
+	width:80%;
+    margin:0 auto;
 }
 .Remarks .photo img{
-	 width:80px;
-     height:80px;
+	width:100%;
+    height:auto;
 }

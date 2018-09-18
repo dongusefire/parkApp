@@ -228,5 +228,15 @@
 		"refer": [
 			"template/Account.html"
 		]
+	},
+	"template/successfulIssue.html": {
+		"refer": [
+			"template/rentList.html"
+		]
+	},
+	"template/rentList.html": {
+		"refer": [
+			"template/Rent_details.html"
+		]
 	}
 }

@@ -1,12 +1,10 @@
 .content-box{
 	width:100%;
-	height:140px;
 	background: #fff;
 	margin-top:10px;
 }
 .content-box .forword{
 	width:92%;
-	height:140px;
 	margin:0 auto;
 	padding:15px 0 24px 0;
 }
@@ -22,43 +20,43 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-	padding:15px 0 20px 0;
+    margin: 10px 0;
 }
 .content-box .forword .money  span{
 	font-size:23px;
 	color:#707070;
-	padding-top:12px;
+	padding-top:27px;
 }
 .content-box .forword .money  input{
 	display:inline-block; 
 	padding:0 0;
 	border:none;
+	height: 100%;
 	margin-bottom:0;
 	font-size: 32px;
 	color:#707070;
 }
 .content-box .forword .wei{
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-justify-content: space-between;
-    -moz-justify-content: space-between;
-    -ms-justify-content: space-between;
-    -o-justify-content: space-between;
-    justify-content: space-between;
+	position: relative;
+    display: none;
 }
-.content-box .forword .wei p{
+.content-box .forword .wei div{
 	margin-bottom:0;
 }
 .content-box .forword .wei .binding{
 	font-size: 12px;
 	color:#cacaca;
+	display: inline-block;
 }
 .content-box .forword .wei .binded span{
 	font-size: 12px;
 	color:#a3bbff;
+}
+.content-box .forword .wei .click {
+	display: inline-block;
+	position: absolute;
+	right: 0;
+	top:0;
 }
 .content-box .forword .wei .click span{
 	font-size: 12px;
@@ -79,4 +77,40 @@
 	text-align: center;
 	border-radius: 20px;
 	
+}
+.ban_con {
+	height: 60px;
+	line-height: 60px;
+	background-color: #ffffff;
+}
+.ban_con label {
+	margin-left: 15px;
+	font-size: 14px;
+	color: #333333;
+	letter-spacing: 0;
+}
+input[type=text] {
+	width: 54%;
+	border:none;
+	margin:0;
+	padding:0 0 0 10px;
+	font-size: 14px;
+}
+input::-webkit-input-placeholder {
+	font-size: 14px;
+	color: #9B9B9B;
+	letter-spacing: 0;
+}
+.verify_code {
+	margin-top: 10px;
+}
+.get_code {
+	font-size: 14px;
+	color: #3883FD;
+	letter-spacing: 0;
+}
+.seconds {
+	font-size: 14px;
+	display: none;
+	color: #9B9B9B;
 }
