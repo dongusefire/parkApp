@@ -51,7 +51,12 @@ img {
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
 	border-radius: 8px;
 	z-index: 9999;
-	height: 112px;
+	min-height: 112px;
+}
+.siteInfo .credit_score {
+	line-height: 30px;
+	font-size: 14px;
+	color:#EC971F;
 }
 .siteInfo .price {
 	color:#F25B57;

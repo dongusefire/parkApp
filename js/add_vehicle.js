@@ -87,6 +87,7 @@ var vm = new Vue({
 		sendCode:function(){
 			var _this = this;
 			if(_this.num == 0){
+				_this.isSend = false;
 				_this.num = 60;
 				return;
 			}else{

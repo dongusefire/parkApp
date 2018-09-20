@@ -134,3 +134,36 @@
 	background:rgba(0,0,0,0.3);
 	display: none;
 }
+#parking-list .parking-l .top{
+	position: relative;
+	height: 30px;
+}
+#parking-list .parking-l .price {
+	position: absolute;
+	right:0;
+	top:0;
+	line-height: 30px;
+}
+#parking-list .bottom {
+	width:100%;
+	font-size: 0;
+	position: relative;
+	height: 30px;
+}
+#parking-list .bottom .num {
+	width:48%;
+	font-size: 14px;
+	max-width: 48%;
+	display: inline-block;
+	vertical-align: bottom;
+	overflow: hidden;
+}
+#parking-list .bottom .credit_score {
+	position: absolute;
+	right:0;
+	top:0;
+	line-height: 30px;
+	font-size: 14px;
+	color:#EC971F;
+	margin-left: 13px;
+}

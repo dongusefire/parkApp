@@ -18,7 +18,7 @@
 </head>
 <body id="body">
 	<div id="parking-box">
-		<div class="parking">
+		<div class="parking" :data-status="status">
 			<div class="parking-l">
 				<div class="top">
 					<span class="name">{{parking_lot_name}}</span>
@@ -36,6 +36,7 @@
 		</div>
 	</div>
     <script src="../js/mui.min.js"></script>
+    <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
     	var vm = new Vue({
     		el:'#parking-box',
@@ -48,7 +49,8 @@
     			number:0,
 				free_number:0,
 				distance:'',
-				parking_lot_number:''
+				parking_lot_number:'',
+				status:''
     		},
     		methods:{
     			readData:function(data){
@@ -61,6 +63,7 @@
 	    			this.free_number = data.free_number;
 	    			this.distance = (data.distance/1000).toFixed(3);
 	    			this.parking_lot_number = data.parking_lot_number;
+	    			this.status = data.status;
     			}
     		}
     	})
@@ -73,7 +76,12 @@
     		plus.webview.currentWebview().opener().evalJS('home.createRoute('+vm.longitude+','+vm.latitude+')');
     		e.stopPropagation();
     	});
-    	mui('#body').on('tap','#parking-box',function(){
+    	mui('#body').on('tap','.parking',function(){
+    		var status = this.getAttribute('data-status');
+			if(status!=2){
+				mui.alert('该车场尚未开放',app.name+'提示');
+				return false;
+			};
     		localStorage.setItem('parkingName',vm.parking_lot_name);
     		plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.parking_lot_number+')');
     	});

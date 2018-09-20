@@ -32,13 +32,13 @@
 			<div class="tab-sort-group" :class="isSort? 'show':''">
 				<div class="sort1">
 					<ul class="mui-table-view mui-table-view-radio" id="sort">
-						<li class="mui-table-view-cell mui-selected" data-sort="distance">
+						<li class="mui-table-view-cell mui-selected" data-sort="distance" data-text="距离优先">
 							<a class="mui-navigate-right">距离优先</a>
 						</li>
-						<li class="mui-table-view-cell" data-sort="price">
+						<li class="mui-table-view-cell" data-sort="price" data-text="价格最低">
 							<a class="mui-navigate-right">价格最低</a>
 						</li>
-						<li class="mui-table-view-cell" data-sort="number">
+						<li class="mui-table-view-cell" data-sort="number" data-text="车位数量优先">
 							<a class="mui-navigate-right">车位数量优先</a>
 						</li>
 					</ul>
@@ -48,14 +48,19 @@
 		</div>
 		<div id="parking-list" v-show="items.length!=0">
 			<div class="parkingList-mask" :style="isSort? 'display:block':'display:none'"></div>
-			<div class="parking" :id="index" v-for="(item,index) in items">
+			<div class="parking" :id="index" v-for="(item,index) in items" :data-status="item.status">
 				<div class="parking-l">
 					<div class="top">
 						<span class="name">{{item.parking_lot_name}}</span>
 						<span class="price"><span>{{item.price/100}}元</span>/小时</span>
 					</div>
 					<p class="address">{{item.parking_lot_address}}</p>
-					<div class="num">车位:<span>{{item.free_number}}</span>/{{item.number}}</div>
+					<div class="bottom">
+						<div class="num">车位:<span>{{item.free_number}}</span>/{{item.number}}</div>
+						<div class="credit_score">
+							<span class="mui-icon mui-icon-star" v-for="i in item.score"></span>
+						</div>
+					</div>
 				</div>
 				<div class="parking-r">
 					<div class="parking-img"><span class="goRoute" :id="index"></span></div>
@@ -84,13 +89,17 @@
 				},
 				keywords:'',
 				isSort:false,
-				sort:'智能排序',
+				sort:'距离优先',
 				sortValue:'distance',
 			},
 			methods:{
 				readData:function(res,point){ //初始化第一次的数据
 					for(var i=0;i<res.length;i++){
 						res[i].distance = (res[i].distance/1000).toFixed(3)
+						res[i].score = [];
+						for(var j=0;j<res[i].credit_score;j++){
+							res[i].score.push(j);
+						};
 					};
 					this.items = res;
 					this.point = point;
@@ -111,6 +120,10 @@
 								var _list = res.data.list;
 								for(var i=0;i<_list.length;i++){
 									_list[i].distance = (_list[i].distance/1000).toFixed(3)
+									_list[i].score = [];
+									for(var j=0;j<_list[i].credit_score;j++){
+										_list[i].score.push(j);
+									};
 								};
 								_this.items = _list;
 							}else{
@@ -126,6 +139,11 @@
 		});
 		mui('#parking-list').on('tap','.parking',function(e){
 			var id = this.getAttribute('id');
+			var status = this.getAttribute('data-status');
+			if(status!=2){
+				mui.alert('该车场尚未开放',app.name+'提示');
+				return false;
+			};
 			localStorage.setItem('parkingName',vm.items[id].parking_lot_name);
 			plus.webview.currentWebview().opener().evalJS('home.bespeak('+vm.items[id].parking_lot_number+')');
 			e.stopPropagation();
@@ -138,6 +156,7 @@
 		});
 		document.querySelector('#sort.mui-table-view-radio').addEventListener('selected',function(e){
 			vm.sortValue =e.detail.el.dataset.sort; 
+			vm.sort = e.detail.el.dataset.text;
 			vm.getParking();
 			vm.isSort = false;
 		});
