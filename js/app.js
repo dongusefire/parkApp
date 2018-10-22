@@ -1,7 +1,7 @@
-var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
-var AJAX_HOST = 'http://bj.ecosysnet.com:7098';
+var AJAX_PATH = 'http://bj.ecosysnet.com:7106/api';
+var AJAX_HOST = 'http://bj.ecosysnet.com:7106';
 var app = {
-	name:"易惠停演示版",
+	name:"易惠停",
 	netType:null,
 	pushServer:"http://demo.dcloud.net.cn/push/?",
 	isNetwork:true, //客户端网络状态  false无网络，true有网络
@@ -154,11 +154,11 @@ mui.ajaxSettings.beforeSend = function(xhr, setting) {
 //		xhr.abort();
 //		return false;
 //	};
-	console.log('beforeSend:' + JSON.stringify(setting));
+//	console.log('beforeSend:' + JSON.stringify(setting));
 };
 //设置ajax全局的complete
 mui.ajaxSettings.complete = function(xhr, status) {
-	console.log('complete:' + status,xhr,xhr.response);
+//	console.log('complete:' + status,xhr,xhr.response);
 //	if(status=='abort'){
 //		app.oneAlert({  
 //			id:'network',

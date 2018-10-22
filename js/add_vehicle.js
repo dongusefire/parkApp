@@ -20,7 +20,8 @@ var vm = new Vue({
 		isDefault:true,
 		isSend:false,
 		num:60,
-		token:''
+		token:'',
+		addAjax:false
 	},
 	methods:{
 		setInput:function(e){
@@ -35,7 +36,7 @@ var vm = new Vue({
 		focusInput:function(event){
 			this.provinceBox = false;
 			this.cityBox = false;
-			this.plateIndex = event.target.value==''? 0:event.target.value.length-1;
+			this.plateIndex = event.target.value==''? 0:(event.target.value.length==this.maxlen? event.target.value.length-1:event.target.value.length);
 			event.currentTarget.style.marginLeft = '-100%';
 		},
 		blurInput:function(event){
@@ -131,27 +132,31 @@ var vm = new Vue({
 			var jsonData = JSON.stringify({
 				phone_number:_this.phone_number,code:_this.code,car_number:car_number
 			});
-			mui.ajax(AJAX_PATH+'/user/car/add?token='+this.token,{
-				data:jsonData,
-				dataType:'json',
-				type:'post',
-				success:function(res,textStatus,xhr){
-					if(res.code==200){
-						mui.toast('添加成功');
-						//获取我的页面的窗口对象
-			    		var wo = plus.webview.currentWebview().opener();
-						//触发我的页面（readData）,从而进行数据刷新
-						mui.fire(wo,'readData');
-						setTimeout(function(){
-							mui.back();
-						},1000);
-					}else if(res.code==509){
-						_this.addVehicle();
-					}else if(res.code!=502 && res.code!=503){
-						mui.alert(res.msg,app.name+'提示','确定',null);
-					};
-				}
-			});
+			if(!this.addAjax){
+				_this.addAjax = true;
+				mui.ajax(AJAX_PATH+'/user/car/add?token='+this.token,{
+					data:jsonData,
+					dataType:'json',
+					type:'post',
+					success:function(res,textStatus,xhr){
+						_this.addAjax = false;
+						if(res.code==200){
+							mui.toast('添加成功');
+							//获取我的页面的窗口对象
+				    		var wo = plus.webview.currentWebview().opener();
+							//触发我的页面（readData）,从而进行数据刷新
+							mui.fire(wo,'readData');
+							setTimeout(function(){
+								mui.back();
+							},1000);
+						}else if(res.code==509){
+							_this.addVehicle();
+						}else if(res.code!=502 && res.code!=503){
+							mui.alert(res.msg,app.name+'提示','确定',null);
+						};
+					}
+				});
+			};
 		}
 	}
 })

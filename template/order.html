@@ -185,7 +185,7 @@
 							mask.close();
 							plus.nativeUI.closeWaiting();
 							if( res.code== '200'){
-								console.log(JSON.stringify(res.data),'23232323232');
+								console.log(JSON.stringify(res.data));
 								if(res.data.userCarInfo == ''){
 									mui.alert('请添加车辆',app.name+'提示','确定',function(){
 										mui.openWindow({
@@ -269,12 +269,21 @@
 										})
 									},false);
 									carnoPicker.setData(picker_data);
+									//温馨提示
+									var CozyTip = '该车场不允许提前到场。请您按预约时间到场停车。否则将不会消耗您预定的订单。';
+									var parkingInfo = res.data.parkingInfo;
+									if(type=='noChoose' && parkingInfo.c_allow_time!=0){
+										CozyTip = '该车场无差别车位允许提前到场的时间为'+parkingInfo.c_allow_time+'分钟。如果超出该允许到场时间入场停车，将不会消耗您预定的订单。';
+									}else if(type=='choose' && parkingInfo.d_allow_time!=0){
+										CozyTip = '该车场固定车位允许提前到场的时间为'+parkingInfo.d_allow_time+'分钟。如果超出该允许到场时间入场停车，将不会消耗您预定的订单。';
+									};
+									mui.alert(CozyTip,app.name+'提示','知道了');
 								}
 							}else if(res.code==509){
 								ajaxGet(head,data,type);
 							}else if(res.code!=502 && res.code!=503){
 								if(res.code == 507){
-									console.log(JSON.stringify(res),233232)
+									console.log(JSON.stringify(res))
 									if(type=="noChoose"){
 										mui.alert('该车场没有发布无差别车位，请预定自选车位',app.name+'提示','确定',function(){
 											//确定之后做处理
@@ -572,7 +581,7 @@
 					};
 					//3.发送预定请求
 					//判断用户信用值，来进行两种提交类型的判断
-					var dccScore = plus.storage.getItem('dccScore');
+					var dccScore = plus.storage.getItem('dccscore');
 					if(dccScore>=120){
 						//信用值大于120时，直接预定
 						//判断预定车位类型是无差别还是固定

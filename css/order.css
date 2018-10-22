@@ -13,6 +13,7 @@ img {
 
 .mui-content {
 	background-color:#F5F5F5; 
+	margin-bottom: 60px;
 }
 .mui-backdrop {
     position: fixed;

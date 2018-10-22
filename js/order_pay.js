@@ -11,40 +11,41 @@ var orderPay = {
 	paylink:null,
 	resultOff:false,
 	mweb_url:'',
+	order_belong_user:'',
 	getChannels:function(){//获取支付通道
-//		var _this = this;
-//		// 获取支付通道
-//	    plus.payment.getChannels(function(channels){
-//	    	for(var i in channels){
-//	    		var channel=channels[i];
-//				if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
-//					continue;
-//				}
-//				_this.pays[channel.id] = channel;
-//				console.log(channel.id+':'+JSON.stringify(channel))
-//	    	};
-//	    },function(e){
-//	    	console.log("获取支付通道失败："+e.message);
-//	    });
+		var _this = this;
+		// 获取支付通道
+	    plus.payment.getChannels(function(channels){
+	    	for(var i in channels){
+	    		var channel=channels[i];
+				if(channel.id=='qhpay'||channel.id=='qihoo'){	// 过滤掉不支持的支付通道：暂不支持360相关支付
+					continue;
+				}
+				_this.pays[channel.id] = channel;
+				console.log(channel.id+':'+JSON.stringify(channel))
+	    	};
+	    },function(e){
+	    	console.log("获取支付通道失败："+e.message);
+	    });
 	},
 	promptInstall:function(channel){//提示安装客户端支付工具
-//		var txt=null;
-//		switch(channel.id){
-//			case 'alipay':
-//			txt='检测到系统未安装“支付宝”，无法完成支付操作，是否立即安装？';
-//			break;
-//			default:
-//			txt='系统未安装“'+channel.description+'”服务，无法完成支付，是否立即安装？';
-//			break;
-//		}
-//		plus.nativeUI.confirm(txt, function(status){
-//			if(status.index==0){
-//				channel.installService();
-//			}
-//		}, {
-//			title:app.name+'提示',
-//			buttons:['是','否']
-//		});
+		var txt=null;
+		switch(channel.id){
+			case 'alipay':
+			txt='检测到系统未安装“支付宝”，无法完成支付操作，是否立即安装？';
+			break;
+			default:
+			txt='系统未安装“'+channel.description+'”服务，无法完成支付，是否立即安装？';
+			break;
+		}
+		plus.nativeUI.confirm(txt, function(status){
+			if(status.index==0){
+				channel.installService();
+			}
+		}, {
+			title:app.name+'提示',
+			buttons:['是','否']
+		});
 	},
 	payResult:function(){//查询支付状态
 		var loding = plus.nativeUI.showWaiting('正在查询支付状态',{
@@ -89,93 +90,100 @@ var orderPay = {
 	getPayInfo:function(){//获取支付签名
 		var _this = this;
 		var token = plus.storage.getItem('token');
+		var pay_type = 1;
+		if(_this.order_belong_user==1){
+			pay_type = 2;
+		};
+//		alert(_this.order_belong_user)
 		mui.ajax(AJAX_PATH+'/pay?token='+token,{
 			data:{
 				"order_sn":_this.order_sn,
 				"pay_channel":_this.pay_channel,
-				"pay_type":1
+				"pay_type":pay_type   //支付方式 1 h5 2 APP 3 公众号
 			},
 			dataType:'json',
 			type:'POST',
 			success:function(res,textStatus,xhr){
 				_this.payBtn = false;
 				if(res.code==200){
-					_this.mweb_url = 
-					//var order = JSON.stringify(res.data);
 //					var _text = '微信支付'
 //					if(_this.pay_channel==1){
 //						_text = '支付宝支付'
 //					};
-					_this.mweb_url = res.data['mweb_url'];
-					_this.openPaylink();
-//					plus.payment.request(_this.pays[_this.payId],order,function(result){
-//						mui.openWindow({
-//							url:'paySuccess.html',
-//							id:'paySuccess.html',
-//							styles:{
-//								popGesture: "close",
-//								statusbar:{
-//									background:"#fff" 
-//								}
-//							},
-//							extras:{
-//								order_sn:_this.order_sn,
-//								park_id:_this.park_id
-//							}
-//						});
-//					},function(e){
-//						//alert(JSON.stringify(e));
-//						var str = '';
-//						if(_this.payId=='wxpay'){
-//							if(e.message.indexOf('-1')!=-1){
-//								str='一般错误';
-//							};
-//							if(e.message.indexOf('-2')!=-1){
-//								str='您已取消支付';
-//							};
-//							if(e.message.indexOf('-3')!=-1){
-//								str='发送失败';
-//							};
-//							if(e.message.indexOf('-4')!=-1){
-//								str='认证被否决';
-//							};
-//							if(e.message.indexOf('-5')!=-1){
-//								str='不支持错误';
-//							};
-//						}else{
-//							if(e.message.indexOf('62000')!=-1){
-//								str='尚未安装支付通道依赖的服务';
-//							};
-//							if(e.message.indexOf('62001')!=-1){
-//								str='您已取消支付';
-//							};
-//							if(e.message.indexOf('62002')!=-1){
-//								str='此设备不支持支付';
-//							};
-//							if(e.message.indexOf('62003')!=-1){
-//								str='数据格式错误';
-//							};
-//							if(e.message.indexOf('6204')!=-1){
-//								str='支付账号状态错误';
-//							};
-//							if(e.message.indexOf('62005')!=-1){
-//								str='订单信息错误';
-//							};
-//							if(e.message.indexOf('62006')!=-1){
-//								str='支付操作内部错误';
-//							};
-//							if(e.message.indexOf('62007')!=-1){
-//								str='支付服务器错误';
-//							};
-//							if(e.message.indexOf('62008')!=-1){
-//								str='网络问题引起的错误';
-//							};
-//							if(e.message.indexOf('62009')!=-1){
-//								str='网络问题引起的错误';
-//							};
-//						};
-//						mui.alert(str,app.name+'提示');
-//					});
+					if(_this.order_belong_user!=1){
+						_this.mweb_url = res.data['mweb_url'];
+						_this.openPaylink();
+						return false;
+					};
+					var order = JSON.stringify(res.data);
+					plus.payment.request(_this.pays[_this.payId],order,function(result){
+						mui.openWindow({
+							url:'paySuccess.html',
+							id:'paySuccess.html',
+							styles:{
+								popGesture: "close",
+								statusbar:{
+									background:"#fff" 
+								}
+							},
+							extras:{
+								order_sn:_this.order_sn,
+								park_id:_this.park_id
+							}
+						});
+					},function(e){
+//						alert(JSON.stringify(e))
+						var str = '';
+						if(_this.payId=='wxpay'){
+							if(e.message.indexOf('-1')!=-1){
+								str='一般错误';
+							};
+							if(e.message.indexOf('-2')!=-1){
+								str='您已取消支付';
+							};
+							if(e.message.indexOf('-3')!=-1){
+								str='发送失败';
+							};
+							if(e.message.indexOf('-4')!=-1){
+								str='认证被否决';
+							};
+							if(e.message.indexOf('-5')!=-1){
+								str='不支持错误';
+							};
+						}else{
+							if(e.message.indexOf('62000')!=-1){
+								str='尚未安装支付通道依赖的服务';
+							};
+							if(e.message.indexOf('62001')!=-1){
+								str='您已取消支付';
+							};
+							if(e.message.indexOf('62002')!=-1){
+								str='此设备不支持支付';
+							};
+							if(e.message.indexOf('62003')!=-1){
+								str='数据格式错误';
+							};
+							if(e.message.indexOf('6204')!=-1){
+								str='支付账号状态错误';
+							};
+							if(e.message.indexOf('62005')!=-1){
+								str='订单信息错误';
+							};
+							if(e.message.indexOf('62006')!=-1){
+								str='支付操作内部错误';
+							};
+							if(e.message.indexOf('62007')!=-1){
+								str='支付服务器错误';
+							};
+							if(e.message.indexOf('62008')!=-1){
+								str='网络问题引起的错误';
+							};
+							if(e.message.indexOf('62009')!=-1){
+								str='网络问题引起的错误';
+							};
+						};
+						mui.alert(str,app.name+'提示');
+					});
 				}else if(res.code==509){
 					_this.getPayInfo();
 				}else if(res.code!=502 && res.code!=503){
@@ -254,6 +262,8 @@ var orderPay = {
 			success:function(res,textStatus,xhr){
 				if(res.code==200){
 					console.log(JSON.stringify(res.data));
+//					_this.order_belong_user = res.data.order_info.order_belong_user;
+					_this.order_belong_user = 2;//强制使用h5支付
 					var order_info = res.data.order_info;
 					var parkType = '',start='',end='';
 					//类型判断

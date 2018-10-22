@@ -19,6 +19,7 @@ var Account = {
 				if(res.code==200){
 					var _html = '',data=res.data;
 					_this.item = data;
+//						console.log(JSON.stringify(data))
 					for(var i=0;i<data.length;i++){
 						var checked = '',disabled='';
 						if(data[i].codename==_this.ws.codename){
@@ -28,7 +29,8 @@ var Account = {
 							disabled = ' mui-disabled';
 						};
 						_html +='<label class="item-box mui-radio'+disabled+'">'+
-							'<p class="item-icon"><span class="logo"></span></p>'+
+							//'<p class="item-icon"><span class="logo"></span></p>'+							
+							'<p class="item-icon"><img src="../img/card-icon.png" class="logo" /></p>'+
 							'<p class="item-title">'+data[i].codename+'</p>'+
 							'<p class="num"><span class="one">'+data[i].codenum+'</span><span class="su">数量</span></p>'+
 							'<input name="payType" class="pay-type" data-codetype="'+data[i].codetype+'" data-ind="'+i+'" type="radio"'+checked+'>'+

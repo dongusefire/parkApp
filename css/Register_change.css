@@ -15,8 +15,18 @@
 .g-content .Nocard .list{
 	width:92%;
 	height:220px;
+	/*float: right;*/
+	/*background: url(../img/huanchu.png) no-repeat center;*/
+    /*background-size:100% 100%;*/
+}
+.g-content .Nocard .uplist{
 	float: right;
-	background: url(../img/nocard.png) no-repeat center;
+	background: url(../img/huanchu.png) no-repeat center;
+	background-size:100% 100%;
+}
+.g-content .Nocard .downlist{
+	float: left;
+	background: url(../img/huanru.png) no-repeat center;
     background-size:100% 100%;
 }
 .g-content .Nocard .list .address {
@@ -46,14 +56,14 @@
 	height:220px;
 	float: right;
 	background: url(../img/outcard.png) no-repeat center;
-    background-size:100% 100%;
+	background-size:100% 100%;
 }
 .g-content .Nocard .incard{
 	width:92%;
 	height:220px;
-	float: right;
-	background: url(../img/incard.png) no-repeat center;
-    background-size:100% 100%;
+	float: left;
+	background: url(../img/register_out.png) no-repeat center;
+	background-size:100% 100%;
 }
 .g-content .Nocard .list .short{
 	display: block;
@@ -80,6 +90,17 @@
 	color:#f4f3f1;
 }
 .g-content .Nocard .list .short .yu{
+	font-size:13px;
+	color:#f4f3f1;
+}
+.g-content .Nocard .downlist .short p{
+	margin-bottom:0;
+}
+.g-content .Nocard .downlist .short .out{
+	font-size:16px;
+	color:#f4f3f1;
+}
+.g-content .Nocard .downlist .short .yu{
 	font-size:13px;
 	color:#f4f3f1;
 }
@@ -112,8 +133,8 @@
 }
 .g-content .Nocard .list .c_assets{
 	display: inline-block;
-	margin-left:25px;
-	padding:4px 12px;
+	margin-left:60px;
+	padding:10px 20px;
 	border: 1px solid #f0efed;
 	border-radius:20px;
 	font-size:12px;
@@ -162,4 +183,26 @@
 	top:0;
 	bottom: 62px;
 	overflow-y: auto;
+}
+.downlist .short .outdown{
+		font-size:16px;
+		color:#f4f3f1;
+		margin-left: 90px;
+}
+.downlist .short .yudown{
+	font-size:13px;
+	color:#f4f3f1;
+	margin-left: 90px;
+}
+.downlist .c_assetsfugai{
+	display: inline-block;
+	/*margin-right:25px;*/
+	padding:10px 20px;
+	margin-left: 190px;
+	border: 1px solid #f0efed;
+	border-radius:20px;
+	font-size:12px;
+	color:#f3f2f1;
+	line-height:24px;
+	z-index:9999;
 }

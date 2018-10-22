@@ -372,7 +372,7 @@ var home = {
 			type:'get',
 			success:function(res,textStatus,xhr){
 				if(res.code==200){
-					console.log(JSON.stringify(res));
+//					console.log(JSON.stringify(res));
 					_this.latest = res.data;
 					console.log(_this.homeAccount.id)
 					mui.fire(_this.homeAccount,'updata',{

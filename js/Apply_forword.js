@@ -59,6 +59,8 @@ var Apply_forword = {
 				str = '您还未绑定提现微信';
 			}else if(!p1.test(val) || val==0){
 				str='提现金额只能为正整数和小数';
+			}else if(Number(val)<10){
+				str='提现金额不能小于10';
 			}else if(val>_this.balance){
 				str='您最多可提现'+_this.balance;
 			}else if(!/^\d{6}$/.test(code)){

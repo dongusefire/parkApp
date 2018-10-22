@@ -8,6 +8,8 @@ var mask=mui.createMask();
 var issue = {
 	isShow:false,
 	spacePicker:null,
+	picker_data:[],
+	picker_msg:'',
 	//获取车位列表
 	getCarSpace:function(){
 		var this_ = this;
@@ -49,7 +51,8 @@ var issue = {
 							$(".spaceName").attr('data-maxprice',space_arr[0].max_price/100);
 						}else{
 							if(space_arr_checking.length!=0&&space_arr_failed.length==0){
-								mui.alert('您的车位正在审核中，请联系车场管理员',app.name+'提示','去查看',function(){
+								this_.picker_msg = '您的车位正在审核中，请联系车场管理员';
+								mui.alert(this_.picker_msg,app.name+'提示','去查看',function(){
 									mui.openWindow({
 										url:'my_parking.html',
 										id:'my_parking.html',
@@ -62,7 +65,8 @@ var issue = {
 									})
 								})
 							}else if(space_arr_checking.length==0&&space_arr_failed.length!=0){
-								mui.alert('您的车位审核未通过，请联系车场管理员',app.name+'提示','去查看',function(){
+								this_.picker_msg = '您的车位审核未通过，请联系车场管理员';
+								mui.alert(this_.picker_msg,app.name+'提示','去查看',function(){
 									mui.openWindow({ 
 										url:'my_parking.html',
 										id:'my_parking.html',
@@ -74,8 +78,9 @@ var issue = {
 										}
 									})
 								})
-							}else if(space_arr_checking.length!=0&&space_arr_failed.length!=0)(
-								mui.alert('您的车位审核未完成或者未通过，请到我的车位页面查看',app.name+'提示','去查看',function(){
+							}else if(space_arr_checking.length!=0&&space_arr_failed.length!=0){
+								this_.picker_msg = '您的车位审核未完成或者未通过，请到我的车位页面查看';
+								mui.alert(this_.picker_msg,app.name+'提示','去查看',function(){
 									mui.openWindow({
 										url:'my_parking.html',
 										id:'my_parking.html',
@@ -87,12 +92,13 @@ var issue = {
 										}
 									})
 								})
-							)
+							}
 						}
 						var picker_data = [];
 						for(var i=0;i<space_arr.length;i++){
 							picker_data.push({value:space_arr[i].id,text:space_arr[i].parking_lot_name,max_price:space_arr[i].max_price/100});
 						}
+						this_.picker_data = picker_data;
 						this_.spacePicker.setData(picker_data);
 					}
 				}else if(res.code==509){
@@ -398,12 +404,27 @@ var issue = {
 		//车位拾取器的处理
 		var spaceName = $(".spaceName");
 		mui(".mySpace").on('tap','.chooseSpace',function(event){
-			_this.spacePicker.show(function(items){
-				console.log(JSON.stringify(items),'车位选择');
-				spaceName.html(items[0].text);
-				spaceName.attr('data-id',items[0].value);
-				spaceName.attr('data-maxprice',items[0].max_price);
-			})
+			if(_this.picker_data.length!=0){
+				_this.spacePicker.show(function(items){
+					console.log(JSON.stringify(items),'车位选择');
+					spaceName.html(items[0].text);
+					spaceName.attr('data-id',items[0].value);
+					spaceName.attr('data-maxprice',items[0].max_price);
+				})
+			}else{
+				mui.alert(_this.picker_msg,app.name+'提示','去查看',function(){
+					mui.openWindow({
+						url:'my_parking.html',
+						id:'my_parking.html',
+						styles:{
+							popGesture: "close",
+							statusbar:{
+								background:"#fff" 
+							}
+						}
+					})
+				});
+			};
 		});
 		window.addEventListener('isShow',function(){
 			var token = plus.storage.getItem('token');

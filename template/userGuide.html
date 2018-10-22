@@ -8,6 +8,26 @@
     <title>用户指南</title>
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+    <style type="text/css">
+    	#helplist:after,#helplist:before {
+    		content: initial;
+    	}
+    	#helplist li:after {
+    		content: initial;
+    	}
+    	#helplist {
+    		background:none;
+    	}
+    	#helplist li {
+    		margin-bottom: 10px;
+    		background: #fff;
+    	}
+    	#helplist li a{
+    		color:#666;
+    		font-size: 14px;
+    		margin: -5px -15px;
+    	}
+    </style>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
@@ -15,8 +35,36 @@
 	    <h1 class="mui-title">用户指南</h1>
 	</header>
 	<div class="mui-content g-content" style="overflow-y:auto;">
-		<img src="../img/appUserGuide.jpg" style="width:100%" />
+		<ul class="mui-table-view" id="helplist">
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" data-href="helpOrder.html">预定帮助</a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" data-href="helpIssue.html">个人发布帮助</a>
+		    </li>
+		    <li class="mui-table-view-cell">
+		        <a class="mui-navigate-right" data-href="helpChange.html">资产交换帮助</a>
+		    </li>
+		</ul>
+		<!--<img src="../img/appUserGuide.jpg" style="width:100%" />-->
 	</div>
     <script src="../js/mui.min.js"></script>
+    <script type="text/javascript">
+    	mui('#helplist').on('tap','a',function(){
+    		var href = this.getAttribute('data-href');
+    		console.log(href)
+    		mui.openWindow(href,href,{
+				styles:{
+					bottom:0,
+					top:0,
+					width:'100%',
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				}
+			});
+    	});
+    </script>
 </body>
 </html>

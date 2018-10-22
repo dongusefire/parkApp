@@ -52,9 +52,12 @@
 	display:inline-block;
 	width:41px;
 	height:41px;
-	border:1px solid #c7c7c7;
-	background: #d8d8d8;
-	border-radius: 100%;
+	/*border:1px solid #c7c7c7;
+	background: #d8d8d8;*/
+	/*border-radius: 100%;*/
+}
+.accountList label .item-icon .logo {
+	width: 100%;
 }
 .accountList label .item-title{
 	flex:1;

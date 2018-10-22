@@ -9,6 +9,20 @@
 		<link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/orderList.css"/>
+		<style type="text/css">
+			.noOrder {
+				margin: 30% auto 0 auto;
+				width: 250px;
+				text-align: center;
+				color: #405486;
+				font-size: 14px;
+			}
+			.noOrder img {
+				width: 100%;
+				margin-bottom: 10px;
+			}
+
+		</style>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav header-bar">
@@ -21,6 +35,7 @@
 				<li><span data-done="running">未完成</span></li>
 				<li><span data-done="success">已完成</span></li>
 			</ul>
+			
 		</div>
 		<div class="mui-content trans-box" id="trans-box">
 		</div>
@@ -60,7 +75,9 @@
 			   	//获取当前时间，并声明过期标识
 			   	var nowTime = Date.parse(new Date());
 			   	//声明下面需要的变量
-				var html_ = '', r_html = '', s_html = '', manage = '',status = '',type = '',end = '',hashshow = '';
+				var html_ = '',
+				n_html="<div class='noOrder'><img src='../img/null.png' /><span>暂无订单</span></div>",
+				r_html = '', s_html = '', manage = '',status = '',type = '',end = '',hashshow = '';
 				function auto_ajax(){
 					$('#trans-box').html('');
 					token = plus.storage.getItem('token');
@@ -71,6 +88,10 @@
 						success:function(res){
 							if(res.code == 200){
 								var all = res.data.All_order_data;
+								if(!all || all.length <= 0){
+									html_ = n_html;
+								}
+								else{
 								$.each(all,function(key,value){
 									console.log(value.issue_hash);
 									//时间戳处理：把时间戳转换为时间格式，然后再进行比对
@@ -97,7 +118,7 @@
 											status = '已完成，待支付';
 										}else if(value.order_status==5||value.order_status==6||value.order_status==7){
 											status = '已取消';
-										}else if(value.Order_status==8){
+										}else if(value.order_status==8){
 											status = '已完成';
 										}
 									}else{
@@ -109,7 +130,6 @@
 											status = '已过期';
 										}
 									}
-
 									//按钮条件显示
 									if(timeFlag){
 										if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
@@ -168,6 +188,7 @@
 											'</div>'+
 										'</div>';
 								})
+								}
 								$('.trans-box').html(html_);
 							}else if(res.code==509){
 								auto_ajax();
@@ -191,7 +212,10 @@
 								success:function(res){
 									if(res.code==200){
 										var _data = res.data.running;
-										console.log(_data);
+										if(!_data || _data.length <= 0){
+										r_html = n_html;
+										}
+										else{
 										$.each(_data,function(key,value){
 											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
 											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
@@ -218,7 +242,7 @@
 													status = '已完成，待支付';
 												}else if(value.order_status==5||value.order_status==6||value.order_status==7){
 													status = '已取消';
-												}else if(value.Order_status==8){
+												}else if(value.order_status==8){
 													status = '已完成';
 												}
 											}else{
@@ -289,6 +313,7 @@
 													'</div>'+
 												'</div>';
 										});
+										}
 										$('#trans-box').empty();
 										$('#trans-box').html(r_html);
 									}else if(res.code==509){
@@ -309,7 +334,10 @@
 								success:function(res){
 									if(res.code==200){
 										var _data = res.data.success;
-										console.log(_data);
+										if(!_data || _data.length <= 0){
+										s_html = n_html;
+										}
+										else{
 										$.each(_data,function(key,value){
 											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
 											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
@@ -335,7 +363,7 @@
 													status = '已完成，待支付';
 												}else if(value.order_status==5||value.order_status==6||value.order_status==7){
 													status = '已取消';
-												}else if(value.Order_status==8){
+												}else if(value.order_status==8){
 													status = '已完成';
 												}
 											}else{
@@ -406,6 +434,7 @@
 													'</div>'+
 												'</div>';
 										});
+										}
 										$('#trans-box').empty();
 										$('#trans-box').html(s_html);
 									}else if(res.code==509){

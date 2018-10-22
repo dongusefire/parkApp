@@ -49,8 +49,12 @@ function readData(){
 			mask.close();//关闭遮罩层
 			if(res.code==200){
 				var _data=res.data;
+				var num = ""+(_data.profitTotal/100)+"";
+				if(num.indexOf(".")!=-1){
+					num = num.substr(0,num.indexOf(".")+3);
+				};
 				console.log(JSON.stringify(_data));
-				html_+= '<span class="num">'+(_data.profitTotal/100)+'</span>元';
+				html_+= '<span class="num">'+num+'</span> 元';
 				$('.money').append(html_);
 			}else if(res.code==509){
 				readData();

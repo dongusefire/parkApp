@@ -9,6 +9,16 @@
     <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="../css/app.css"/>
     <link rel="stylesheet" type="text/css" href="../css/Register_change.css"/>
+    <style>
+    	.exchange .swap{
+    		width: 10%;
+    		height: 45px;
+    		margin: 0 auto;
+    	}
+    	.exchange .swap img{
+    		width: 100%;
+    	}
+    </style>
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav header-bar">
@@ -22,12 +32,13 @@
 			</div>
 			<div class="Nocard">
 				<!--<div class="list outcard">-->
-				<div class="list">
+					<!--.g-content .Nocard .list-->
+				<div class="list uplist">
 					<a class="short">
-						<div class="item-icon"><span class="logo"></span></div>
+						<!--<div class="item-icon"><span class="logo"></span></div>-->
 						<p class="out">请选择换出资产</p>
 						<p class="yu">剩余：0</p>
-						<p class="addr address"></p>
+						<!--<p class="addr address"></p>-->
 						<p class="addr time">
 							<span></span>
 							<span></span>
@@ -39,28 +50,24 @@
 					<span class="c_assets" data-type="in">选择资产</span>
 				</div>
 			</div>
-			<!--<div class="exchange">
+			<div class="exchange">
 				<div class="swap ">
 				  <img src="../img/swap.png">
 			   </div>
-			</div>-->
+			</div>
 			<div class="Nocard card">
 				<!--<div class="list incard">-->
-				<div class="list">
+				<div class="list downlist">
 					<a class="short">
-						<div class="item-icon"><span class="logo"></span></div>
 						<p class="out">请选择换入资产</p>
 						<p class="yu">剩余：0</p>
-						<p class="addr address"></p>
+						<!--<p class="addr address"></p>-->
 						<p class="addr time">
 							<span></span>
 							<span></span>
 						</p>
 					</a>
-					<!--<div class="input">
-						<input type="text" placeholder="请输入换出数量" class="num" onfocus="this.placeholder=''" onblur="this.placeholder=''">
-					</div>-->
-					<span class="c_assets" data-type="out">选择资产</span>
+					<span class="c_assetsfugai" data-type="out" style>选择资产</span>
 				</div>
 			</div>
 			<div class="tips">

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>关于我们</title>
+    <link href="../css/mui.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+    <style>
+    	.edi{
+    		text-align: center;
+    		margin-top: 80px;
+    	}
+    	.edi img{
+    		width: 100px;
+		    height: 100px;
+    	}
+    	.edi p{
+    		font-size:14px;
+    		color:#333;
+    		margin-bottom:0;
+    	}
+    	.edi .introduce{
+    		width:87%;
+    		margin:0 auto;
+    	}
+    	.servation{
+    		position:relative;
+    		top:150px;
+    		left: 0;
+    	}
+    	.servation .clear{
+    		background: none;
+    		text-align: center;
+    		width:92%;
+    		height:46px;
+    		margin:0 auto;
+    		background: #fff;
+    	}
+    	.servation .clear:before{
+    		content: initial;
+    	}
+    	.servation .clear:after{
+    		content: initial;
+    	}
+    	.servation .logout{
+    		width:92%;
+    		height:46px;
+    		margin:0 auto;
+    		margin-top:10px;
+    	}
+    	.servation .logout button{
+    		line-height:15px;
+    		text-align: center;    		
+    	}
+    	.servicephone{
+			margin-top: 250px;
+			line-height: 10px;
+			font-size: 24px;
+			text-align: center;
+			font-family: PingFangTC-Regular;	
+    	}
+    	.servicephone .phone{
+    		color: #000000;
+    	}
+    	.servicephone .num{
+    		color: #000000;
+    	}
+    	.companyname{
+    		
+    		width:100%;
+    		margin: 0 auto;
+			height: 40px;
+			font-family: PingFangSC-Regular;
+    	}
+    	.companyname .line{
+    		margin-top: 20px;
+    		/*height: 10px;*/
+    		border-top: 1px solid #979797;
+    	}
+    	.companyname .gzhz{
+    		text-align:center;
+    		margin:0 auto;
+          	width: 294px;
+          	height: 40px;
+			font-family: PingFangSC-Regular;
+    	}
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav header-bar">
+		<a class="mui-action-back  mui-pull-left back"><span class="mui-icon mui-icon-arrowleft" style="font-size: 35px; padding-top: 3px;color:#292929;"></span></a>
+	    <h1 class="mui-title">关于我们</h1>
+	</header>
+	<div class="mui-content g-content">
+		<div class="edi">
+			<img src="../img/edi.png">
+			<p class="ver"> <span id="v"></span></p>
+			<p class="introduce">易惠停是一款应用区块链技术打造的停车服务APP。
+为用户提供公开可信的预约服务，用户也可将自己的闲置车位共享，获取收益，参与缓解停车难问题。</p>
+		</div>
+		<div class="servicephone">
+			<p class="phone">客服电话</p>
+			<p class="num">020-82035326</p>
+		</div>
+		<div class="companyname">
+			<p class="line"></p>
+			<p class="gzhz">惠智（广州）技术有限公司</p>
+		</div>
+	</div>
+	
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/app.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var auths={};
+    	function upwo(){ //更新父页面的数据
+    		//获取我的页面的窗口对象
+    		var wo = plus.webview.currentWebview().opener();
+			//触发我的页面（readData）,从而进行数据刷新
+			mui.fire(wo,'readData');
+    	};
+    	var login_off = false,token = null;
+    	mui.plusReady(function(){
+    		token=plus.storage.getItem('token');
+    		if(token){
+    			mui('.logout')[0].style.display = 'block';
+    		};
+    		mui('#v')[0].innerHTML = plus.runtime.version;
+    	});
+    	mui('.g-content').on('tap','#clear',function(){
+			localStorage.clear();
+			plus.storage.removeItem('search');
+			mui.toast("已清除");
+    	});
+    	mui('.g-content').on('tap','#notice',function(){
+			app.requireNotiMsg('我是离线消息2')
+    	});
+    	mui('.g-content').on('tap','#openPayView',function(){
+			mui.openWindow("Register_change.html","Register_change.html",{
+				styles:{
+					bottom:0,
+					top:0,
+					width:'100%',
+					popGesture: "close",
+					statusbar:{
+						background:"#fff" 
+					}
+				}
+			});
+    	});
+    	mui('.g-content').on('tap','.logout',function(){
+    		var _this = this;
+    		if(!login_off){
+    			setTimeout(function(){
+    				plus.storage.removeItem('phone_number');
+    				plus.storage.removeItem('token');
+    				upwo();
+    				login_off = false;
+    				_this.style.display = 'none';
+    				mui.toast('退出成功');
+    			},500);
+    			mui.ajax(AJAX_PATH+'/auth/logout?token='+token,{
+					dataType:'json',
+					type:'get',
+					success:function(res,textStatus,xhr){
+//						if(res.code==200){
+//							mui.toast(res.msg);
+//						};
+					},
+					complete:function(xhr, status){
+						login_off = false;
+					}
+				});
+    		};
+    	});
+    </script>
+</body>
+</html>

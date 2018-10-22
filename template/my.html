@@ -32,6 +32,7 @@
 		</div>
 		<div class="park-nav" id="park-nav">
 			<a href="wallet.html" class="item-box" :data-wallet="wallet">
+				
 				<span class="item-icon"><img src="../img/wdqb.png"></span>
 				<span class="item-title">我的钱包</span>
 			</a>
@@ -74,6 +75,10 @@
 				<span class="item-icon"><img src="../img/xz.png"></span>
 				<span class="item-title">设置</span>
 			</a>
+			<a id="distance" href="about_us.html" class="item-box">
+				<span class="item-icon"><img src="../img/about_us.png"></span>
+				<span class="item-title">关于我们</span>
+			</a>
 		</div>
 	</div>
 	<script src="../js/immersed.js" type="text/javascript" charset="utf-8"></script>
@@ -106,7 +111,11 @@
 								_this.id = res.data.id;
 								_this.block_height = res.data.block_height;
 								_this.wallet = res.data.wallet;
-								plus.storage.setItem('dccScore',res.data.dcc_score);
+								var str = res.data.dcc_score;
+								if(typeof(str)=='number'){
+									str = str.toString();
+								};
+								plus.storage.setItem('dccscore',);
 							}else if(res.code==509){
 								plus.storage.setItem('token',res.data.newToken);
 								_this.getUserInfo();

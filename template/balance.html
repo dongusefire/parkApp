@@ -10,6 +10,16 @@
 		<link rel="stylesheet" type="text/css" href="../css/app.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/balance.css"/>
 	    <script src="../js/vue.min.js"></script>
+	    <style type="text/css">
+	    	.noPrice{
+	    		width: 200px;
+	    		height: 200px;
+	    		margin-top: 180px;
+	    	}
+	    	.wenzi{
+	    		
+	    	}
+	    </style>
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav header-bar">
@@ -29,7 +39,8 @@
 				</li>
 			</ul>
 			<div class="itemNull" v-show="itemNull" style="width: 100%;height: 200px;line-height: 200px;color:#231916;text-align: center;">
-				暂无明细~
+				<img class="noPrice" src="../img/null.png" alt="" />
+				<p class="wenzi">暂无明细</p>
 			</div>
 		</div>
 	    <script src="../js/mui.min.js"></script>
@@ -58,9 +69,9 @@
 							data:{},
 							success:function(res){
 								if(res.code==200){
-									console.log(res.data);
-									if(res.data || res.data==null || res.data.length==0){
+									if(!res.data || res.data==null || res.data.length==0){
 										that.itemNull = true;
+										
 									};
 									that.items=res.data;
 								}else if(res.code==509){

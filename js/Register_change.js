@@ -59,7 +59,18 @@ var Register_change = {
 				plus.nativeUI.closeWaiting();
 				if(res.code==200){
 					mui.toast('挂单成功');
-					_this.updateData();
+					setTimeout(function(){
+						mui.openWindow('Register.html','Register.html',{styles:{
+							bottom:0,
+							top:0,
+							width:'100%',
+							popGesture: "close",
+							statusbar:{
+								background:"#6d93ff" 
+							}
+						}});
+						_this.updateData();
+					},1000)
 				}else if(res.code==509){
 					_this.pendingCreate();
 				}else if(res.code!=502 && res.code!=503){
@@ -68,6 +79,7 @@ var Register_change = {
 			}
 		});
 	},
+	//挂单成功后，更新页面数据
 	updateData:function(){
 		var Nocard = $('.Nocard-wrap .list');
 		if(this.assets_in.length==1){
@@ -89,6 +101,7 @@ var Register_change = {
 			this.insertData('out',this.assets_out,this.assets_codenumOut-1,this.assets_codenameOut,this.assets_addressOut);
 		};
 	},
+	//资产的类型，当前资产的所有数据，当前资产的数量，当前资产的名称，资产的地址
 	insertData:function(Atype,data,num,name,address){
 		var Nocard = $('.Nocard-wrap .list'),i=0;
 		if(Atype=='in'){
@@ -105,6 +118,7 @@ var Register_change = {
 			this.assets_codenumOut = num;
 			this.assets_addressOut = address;
 			Nocard.eq(i).addClass('incard');
+			//如果资产有地址，就展示
 			if(address && address!=''){
 				Nocard.eq(i).find('.address').html(address);
 			};
@@ -122,12 +136,24 @@ var Register_change = {
 		mui.plusReady(function(){
 			_this.ws = plus.webview.currentWebview();
 		});
+//		换出资产中的选择资产按钮
 		mui('.g-content').on('tap','.c_assets',function(){
+			var type = this.dataset.type,codename=_this.assets_codenameOut;
+			var webviewOption = _this.webviewOption;
+			webviewOption.extras = {
+				assetsType:type,
+				codename:codename,
+				cardtype:_this.type
+			};
+			webviewOption.styles.statusbar.background = "#fff";
+			//type是资产的类型，通过不同的类型，打开不同的界面
+			mui.openWindow('Account-'+type+'.html','Account-'+type+'.html',webviewOption);
+		});
+//		换入资产中的选择资产按钮
+			mui('.g-content').on('tap','.c_assetsfugai',function(){
+//				alert("123")
 			var type = this.dataset.type,codename=_this.assets_codenameIn;
 			var webviewOption = _this.webviewOption;
-			if(type=='out'){
-				codename = _this.assets_codenameOut;
-			};
 			webviewOption.extras = {
 				assetsType:type,
 				codename:codename,
@@ -147,11 +173,13 @@ var Register_change = {
 				mui.confirm('如果因为交换不成功，且原订单未按时使用，预定费用不退费。','确认挂单吗？',['取消','确定'],function(e){
 					if(e.index==1){ //点击确定
 						_this.pendingCreate();
+						
 					};
 				});
 			};
 		});
 		window.addEventListener('update',function(event){
+//			alert(JSON.stringify(event.detail))//这个是接受过来的数据
 			var data = event.detail;
 			_this.type = data.cardtype;
 			_this.insertData(data.type,data.item,data.codenum,data.codename,data.address);
