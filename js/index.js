@@ -322,7 +322,7 @@ var home = {
 	getUpData:function(){ //获取最新数据
 		var items = this.parking_list; //创建的home_parking窗口
 		this.list = [];
-		for(var i=0;i<list.length;i++){
+		for(var i=0;i<items.length;i++){
 			items[i].close(); //关闭窗口
 		};
 		this.map.clearOverlays(); //清除所有的覆盖物(此处为了清除所有的标记)
@@ -399,6 +399,7 @@ var home = {
 			type:'POST',
 			success:function(res,textStatus,xhr){
 				if(res.code==200){
+//					alert(JSON.stringify(res.data.list));
 					_this.list = res.data.list;
 					_this.createParking();
 				}else{

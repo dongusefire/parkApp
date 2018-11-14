@@ -253,6 +253,8 @@ var newParkSpace = {
 			        title: 'Images',
 			        mimeTypes: 'image/*'
 			    },
+			    //限制单张图片最大为8M
+			    fileSingleSizeLimit: 8 * 1024 * 1024,
 //			    fileNumLimit:1,
 			    fileVal:'file'
 			});
@@ -263,6 +265,17 @@ var newParkSpace = {
 			});
 			_this[id].on( 'uploadProgress',function(file,percentage) {
 				_this.loading.setTitile('正在上传,请稍后...'+(percentage*100).toFixed(2)+'%');
+			});
+			_this[id].on( 'error',function(type) {
+				var str = '';
+				if(type=='Q_EXCEED_NUM_LIMIT'){
+					str = '添加文件的数量超出限制';
+				}else if(type=='Q_EXCEED_SIZE_LIMIT'){
+					str = '单张图片限制为8M';
+				}else if(type=='Q_TYPE_DENIED'){
+					str = '请上传图片格式文件';
+				};
+				mui.alert(str,app.name+'提示');
 			});
 			_this[id].on( 'uploadError',function(file,reason) {
 				_this.loading.close();

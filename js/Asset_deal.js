@@ -1,3 +1,21 @@
+//时间戳转换为时间格式
+function timestampToTime(timestamp,str) {
+	function p(s) {
+		return s < 10 ? '0' + s: s;
+	}
+	var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+	Y = date.getFullYear() + '-';
+	M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+	D = date.getDate() + ' ';
+	h = date.getHours() + ':';
+    m = date.getMinutes();
+    s = date.getSeconds();
+    if(str=='start'){
+    	return Y+M+p(D)+p(h)+p(m);
+    }else{
+    	return p(h)+p(m);
+    };
+}
 mui.init();
 var vm = new Vue({
 	el:'.box-main',
@@ -25,7 +43,16 @@ var vm = new Vue({
 					if(res.code==200){
 						total = res.data.codetotle;
 						$(".Total h3").html(total);
-						this_.items = res.data.codelist;
+						console.log(JSON.stringify(res),'资产数据');
+						var codelist = res.data.codelist;
+						for(var i=0;i<codelist.length;i++){
+							if(codelist[i].cardtype!='0'){
+								codelist[i].time ='<span>截至日期：</span><span>'+codelist[i].usertime+'</span>';
+							}else{
+								codelist[i].time ='<span>有效时间：</span><span>'+timestampToTime(codelist[i].start_time,'start')+'~'+timestampToTime(codelist[i].end_time,'end')+'</span>';
+							};
+						};
+						this_.items = codelist;
 					}else if(res.code==509){
 						this_.readData();
 					}else if(res.code!=502 && res.code!=503){
@@ -60,7 +87,20 @@ mui.plusReady(function(){
 		}else{
 			mui.alert('您没有资产，无法进行交换！',app.name+'提示');
 		};
-	})
+	});
+	mui('.g-content').on('tap','#openList',function(){
+		mui.openWindow('Register.html','Register.html',{
+			styles:{
+				bottom:0,
+				top:0,
+				width:'100%',
+				popGesture: "close",
+				statusbar:{
+					background:"#6d93ff" 
+				}
+			}
+		});
+	});
 });
 
 //设置更新事件

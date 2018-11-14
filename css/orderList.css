@@ -136,8 +136,14 @@
 	color: #087CFD;
 	border-color: #087CFD;
 }
-.trans-box {
-	margin-top: 50px;
+#trans-box {
+	position: absolute;
+    top: 90px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	overflow: auto;
+	padding-top: 0;
 }
 .choose {
 	position: fixed;
@@ -148,7 +154,7 @@
     background-color: #fff;
 }
 .choose li {
-	width: 33.3%;
+	width: 25%;
 	float: left;
 	text-align: center;
 	line-height: 40px;

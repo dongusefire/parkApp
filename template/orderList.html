@@ -34,18 +34,19 @@
 				<li><span data-done="" class="active">全部</span></li>
 				<li><span data-done="running">未完成</span></li>
 				<li><span data-done="success">已完成</span></li>
+				<li><span data-done="timeout">超时订单</span></li>
 			</ul>
-			
 		</div>
-		<div class="mui-content trans-box" id="trans-box">
+		<div class="mui-content" id="trans-box">
 		</div>
 	    <script src="../js/mui.min.js"></script>
 		<script src="../js/app.js"></script>
 		<script src="../js/jquery-1.11.2.min.js"></script>
 		<script>
-			var token;
+			var token,ws;
 			mui.plusReady(function(){
 				token = plus.storage.getItem('token');
+				ws = plus.webview.currentWebview();
 				readData(jQuery);
 			});
 			window.addEventListener('upData',function(){
@@ -54,7 +55,13 @@
 			});
 			function readData($){
 				mui.init();
-				auto_ajax();
+				if(ws.type=='timeout'){
+					$('[data-done]').removeClass('active');
+					$('[data-done="timeout"]').addClass('active');
+					auto_ajax('timeout');
+				}else{
+					auto_ajax('');
+				};
 				function timestampToTime(timestamp,type) {
 			        var date = new Date(timestamp * 1000),Y,M,D,h,m,s;;//时间戳为10位需*1000，时间戳为13位的话不需乘1000
 			        Y = date.getFullYear() + '-';
@@ -78,389 +85,175 @@
 				var html_ = '',
 				n_html="<div class='noOrder'><img src='../img/null.png' /><span>暂无订单</span></div>",
 				r_html = '', s_html = '', manage = '',status = '',type = '',end = '',hashshow = '';
-				function auto_ajax(){
+				function render(all){
+					if(!all || all.length <= 0){
+						html_ = n_html;
+					}else{
+						$.each(all,function(key,value){
+							console.log(value.issue_hash);
+							//时间戳处理：把时间戳转换为时间格式，然后再进行比对
+							var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
+							if(startTime.substr(0,10) == endTime.substr(0,10)){
+								end = endTime.substr(11,8) 
+							}else if(startTime.substr(0,10) != endTime.substr(0,10)){
+								end = endTime;
+							}
+							//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
+							var timeFlag=true;
+							if((value.end_time*1000) < nowTime){
+								timeFlag = false;
+							};
+							//状态判断
+							if(timeFlag){
+								if(value.order_status==1){
+									status = '待支付';
+								}else if(value.order_status==2){
+									status = '未使用';
+								}else if(value.order_status==3){
+									status = '已入场';
+								}else if(value.order_status==4){
+									status = '已完成，待支付';
+								}else if(value.order_status==5||value.order_status==6||value.order_status==7){
+									status = '已取消';
+								}else if(value.order_status==8){
+									status = '已完成';
+								}
+							}else{
+								if(value.order_status==4){
+									status = '已完成，待支付';
+								}else if(value.order_status==8){
+									status = '已完成';
+								}else if(value.order_status==3){
+									status = '已入场';
+								}else{
+									status = '已过期';
+								}
+							};
+							
+							//按钮条件显示
+							if(timeFlag){
+								if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
+									manage='';	
+								}else if(value.order_status==1){
+									manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
+											'<p class="cancel cancle-order"><button>取消订单</button></p>';	
+								}else if(value.order_status==4){
+									manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
+								}else if(value.order_status==2 && timeFlag){
+									manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
+											'<p class="cancel cancle-order"><button>取消订单</button></p>';	
+								}else if(value.order_status==3){
+									manage='';
+								}
+							}else{
+								manage='';
+							};
+							//超时订单判断--开始
+							var bookFee = value.order_amount; //订单金额
+							var outTime = ''; //超时时长
+							var sns = value.order_sn; //订单编号
+							if(value.t_o_id!=null){
+								status = '超时订单';
+								bookFee = value.t_o_order_amount;
+								if(value.t_o_order_status==1){
+									status = '待支付';
+									manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
+								}else if(value.t_o_order_status==2){
+									status = '已完成';
+									bookFee = Number(value.t_o_order_amount)+Number(value.order_amount);
+								};
+								if(value.t_o_time){
+									outTime='<p class="time place-time">'+
+										'<span>超时时长:</span>'+
+										'<span>'+value.t_o_time+'分钟</span>'+
+									'</p>';
+								};
+								sns+=','+value.t_o_sn;
+							};
+							//超时订单判断--结束
+							
+							//车位类型判断
+							if(value.flag == 'C'){
+								type = '不固定';
+							}else if(value.flag == 'D'){
+								var _floor = '';
+								if(value.floor[0]=='1'){
+									_floor +='负';	
+								};
+								_floor+=value.floor[1];
+								if(value.floor[2]=='1'){
+									_floor +='夹层';	
+								}else{
+									_floor+='层';
+								};
+								type = value.building+'栋'+_floor+value.area+'区'+value.park_space_num+'号车位';
+							}
+							if(value.issue_hash==''||value.issue_hash==null){
+								hashshow = ''
+							}else{
+								hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
+												'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
+											'</p>';
+							}
+							html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+sns+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
+									'<div class="order-text">'+
+										'<a href="#" class="item-box">'+
+											'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
+											'<span class="item-title">'+value.park_name+'</span>'+
+											'<span class="mui-pull-right pay">'+status+'</span>'+
+									  ' </a>'+
+									'</div>'+
+									'<div class="order-time">'+
+										'<p class="time place-time">'+
+											'<span>车位:</span>'+
+											'<span>'+type+'</span>'+
+										'</p>'+
+										'<span class="amount">￥'+(bookFee/100)+'</span>'+
+										'<p class="time out-time">'+
+											'<span>预约时间段:</span>'+
+										'</p>'+
+										'<p class="time time-part">'+
+											'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
+										'</p>'+outTime+
+									'</div>'+hashshow+
+									'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
+									'</div>'+
+								'</div>';
+						})
+					};
+					$('#trans-box').html(html_);
+				};
+				function auto_ajax(status){
 					$('#trans-box').html('');
 					token = plus.storage.getItem('token');
 					html_ = '';
 					mui.ajax(AJAX_PATH+'/user/order/list/?token='+token,{
+						data:{
+							"order_type":status
+						},
 						dataType:'json',
 						type:'get',
 						success:function(res){
 							if(res.code == 200){
-								var all = res.data.All_order_data;
-								if(!all || all.length <= 0){
-									html_ = n_html;
-								}
-								else{
-								$.each(all,function(key,value){
-									console.log(value.issue_hash);
-									//时间戳处理：把时间戳转换为时间格式，然后再进行比对
-									var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
-									if(startTime.substr(0,10) == endTime.substr(0,10)){
-										end = endTime.substr(11,8) 
-									}else if(startTime.substr(0,10) != endTime.substr(0,10)){
-										end = endTime;
-									}
-									//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
-									var timeFlag=true;
-									if((value.end_time*1000) < nowTime){
-										timeFlag = false;
-									};
-									//状态判断
-									if(timeFlag){
-										if(value.order_status==1){
-											status = '待支付';
-										}else if(value.order_status==2){
-											status = '未使用';
-										}else if(value.order_status==3){
-											status = '已入场';
-										}else if(value.order_status==4){
-											status = '已完成，待支付';
-										}else if(value.order_status==5||value.order_status==6||value.order_status==7){
-											status = '已取消';
-										}else if(value.order_status==8){
-											status = '已完成';
-										}
-									}else{
-										if(value.order_status==4){
-											status = '已完成，待支付';
-										}else if(value.order_status==8){
-											status = '已完成';
-										}else{
-											status = '已过期';
-										}
-									}
-									//按钮条件显示
-									if(timeFlag){
-										if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
-											manage='';	
-										}else if(value.order_status==1){
-											manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
-													'<p class="cancel cancle-order"><button>取消订单</button></p>';	
-										}else if(value.order_status==4){
-											manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
-										}else if(value.order_status==2 && timeFlag){
-											manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-													'<p class="cancel cancle-order"><button>取消订单</button></p>';	
-										}else if(value.order_status==3){
-											manage='';
-										}
-									}else{
-										manage='';
-									}
-									
-									//车位类型判断
-									if(value.flag == 'C'){
-										type = '不固定';
-									}else if(value.flag == 'D'){
-										type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
-									}
-									var bookFee = value.order_amount;
-									if(value.issue_hash==''||value.issue_hash==null){
-										hashshow = ''
-									}else{
-										hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
-														'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
-													'</p>';
-									}
-									html_+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
-											'<div class="order-text">'+
-												'<a href="#" class="item-box">'+
-													'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
-													'<span class="item-title">'+value.park_name+'</span>'+
-													'<span class="mui-pull-right pay">'+status+'</span>'+
-											  ' </a>'+
-											'</div>'+
-											'<div class="order-time">'+
-												'<p class="time place-time">'+
-													'<span>车位:</span>'+
-													'<span>'+type+'</span>'+
-												'</p>'+
-												'<span class="amount">￥'+(bookFee/100)+'</span>'+
-												'<p class="time out-time">'+
-													'<span>预约时间段:</span>'+
-												'</p>'+
-												'<p class="time time-part">'+
-													'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
-												'</p>'+
-											'</div>'+hashshow+
-											'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
-											'</div>'+
-										'</div>';
-								})
-								}
-								$('.trans-box').html(html_);
+								if(status==''){
+									status = 'All_order_data';
+								};
+								render(res.data[status])
 							}else if(res.code==509){
-								auto_ajax();
+								auto_ajax(status);
 							}else if(res.code!=502 && res.code!=503){
 								mui.alert(res.msg,app.name+'提示','确定',null);
 							};
 						}
 					})
-				}
-				
-				function orderList(status){
-					token = plus.storage.getItem('token');
-					if(status=='running'){
-							r_html = '';
-							mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
-								data:{
-									"order_type":'running'
-								},
-								dataType:'json',
-								type:'get',
-								success:function(res){
-									if(res.code==200){
-										var _data = res.data.running;
-										if(!_data || _data.length <= 0){
-										r_html = n_html;
-										}
-										else{
-										$.each(_data,function(key,value){
-											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
-											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
-											if(startTime.substr(0,10) == endTime.substr(0,10)){
-												end = endTime.substr(11,8)
-												console.log(end);
-											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
-												end = endTime;
-											}
-											//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
-											var timeFlag=true;
-											if((value.end_time*1000) < nowTime){
-												timeFlag = false;
-											}
-											//状态判断
-											if(timeFlag){
-												if(value.order_status==1){
-													status = '待支付';
-												}else if(value.order_status==2){
-													status = '未使用';
-												}else if(value.order_status==3){
-													status = '已入场';
-												}else if(value.order_status==4){
-													status = '已完成，待支付';
-												}else if(value.order_status==5||value.order_status==6||value.order_status==7){
-													status = '已取消';
-												}else if(value.order_status==8){
-													status = '已完成';
-												}
-											}else{
-												if(value.order_status==4){
-													status = '已完成，待支付';
-												}else if(value.order_status==8){
-													status = '已完成';
-												}else{
-													status = '已过期';
-												}
-											}
-		
-											//按钮条件显示
-											if(timeFlag){
-												if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
-													manage='';	
-												}else if(value.order_status==1){
-													manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
-															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
-												}else if(value.order_status==4){
-													manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
-												}else if(value.order_status==2 && timeFlag){
-													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
-												}else if(value.order_status==3){
-													manage='';
-												}
-											}else{
-												manage='';
-											}
-											//车位类型判断
-											if(value.flag == 'C'){
-												type = '不固定';
-											}else if(value.flag == 'D'){
-												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
-											}
-											var bookFee = value.order_amount;
-											//拼接dom
-											if(value.issue_hash==''||value.issue_hash==null){
-												hashshow = ''
-											}else{
-												hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
-																'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
-															'</p>';
-											}
-											r_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
-													'<div class="order-text">'+
-														'<a href="#" class="item-box">'+
-															'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
-															'<span class="item-title">'+value.park_name+'</span>'+
-															'<span class="mui-pull-right pay">'+status+'</span>'+
-													  ' </a>'+
-													'</div>'+
-													'<div class="order-time">'+
-														'<p class="time place-time">'+
-															'<span>车位:</span>'+
-															'<span>'+type+'</span>'+
-														'</p>'+
-														'<span class="amount">￥'+(bookFee/100)+'</span>'+
-														'<p class="time out-time">'+
-															'<span>预约时间段:</span>'+
-														'</p>'+
-														'<p class="time time-part">'+
-															'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
-														'</p>'+
-													'</div>'+hashshow+
-													'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
-													'</div>'+
-												'</div>';
-										});
-										}
-										$('#trans-box').empty();
-										$('#trans-box').html(r_html);
-									}else if(res.code==509){
-										orderList(status);
-									}else if(res.code!=502 && res.code!=503){
-										mui.alert(res.msg,app.name+'提示','确定',null);
-									};
-								}
-						})
-					}else if(status=='success'){
-						s_html = '';
-						mui.ajax(AJAX_PATH+'/user/order/list?token='+token,{
-								data:{
-									"order_type":'success'
-								},
-								dataType:'json',
-								type:'get',
-								success:function(res){
-									if(res.code==200){
-										var _data = res.data.success;
-										if(!_data || _data.length <= 0){
-										s_html = n_html;
-										}
-										else{
-										$.each(_data,function(key,value){
-											//时间戳处理：把时间戳转换为时间格式，然后再进行比对
-											var startTime = timestampToTime(value.start_time,''),endTime = timestampToTime(value.end_time,'');
-											if(startTime.substr(0,10) == endTime.substr(0,10)){
-												end = endTime.substr(11,8);
-											}else if(startTime.substr(0,10) != endTime.substr(0,10)){
-												end = endTime;
-											}
-											//订单过期判断，这里利用当前时间和订单的结束时间做比对，如果当前时间大于结束时间，则订单过期
-											var timeFlag=true;
-											if((value.end_time*1000) < nowTime){
-												timeFlag = false;
-											}
-											//状态判断
-											if(timeFlag){
-												if(value.order_status==1){
-													status = '待支付';
-												}else if(value.order_status==2){
-													status = '未使用';
-												}else if(value.order_status==3){
-													status = '已入场';
-												}else if(value.order_status==4){
-													status = '已完成，待支付';
-												}else if(value.order_status==5||value.order_status==6||value.order_status==7){
-													status = '已取消';
-												}else if(value.order_status==8){
-													status = '已完成';
-												}
-											}else{
-												if(value.order_status==4){
-													status = '已完成，待支付';
-												}else if(value.order_status==8){
-													status = '已完成';
-												}else{
-													status = '已过期';
-												}
-											}
-		
-											//按钮条件显示
-											if(timeFlag){
-												if(value.order_status==5||value.order_status==6||value.order_status==7||value.order_status==8){
-													manage='';	
-												}else if(value.order_status==1){
-													manage='<p class="cancel unpay toPay"><button>去支付</button></p>'+
-															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
-												}else if(value.order_status==4){
-													manage='<p class="cancel unpay toPay"><button>去支付</button></p>';
-												}else if(value.order_status==2 && timeFlag){
-													manage='<p class="cancel unpay"><button class="goRoute">导航</button></p>'+
-															'<p class="cancel cancle-order"><button>取消订单</button></p>';	
-												}else if(value.order_status==3){
-													manage='';
-												}
-											}else{
-												manage='';
-											}
-											//车位类型判断
-											if(value.flag == 'C'){
-												type = '不固定';
-											}else if(value.flag == 'D'){
-												type = value.building+'栋'+value.floor+'层'+value.area+'区'+value.park_space_num+'号车位';
-											}
-											var bookFee = value.order_amount;
-											if(value.issue_hash==''||value.issue_hash==null){
-												hashshow = ''
-											}else{
-												hashshow = '<p class="time hash" data-hash="'+value.issue_hash+'">'+
-																'<span class="ha_title">数字资产交易HASH</span><span class="ha_content">'+value.issue_hash+'</span>'+
-															'</p>';
-											}
-											//拼接dom
-											s_html+='<div class="order-nav" data-address="'+value.parking_lot_address+'" data-start="'+startTime+'" data-end="'+endTime+'" data-onum="'+value.order_sn+'" data-pid="'+value.park_id+'" data-type="'+type+'" data-amount="'+value.order_amount+'">'+
-													'<div class="order-text">'+
-														'<a href="#" class="item-box">'+
-															'<span id="item-icon"><img src="../img/tcicon.png"></span>'+
-															'<span class="item-title">'+value.park_name+'</span>'+
-															'<span class="mui-pull-right pay">'+status+'</span>'+
-													  ' </a>'+
-													'</div>'+
-													'<div class="order-time">'+
-														'<p class="time place-time">'+
-															'<span>车位:</span>'+
-															'<span>'+type+'</span>'+
-														'</p>'+
-														'<span class="amount">￥'+(bookFee/100)+'</span>'+
-														'<p class="time out-time">'+
-															'<span>预约时间段:</span>'+
-														'</p>'+
-														'<p class="time time-part">'+
-															'<span>'+startTime+'&nbsp;至&nbsp;'+end+'</span>'+
-														'</p>'+
-													'</div>'+hashshow+
-													'<div class="order-state" data-address="'+value.parking_lot_address+'" data-lat="'+value.latitude+'" data-lng="'+value.longitude+'">'+manage+
-													'</div>'+
-												'</div>';
-										});
-										}
-										$('#trans-box').empty();
-										$('#trans-box').html(s_html);
-									}else if(res.code==509){
-										orderList(status);
-									}else if(res.code!=502 && res.code!=503){
-										mui.alert(res.msg,app.name+'提示','确定',null);
-									};
-								}
-						})
-					}else if(status == ''){
-						auto_ajax();
-					}
 				};
-				
 				//未完成
 				$('.choose li').click(function(){
-					var status = $(this).children().attr('data-done');
-					console.log(status);
+					var status = $(this).children('span').attr('data-done');
 					$('#trans-box').html('');
 					$(this).children('span').addClass('active');
 					$(this).siblings().children('span').removeClass('active');
-					if(status==''){
-						auto_ajax();
-					}else{
-						orderList(status);
-					}
+					auto_ajax(status)
 				});
 				
 				//点击进入订单详情
@@ -468,6 +261,14 @@
 					//获取订单编号和停车场编号
 					var order_num = $(this).parents('.order-nav').attr('data-onum'),park_id = $(this).parents('.order-nav').attr('data-pid');
 					if(park_id&&park_id!=''){
+						var extras = {
+							park_id:park_id,
+							order_num:order_num
+						};
+						if(order_num.indexOf(',')!=-1){
+							extras.order_num = order_num.split(',')[0];
+							extras.t_order_num = order_num.split(',')[1]
+						};
 						mui.openWindow({
 							url:'OrderDetails.html',
 							id:'orderDetails.html',
@@ -477,10 +278,7 @@
 									background:"#fff" 
 								}
 							},
-							extras:{
-								order_num:order_num,
-								park_id:park_id
-							}
+							extras:extras
 						})
 					}else{
 						mui.alert('订单id不存在，无法查看订单详情',app.name+'提示','确定',null)
@@ -501,12 +299,16 @@
 							}
 						},
 						extras:{
-							order_sn:order_num,
 							parkType:order_type,
 							stateTime:order_start,
 							endTime:order_end,
-							park_id:park_id
+							park_id:park_id,
+							order_sn:order_num
 						}
+					};
+					if(order_num.indexOf(',')!=-1){
+						options.extras.order_sn=order_num.split(',')[0],
+						options.extras.t_order_num = order_num.split(',')[1];
 					};
 					mui.openWindow("orderPay.html","orderPay.html",options);
 				});

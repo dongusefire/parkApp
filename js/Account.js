@@ -1,3 +1,21 @@
+//时间戳转换为时间格式
+function timestampToTime(timestamp,str) {
+	function p(s) {
+		return s < 10 ? '0' + s: s;
+	}
+	var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+	Y = date.getFullYear() + '-';
+	M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+	D = date.getDate() + ' ';
+	h = date.getHours() + ':';
+    m = date.getMinutes();
+    s = date.getSeconds();
+    if(str=='start'){
+    	return Y+M+p(D)+p(h)+p(m);
+    }else{
+    	return p(h)+p(m);
+    };
+}
 var Account = {
 	ws:null,
 	wo:null,
@@ -18,24 +36,25 @@ var Account = {
 			success:function(res){
 				if(res.code==200){
 					var _html = '',data=res.data;
-					_this.item = data;
-//						console.log(JSON.stringify(data))
 					for(var i=0;i<data.length;i++){
 						var checked = '',disabled='';
 						if(data[i].codename==_this.ws.codename){
 							checked = 'checked="checked"'
 						};
-						if(_this.codetype!='' && _this.codetype!=data[i].codetype){
-							disabled = ' mui-disabled';
+						if(data[i].codetype!='0'){
+							data[i].time = '<span>截至日期：</span><span>'+data[i].usertime+'</span>';
+						}else{
+							data[i].time = '<span>有效时间：</span><span>'+timestampToTime(data[i].start_time,'start')+'~'+timestampToTime(data[i].end_time,'end')+'</span>';
 						};
-						_html +='<label class="item-box mui-radio'+disabled+'">'+
-							//'<p class="item-icon"><span class="logo"></span></p>'+							
+						_html +='<label class="item-box mui-radio'+disabled+'">'+							
 							'<p class="item-icon"><img src="../img/card-icon.png" class="logo" /></p>'+
-							'<p class="item-title">'+data[i].codename+'</p>'+
-							'<p class="num"><span class="one">'+data[i].codenum+'</span><span class="su">数量</span></p>'+
+							'<div class="item-title"><h3>'+data[i].codename+'</h3><p>'+data[i].time+'</p></div>'+
+//							'<p class="num"><span class="one">'+data[i].codenum+'</span><span class="su">数量</span></p>'+
 							'<input name="payType" class="pay-type" data-codetype="'+data[i].codetype+'" data-ind="'+i+'" type="radio"'+checked+'>'+
 						'</label>';
 					};
+					_this.item = data;
+					console.log(_html,'文本')
 					mui('.accountList')[0].innerHTML = _html;
 				}else if(res.code==509){
 					_this.codeList();
@@ -59,10 +78,7 @@ var Account = {
 			if(_this.codetype=='' || codetype==_this.codetype){
 				mui.fire(_this.wo,'update',{
 					type:_this.type,
-					item:_this.item[i].codelist,
-					codenum:_this.item[i].codenum,
-					codename:_this.item[i].codename,
-					address:_this.item[i].address,
+					item:_this.item[i],
 					cardtype:codetype
 				});
 				_this.ws.close();

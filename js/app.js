@@ -1,5 +1,5 @@
-var AJAX_PATH = 'http://bj.ecosysnet.com:7106/api';
-var AJAX_HOST = 'http://bj.ecosysnet.com:7106';
+var AJAX_PATH = 'http://bj.ecosysnet.com:7098/api';
+var AJAX_HOST = 'http://bj.ecosysnet.com:7098';
 var app = {
 	name:"易惠停",
 	netType:null,
@@ -130,6 +130,8 @@ function login(str){
 	if(!str || str==''){
 		str='尚未登录或登录已过期';
 	};
+	plus.storage.removeItem('phone_number');
+	mui.fire(plus.webview.getWebviewById('template/my.html'),'readData')
 	mui.alert(str,app.name+'提示','去登录',function(){
 		mui.openWindow('login.html','login.html',{
 			styles:{
@@ -154,7 +156,7 @@ mui.ajaxSettings.beforeSend = function(xhr, setting) {
 //		xhr.abort();
 //		return false;
 //	};
-//	console.log('beforeSend:' + JSON.stringify(setting));
+	console.log('beforeSend:' + JSON.stringify(setting));
 };
 //设置ajax全局的complete
 mui.ajaxSettings.complete = function(xhr, status) {
@@ -166,6 +168,7 @@ mui.ajaxSettings.complete = function(xhr, status) {
 //			btn:'确定'
 //		});
 //	};
+	console.log('complete:' + xhr.response);
 	if(xhr.response&&xhr.response!=''){
 		var res = mui.parseJSON(xhr.response);
 		if(res.code==502 || res.code==503){

@@ -68,6 +68,23 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.accountList label .item-title h3 {
+	height:35px;
+	line-height:35px;
+	font-size:14px;
+	color:#b8b8b8;
+	margin:0;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.accountList label .item-title p span {
+	display: block;
+	line-height:15px;
+	height:15px;
+	font-size:12px;
+	color:#b8b8b8;
+}
 .accountList label .num{
 	width:20%;
 	display: -webkit-box;

@@ -62,6 +62,10 @@
 								var park_info = res.data.parkInfo;
 								var list_data = res.data.parkSpaceList;
 								$.each(list_data ,function(key,value){
+									var parkPrice = (list_data[key].price/100);
+									if(parkPrice==0){
+										parkPrice = (park_info.parking_lot_price/100);
+									};
 									//开始结束时间的判断 
 									if(this.startTime.substr(0,10) == this.endTime.substr(0,10)){
 										endtime = this.endTime.substr(11,8);
@@ -82,7 +86,7 @@
 												'<div class="list-fire">'+
 													'<p class="par">'+park_info.parking_lot_name+'&nbsp;&nbsp;'+floor_+'</p>'+
 													'<p class="tim">共享时段：<span>'+value.startTime+'-'+endtime+'</span></p>'+
-													'<p class="price">'+(list_data[key].price/100)+
+													'<p class="price">'+parkPrice+
 													'<span>/小时</span>'+
 													'<span class="toOrder" data-num="'+park_info.parking_lot_number+'" data-psnum="'+value.p_s_sn+'"  data-id="'+value.id+'">去预定&nbsp;></span></p>'+
 												'</div>'+

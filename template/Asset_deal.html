@@ -18,7 +18,7 @@
 			<div class="header-icon">
 				<a class="icon mui-action-back"><span class="mui-icon mui-icon-arrowleft"></span></a>
 				<span class="zi">数字资产交易</span>
-				<a class="icon"></a>
+				<a id="openList" class="mui-pull-right">我的挂单</a>
 			</div>
 			<div class="Total">
 				<h3></h3>
@@ -34,7 +34,10 @@
 							<span class="logo" v-if="item.cardtype==1"><img src="../img/posi.png" alt="" /></span>
 							<span class="logo logo2" v-else><img src="../img/card.png" alt="" /></span>
 						</p>
-						<p class="item-title">{{item.cardname}}</p>
+						<div class="item-title">
+							<h3>{{item.cardname}}</h3>
+							<p v-html="item.time"></p>
+						</div>
 						<p class="num"><span class="one">{{item.cardnumber}}</span><span class="su">数量</span></p>
 					</a>
 				</div>

@@ -53,10 +53,13 @@ var orderPay = {
 			padlock:true
 		});
 		var token = plus.storage.getItem('token');
-		var _this = this;
+		var _this = this,order_sn=_this.order_sn;
+		if(this.ws.t_order_num){
+			order_sn = this.ws.t_order_num;
+		};
 		mui.ajax(AJAX_PATH+'/pay/result?token='+token,{
 			data:{
-				"order_sn":_this.order_sn,
+				"order_sn":order_sn,
 			},
 			dataType:'json',
 			type:'get',
@@ -89,15 +92,17 @@ var orderPay = {
 	},
 	getPayInfo:function(){//获取支付签名
 		var _this = this;
-		var token = plus.storage.getItem('token');
+		var token = plus.storage.getItem('token'),order_sn=_this.order_sn;
 		var pay_type = 1;
 		if(_this.order_belong_user==1){
 			pay_type = 2;
 		};
-//		alert(_this.order_belong_user)
+		if(this.ws.t_order_num){
+			order_sn = this.ws.t_order_num;
+		};
 		mui.ajax(AJAX_PATH+'/pay?token='+token,{
 			data:{
-				"order_sn":_this.order_sn,
+				"order_sn":order_sn,
 				"pay_channel":_this.pay_channel,
 				"pay_type":pay_type   //支付方式 1 h5 2 APP 3 公众号
 			},
@@ -284,14 +289,26 @@ var orderPay = {
 						end = _this.timestampToTime(order_info.end_time);
 					}else{
 						end = '暂无数据';
-					}
+					};
+					//如果是超时订单，调整离场时间
+					if(order_info.t_o_id!=null){
+						if(order_info.t_o_end_time && order_info.t_o_end_time!=''){
+							end = _this.timestampToTime(order_info.t_o_end_time);
+						};
+					};
+					var bookFee = order_info.order_amount; //订单金额
+					if(order_info.t_o_id!=null){
+						status = '超时订单';
+						bookFee = order_info.t_o_order_amount
+					};
 					document.getElementById('parkName').innerHTML = res.data.park_info.parking_lot_name;
 					document.getElementById('parkAddress').innerHTML = res.data.park_info.parking_lot_address;
 					document.getElementById('parkType').innerHTML = parkType;
 					document.getElementById('plateNum').innerHTML = order_info.car_num;
 					document.getElementById('stateTime').innerHTML = start;
 					document.getElementById('endTime').innerHTML = end;
-					document.getElementById('parkPrice').innerHTML = res.data.order_info.order_amount/100;
+					
+					document.getElementById('parkPrice').innerHTML = bookFee/100;
 					$('[v-cloak]').removeAttr('v-cloak');
 				}else if(res.code==509){
 					_this.orderDetail();

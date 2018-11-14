@@ -54,7 +54,8 @@
 		    <!--温馨提示-->
 		    <div class="prompt">
 		    	<p class="tit">温馨提示：</p>
-		    	<p>预定开始时间要大于当前时间，预定时间必须大于15分钟以上<p>
+		    	<div id="firstTip"></div>
+		    	<p>预定开始时间要大于当前时间，预定时间必须大于15分钟以上</p>
 		    </div>
 		    <div class="fee">
 		    	<span class="tcf">停车费:</span><span class="num" id="num">0.00</span><span class="unit">元</span>
@@ -203,6 +204,9 @@
 									//设置车场信息
 									var _data = res.data.parkingInfo;
 									parkPrice = res.data.space_price/100;
+									if(parkPrice==0){
+										parkPrice = (_data.price/100);
+									};
 									//设置背景图片
 									var imgSrc = _data.parking_lot_img;
 									if(imgSrc!=''&&imgSrc){
@@ -277,7 +281,7 @@
 									}else if(type=='choose' && parkingInfo.d_allow_time!=0){
 										CozyTip = '该车场固定车位允许提前到场的时间为'+parkingInfo.d_allow_time+'分钟。如果超出该允许到场时间入场停车，将不会消耗您预定的订单。';
 									};
-									mui.alert(CozyTip,app.name+'提示','知道了');
+									mui('#firstTip')[0].innerHTML = '<p>'+CozyTip+'</p>';
 								}
 							}else if(res.code==509){
 								ajaxGet(head,data,type);
@@ -356,51 +360,97 @@
 						ajaxSubmit_off = true;
 						plus.nativeUI.showWaiting();
 						mask.show();//显示遮罩
-						mui.ajax(AJAX_PATH+'/user/reserve?token='+token,{
-							type:'post',
-							dataType:'json',
-							data:postData,
-							success:function(res){
-								ajaxSubmit_off = false;
-								plus.nativeUI.closeWaiting();
-								mask.close();//关闭遮罩层
-								console.log('信用值低于120',JSON.stringify(res));
-								if(res.code == 200){
-									//成功之后做的处理
-									mui.openWindow({
-										url:'orderPay.html',
-										id:'orderPay.html',
-										styles:{
-											popGesture: "close",
-											statusbar:{
-												background:"#fff" 
+						function ajax_reserve(){
+							mui.ajax(AJAX_PATH+'/user/reserve?token='+token,{
+								type:'post',
+								dataType:'json',
+								data:postData,
+								success:function(res){
+									ajaxSubmit_off = false;
+									plus.nativeUI.closeWaiting();
+									mask.close();//关闭遮罩层
+									console.log('信用值低于120',JSON.stringify(res));
+									if(res.code == 200){
+										//成功之后做的处理
+										mui.openWindow({
+											url:'orderPay.html',
+											id:'orderPay.html',
+											styles:{
+												popGesture: "close",
+												statusbar:{
+													background:"#fff" 
+												}
+											},
+											extras:{
+												order_sn:res.data.order_sn,
+												park_id:res.data.park_id
 											}
-										},
-										extras:{
-											order_sn:res.data.order_sn,
-											park_id:res.data.park_id
-										}
-									});
-//									var home = plus.webview.getWebviewById('template/home.html');
-//									mui.fire(home,'updata');
+										});
+	//									var home = plus.webview.getWebviewById('template/home.html');
+	//									mui.fire(home,'updata');
+									}else if(res.code==509){
+										ajax_reserve();
+									}else if(res.code!=502 && res.code!=503){
+										plus.nativeUI.closeWaiting();
+										mask.close();//关闭遮罩层
+										mui.alert(res.msg,app.name+'提示','确定',null);
+									}
+								},
+								error:function(){
+										plus.nativeUI.closeWaiting();
+										mask.close();//关闭遮罩层
+										mui.alert('服务器连接超时，请稍后再试',app.name+'提示','确定',null);
+								}
+							})
+						};
+						//请求用户的超时订单
+						mui.ajax(AJAX_PATH+'/user/order/list/?token='+token,{
+							data:{
+								"order_type":'timeout'
+							},
+							dataType:'json',
+							type:'get',
+							success:function(res){
+								if(res.code == 200){
+									if(res.data['timeout'] && res.data['timeout'].length!=0){
+										var o_status = -1;
+										$.each(res.data['timeout'],function(k,val){
+											o_status = val.t_o_order_status;
+											if(val.t_o_order_status==1){
+												return false;
+											};
+										});
+										if(o_status==1){
+											mui.alert('您有待支付的超时订单，请先支付，才能去预定',app.name+'提示','确定',function(){
+												mui.openWindow({
+													url:'orderList.html',
+													id:'orderList.html',
+													styles:{
+														popGesture: "close",
+														statusbar:{
+															background:"#fff" 
+														}
+													},
+													extras:{
+														type:'timeout'
+													}
+												});
+											});
+										}else{
+											ajax_reserve();
+										};
+									}else{
+										ajax_reserve();
+									};
 								}else if(res.code==509){
 									ajax_order(postData);
 								}else if(res.code!=502 && res.code!=503){
-									plus.nativeUI.closeWaiting();
-									mask.close();//关闭遮罩层
 									mui.alert(res.msg,app.name+'提示','确定',null);
-								}
-							},
-							error:function(){
-									plus.nativeUI.closeWaiting();
-									mask.close();//关闭遮罩层
-									mui.alert('服务器连接超时，请稍后再试',app.name+'提示','确定',null);
+								};
 							}
-						})
-					}
-				}
-				
-
+						});
+					};
+				};
 				//页面加载函数
 				$.ready(function(){
 					//车位信息获取
